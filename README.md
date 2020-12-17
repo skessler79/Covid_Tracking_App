@@ -1,3 +1,4 @@
+<pre>
 # Covid_Tracking_App
 In this project, we would be developing a simplified contact tracing system for COVID-19, as part of our effort in highlighting the importance of 
 identifying potential close contact to those infected as a mean to control the outbreak of COVID-19. As the disease has shown to be able to spread very
@@ -36,3 +37,5 @@ system are listed below:
         ii. All close contacts as Close. 
 
 Further info 
+
+</pre>
