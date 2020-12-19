@@ -1,0 +1,5 @@
+enum ShopStatus
+{
+	Normal,
+	Case
+}
