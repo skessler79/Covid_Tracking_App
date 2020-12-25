@@ -3,6 +3,7 @@ package com.example.covid_19contacttracing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,13 +14,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
+
+import org.w3c.dom.Document;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,8 +34,10 @@ public class Register extends AppCompatActivity
 {
     public static final String TAG = "Register";
 
-    // Declaring Views variables
     FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
+    // Declaring Views variables
     EditText phoneNumber, codeEnter;
     Button nextBtn;
     ProgressBar progressBar;
@@ -46,8 +55,11 @@ public class Register extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Initializing Views
+        // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        // Initializing Views
         phoneNumber = findViewById(R.id.phone);
         codeEnter = findViewById(R.id.codeEnter);
         progressBar = findViewById(R.id.progressBar);
@@ -99,6 +111,20 @@ public class Register extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        if(fAuth.getCurrentUser() != null)
+        {
+            progressBar.setVisibility(View.VISIBLE);
+            state.setText("Checking");
+            state.setVisibility(View.VISIBLE);
+            checkUserProfile();
+        }
+    }
+
     // Verify OTP with Google Firebase Authentication
     private void verifyAuth(PhoneAuthCredential credential)
     {
@@ -110,11 +136,35 @@ public class Register extends AppCompatActivity
             {
                 if(task.isSuccessful())
                 {
-                    Toast.makeText(Register.this, "Authentication is successful.", Toast.LENGTH_SHORT).show();
+                    checkUserProfile();
                 }
                 else
                 {
                     Toast.makeText(Register.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void checkUserProfile()
+    {
+        DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
+                // If user has already registered previously
+                if(documentSnapshot.exists())
+                {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
+                // If user is a new user
+                else
+                {
+                    startActivity(new Intent(getApplicationContext(), AddDetails.class));
+                    finish();
                 }
             }
         });
@@ -143,6 +193,7 @@ public class Register extends AppCompatActivity
             public void onCodeAutoRetrievalTimeOut(@NonNull String s)
             {
                 super.onCodeAutoRetrievalTimeOut(s);
+                Toast.makeText(Register.this, "OTP Expired. Please request another OTP.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
