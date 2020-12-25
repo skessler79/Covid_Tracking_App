@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Covid-19 Contact Tracing</string>
+
+    <string-array name="statesArray">
+        <item>Johor</item>
+        <item>Kedah</item>
+        <item>Kelantan</item>
+        <item>Kuala Lumpur</item>
+        <item>Labuan</item>
+        <item>Malacca</item>
+        <item>Negeri Sembilan</item>
+        <item>Pahang</item>
+        <item>Penang</item>
+        <item>Perlis</item>
+        <item>Putrajaya</item>
+        <item>Sabah</item>
+        <item>Sarawak</item>
+        <item>Selangor</item>
+        <item>Terengganu</item>
+    </string-array>
 </resources>

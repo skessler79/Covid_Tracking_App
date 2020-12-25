@@ -99,6 +99,7 @@ public class Register extends AppCompatActivity
                     String userOTP = codeEnter.getText().toString();
                     if(!userOTP.isEmpty() && userOTP.length() == 6)
                     {
+                        nextBtn.setEnabled(false);
                         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, userOTP);
                         verifyAuth(credential);
                     }
@@ -141,6 +142,7 @@ public class Register extends AppCompatActivity
                 else
                 {
                     Toast.makeText(Register.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    nextBtn.setEnabled(true);
                 }
             }
         });

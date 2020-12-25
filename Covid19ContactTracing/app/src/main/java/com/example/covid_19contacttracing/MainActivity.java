@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
     FirebaseFirestore fStore;
 
     // Declaring Views
-    TextView pName, pEmail, pPhone;
+    TextView pName, pEmail, pPhone, pState;
     Toolbar toolbar;
 
     @Override
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
         pName = findViewById(R.id.profileFullName);
         pEmail = findViewById(R.id.profileEmail);
         pPhone = findViewById(R.id.profilePhone);
+        pState = findViewById(R.id.profileState);
         toolbar = findViewById(R.id.toolbar);
 
         // Initializing toolbar
@@ -57,10 +58,11 @@ public class MainActivity extends AppCompatActivity
             {
                 if(documentSnapshot.exists())
                 {
-                    String fullName = documentSnapshot.getString("firstName") + " " + documentSnapshot.getString("lastName");
+                    String fullName = documentSnapshot.getString("fullName");
                     pName.setText(fullName);
                     pEmail.setText(documentSnapshot.getString("email"));
                     pPhone.setText(fAuth.getCurrentUser().getPhoneNumber());
+                    pState.setText(documentSnapshot.getString("currentState"));
                 }
             }
         });

@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">#0A0A0A</item>
     </style>
 
     <style name="Theme.Covid19ContactTracing.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -26,5 +27,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">#0A0A0A</item>
     </style>
 </resources>

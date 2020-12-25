@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,17 +22,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddDetails extends AppCompatActivity
+public class AddDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     // Connecting to Firebase Authentication and Firestore Database
     FirebaseAuth firebaseAuth;
     FirebaseFirestore fStore;
 
     // Declaring Views variables
-    EditText firstName, lastName, email;
+    EditText fullName, email;
+    Spinner statesSpinner;
     Button saveBtn;
 
     String userID;
+    String selectedState;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,10 +44,16 @@ public class AddDetails extends AppCompatActivity
         setContentView(R.layout.activity_add_details);
 
         // Initializing Views
-        firstName = findViewById(R.id.firstName);
-        lastName = findViewById(R.id.lastName);
+        fullName = findViewById(R.id.fullName);
+        statesSpinner = findViewById(R.id.stateSpinner);
         email = findViewById(R.id.emailAddress);
         saveBtn = findViewById(R.id.saveBtn);
+
+        // Setting up states spinner
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.statesArray, R.layout.states_spinner_layout);
+        adapter.setDropDownViewResource(R.layout.states_spinner_dropdown_layout);
+        statesSpinner.setAdapter(adapter);
+        statesSpinner.setOnItemSelectedListener(this);
 
         // Initializing firebase variables
         firebaseAuth = FirebaseAuth.getInstance();
@@ -58,34 +70,41 @@ public class AddDetails extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                if(!firstName.getText().toString().isEmpty() && !lastName.getText().toString().isEmpty() && !email.getText().toString().isEmpty())
+                if(!fullName.getText().toString().isEmpty() && !email.getText().toString().isEmpty())
                 {
-                    String first = firstName.getText().toString();
-                    String last = lastName.getText().toString();
                     String userEmail = email.getText().toString();
 
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("firstName", first);
-                    user.put("lastName", last);
-                    user.put("email", userEmail);
-
-                    // On complete event listener for Firestore
-                    docRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>()
+                    // Check if email is correct format
+                    if(userEmail.trim().matches(emailPattern))
                     {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task)
+                        String name = fullName.getText().toString();
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("fullName", name);
+                        user.put("currentState", selectedState);
+                        user.put("email", userEmail);
+
+                        // On complete event listener for Firestore
+                        docRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>()
                         {
-                            if(task.isSuccessful())
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task)
                             {
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                finish();
+                                if(task.isSuccessful())
+                                {
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+                                }
+                                else
+                                {
+                                    Toast.makeText(AddDetails.this, "Data is not inserted.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else
-                            {
-                                Toast.makeText(AddDetails.this, "Data is not inserted.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else
                 {
@@ -94,5 +113,17 @@ public class AddDetails extends AppCompatActivity
                 }
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+    {
+        selectedState = adapterView.getSelectedItem().toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView)
+    {
+
     }
 }
