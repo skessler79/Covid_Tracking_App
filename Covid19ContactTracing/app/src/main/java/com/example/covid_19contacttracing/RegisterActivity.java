@@ -26,11 +26,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
-import org.w3c.dom.Document;
-
 import java.util.concurrent.TimeUnit;
 
-public class Register extends AppCompatActivity
+public class RegisterActivity extends AppCompatActivity
 {
     public static final String TAG = "Register";
 
@@ -141,7 +139,7 @@ public class Register extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(Register.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     nextBtn.setEnabled(true);
                 }
             }
@@ -165,7 +163,7 @@ public class Register extends AppCompatActivity
                 // If user is a new user
                 else
                 {
-                    startActivity(new Intent(getApplicationContext(), AddDetails.class));
+                    startActivity(new Intent(getApplicationContext(), UserAddDetailsActivity.class));
                     finish();
                 }
             }
@@ -195,7 +193,7 @@ public class Register extends AppCompatActivity
             public void onCodeAutoRetrievalTimeOut(@NonNull String s)
             {
                 super.onCodeAutoRetrievalTimeOut(s);
-                Toast.makeText(Register.this, "OTP Expired. Please request another OTP.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "OTP Expired. Please request another OTP.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -207,7 +205,7 @@ public class Register extends AppCompatActivity
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e)
             {
-                Toast.makeText(Register.this, "Cannot Create Account " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Cannot Create Account " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

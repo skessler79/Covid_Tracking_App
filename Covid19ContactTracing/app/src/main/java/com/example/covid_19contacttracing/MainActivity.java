@@ -17,8 +17,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Document;
-
 public class MainActivity extends AppCompatActivity
 {
     FirebaseAuth fAuth;
@@ -85,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         if(item.getItemId() == R.id.logout)
         {
             FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), Register.class));
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             finish();
         }
         return super.onOptionsItemSelected(item);
