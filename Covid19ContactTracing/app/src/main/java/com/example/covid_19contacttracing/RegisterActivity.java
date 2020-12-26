@@ -146,6 +146,8 @@ public class RegisterActivity extends AppCompatActivity
         });
     }
 
+    // TODO : Remove these, checking user profile now done at introductory activity
+
     private void checkUserProfile()
     {
         DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
@@ -157,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity
                 // If user has already registered previously
                 if(documentSnapshot.exists())
                 {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), CustomerProfileActivity.class));
                     finish();
                 }
                 // If user is a new user
@@ -169,6 +171,8 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
     }
+
+    // TODO : fix deprecated verifyPhoneNumber function
 
     // Events related to requesting OTP from Firebase Authentication
     private void requestOTP(String phoneNum)

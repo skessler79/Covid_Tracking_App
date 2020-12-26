@@ -75,7 +75,7 @@ public class IntroductoryActivity extends AppCompatActivity
                         break;
 
                     case 2:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), CustomerProfileActivity.class));
                         finish();
                         break;
                 }
