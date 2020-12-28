@@ -9,9 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
-        <activity android:name=".AddDetails"></activity>
         <activity
-            android:name=".Register"
+            android:name=".IntroductoryActivity"
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"></activity>
+        <activity android:name=".UserAddDetailsActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
     </application>
 
 </manifest>

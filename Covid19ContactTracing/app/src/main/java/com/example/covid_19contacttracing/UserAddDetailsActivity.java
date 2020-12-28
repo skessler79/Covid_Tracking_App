@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+public class UserAddDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     // Connecting to Firebase Authentication and Firestore Database
     FirebaseAuth firebaseAuth;
@@ -96,7 +96,7 @@ public class AddDetails extends AppCompatActivity implements AdapterView.OnItemS
                                 }
                                 else
                                 {
-                                    Toast.makeText(AddDetails.this, "Data is not inserted.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserAddDetailsActivity.this, "Data is not inserted.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -108,7 +108,7 @@ public class AddDetails extends AppCompatActivity implements AdapterView.OnItemS
                 }
                 else
                 {
-                    Toast.makeText(AddDetails.this, "All fields are required.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserAddDetailsActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
