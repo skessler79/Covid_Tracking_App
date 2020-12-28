@@ -65,7 +65,7 @@ public class IntroductoryActivity extends AppCompatActivity
                 switch(userStatus)
                 {
                     case 0:
-                        startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                        startActivity(new Intent(getApplicationContext(), SendOTPActivity.class));
                         finish();
                         break;
 
@@ -75,7 +75,7 @@ public class IntroductoryActivity extends AppCompatActivity
                         break;
 
                     case 2:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
                         finish();
                         break;
                 }

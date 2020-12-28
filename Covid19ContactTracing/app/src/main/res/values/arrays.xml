@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="id_activityScreenTitles">
+        <item></item>
+        <item>Dashboard</item>
+        <item>My Profile</item>
+        <item>Nearby Restaurants</item>
+        <item>Settings</item>
+        <item>About Us</item>
+        <item/>
+        <item>Log Out</item>
+    </string-array>
+
+    <array name="id_activityScreenIcons">
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>0</item>
+        <item>@drawable/ic_baseline_home_24</item>
+    </array>
+
+</resources>
