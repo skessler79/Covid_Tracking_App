@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Covid-19 Contact Tracing</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="we_will_send_you_a_one_time_password_on_this_mobile_number">We will send you a One Time Password on this mobile number</string>
 
     <string-array name="statesArray">
         <item>Johor</item>

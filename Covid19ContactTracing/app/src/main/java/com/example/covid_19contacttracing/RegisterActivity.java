@@ -159,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity
                 // If user has already registered previously
                 if(documentSnapshot.exists())
                 {
-                    startActivity(new Intent(getApplicationContext(), CustomerProfileActivity.class));
+                    startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
                     finish();
                 }
                 // If user is a new user

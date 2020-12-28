@@ -82,7 +82,7 @@ public class UserAddDetailsActivity extends AppCompatActivity implements Adapter
                         user.put("fullName", name);
                         user.put("currentState", selectedState);
                         user.put("email", userEmail);
-                        user.put("status", "Normal");
+                        user.put("status", "NORMAL");
 
                         // On complete event listener for Firestore
                         docRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>()
@@ -92,7 +92,7 @@ public class UserAddDetailsActivity extends AppCompatActivity implements Adapter
                             {
                                 if(task.isSuccessful())
                                 {
-                                    startActivity(new Intent(getApplicationContext(), CustomerProfileActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
                                     finish();
                                 }
                                 else

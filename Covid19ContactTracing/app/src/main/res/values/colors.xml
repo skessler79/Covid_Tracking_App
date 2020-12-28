@@ -10,4 +10,10 @@
     <color name="purple">#BA53DE</color>
     <color name="pink">#F469A9</color>
     <color name="blue">#88BEF5</color>
+    <color name="primary_blue">#536DFE</color>
+    <color name="otp_blue">#536DFE</color>
+    <color name="otp_accent">#F44336</color>
+    <color name="otp_text_primary">#212121</color>
+    <color name="otp_text_secondary">#757575</color>
+    <color name="otp_color_divider">#BDBDBD</color>
 </resources>
