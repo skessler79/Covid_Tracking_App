@@ -21,12 +21,18 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener
@@ -44,6 +50,9 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
 
     private SlidingRootNav slidingRootNav;
 
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,6 +61,10 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
 
         Toolbar toolbar = findViewById(R.id.drawer_toolbar);
         setSupportActionBar(toolbar);
+
+        // Initializing Firebase
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withDragDistance(180)
@@ -134,8 +147,11 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
     public void onItemSelected(int position)
     {
         if (position == POS_LOGOUT) {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            fAuth.signOut();
+            Intent intent = new Intent(getApplicationContext(), SendOTPActivity.class);
+            intent.putExtra("logout", "logout");
+            startActivity(intent);
+            finish();
         }
         slidingRootNav.closeMenu();
         Fragment selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
@@ -157,24 +173,35 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         {
             if(result.getContents() != null)
             {
+                Long currentTime = System.currentTimeMillis() / 1000L;
+                // Initializing Firebase
+                fAuth = FirebaseAuth.getInstance();
+                fStore = FirebaseFirestore.getInstance();
+
+                CustomerHistoryTest customerHistory = new CustomerHistoryTest(currentTime, result.getContents());
+                CustomerHistoryTest shopHistory = new CustomerHistoryTest(currentTime, fAuth.getCurrentUser().getUid());
+
+                // Updating user history in Cloud Firestore
+                DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+                docRef.update("history", FieldValue.arrayUnion(customerHistory));
+
+                // Updating shops history in Cloud Firestore
+                DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
+                shopRef.update("history", FieldValue.arrayUnion(shopHistory));
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot)
+                    {
+                        String fullName = documentSnapshot.getString("fullName");
+                        Toast.makeText(TestDrawerActivity.this, fullName, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Alert dialog for checking-in
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(result.getContents());
                 builder.setTitle("Check-in Successful");
-//                builder.setPositiveButton("Scan Again", new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which)
-//                    {
-////                        scanCode();
-//                    }
-//                }).setNegativeButton("Finish", new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which)
-//                    {
-////                        finish();
-//                    }
-//                });
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }

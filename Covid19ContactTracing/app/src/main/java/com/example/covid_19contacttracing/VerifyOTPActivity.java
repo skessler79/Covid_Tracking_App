@@ -101,6 +101,7 @@ public class VerifyOTPActivity extends AppCompatActivity
                                     verifyBtn.setVisibility(View.VISIBLE);
                                     if(task.isSuccessful())
                                     {
+                                        // TODO : Check if user is already in database
                                         Intent intent = new Intent(getApplicationContext(), UserAddDetailsActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);

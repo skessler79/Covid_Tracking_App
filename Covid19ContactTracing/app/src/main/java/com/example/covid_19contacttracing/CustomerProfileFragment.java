@@ -3,6 +3,7 @@ package com.example.covid_19contacttracing;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.Serializable;
+
 public class CustomerProfileFragment extends Fragment implements View.OnClickListener
 {
     private static final String EXTRA_TEXT = "text";
@@ -45,6 +48,9 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
     // Declaring Views
     TextView pName, pPhone, pEmail, pStatus;
     Button checkInBtn, historyBtn;
+
+    // Creating Customer Object
+    Customer customer;
 
     @Nullable
     @Override
@@ -75,11 +81,27 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
                 if(documentSnapshot.exists())
                 {
                     String fullName = documentSnapshot.getString("fullName");
-                    pName.setText(fullName);
+                    String phoneNumber = fAuth.getCurrentUser().getPhoneNumber();
+                    String status = documentSnapshot.getString("status");
+
+                    customer = new Customer(fullName, phoneNumber, CustStatus.valueOf(status));
+
+                    pName.setText(customer.getName());
                     pEmail.setText(documentSnapshot.getString("email"));
-                    pPhone.setText(fAuth.getCurrentUser().getPhoneNumber());
-                    pStatus.setText(documentSnapshot.getString("status"));
+                    pPhone.setText(customer.getPhone());
+                    pStatus.setText(customer.getStatus().toString().toUpperCase());
                 }
+            }
+        });
+
+        historyBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), CustomerHistoryActivity.class);
+                intent.putExtra("customer", customer);
+                startActivity(intent);
             }
         });
 

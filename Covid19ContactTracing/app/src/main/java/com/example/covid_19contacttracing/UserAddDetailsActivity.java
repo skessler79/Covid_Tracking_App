@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class UserAddDetailsActivity extends AppCompatActivity implements Adapter
 
     String userID;
     String selectedState;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,10 +80,12 @@ public class UserAddDetailsActivity extends AppCompatActivity implements Adapter
                     {
                         String name = fullName.getText().toString();
                         Map<String, Object> user = new HashMap<>();
+                        ArrayList<CustomerHistory> history = new ArrayList<>();
                         user.put("fullName", name);
                         user.put("currentState", selectedState);
                         user.put("email", userEmail);
-                        user.put("status", "NORMAL");
+                        user.put("status", "Normal");
+                        user.put("history", history);
 
                         // On complete event listener for Firestore
                         docRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>()

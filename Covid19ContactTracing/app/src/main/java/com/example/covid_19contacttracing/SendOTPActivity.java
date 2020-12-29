@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -30,6 +31,19 @@ public class SendOTPActivity extends AppCompatActivity
         final Button buttonGetOTP = findViewById(R.id.otp_button_get);
 
         final ProgressBar progressBar = findViewById(R.id.otp_progress_bar);
+
+        try
+        {
+            String isLogout = getIntent().getStringExtra("logout");
+            if(isLogout.equals("logout"))
+            {
+                FirebaseAuth.getInstance().signOut();
+            }
+        }
+        catch(Exception e)
+        {
+
+        }
 
         buttonGetOTP.setOnClickListener(new View.OnClickListener() {
             @Override

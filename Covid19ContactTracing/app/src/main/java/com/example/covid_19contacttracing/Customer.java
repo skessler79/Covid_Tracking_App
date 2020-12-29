@@ -1,8 +1,9 @@
 package com.example.covid_19contacttracing;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Customer extends User
+public class Customer extends User implements Serializable
 {
     private CustStatus status;
     private ArrayList<CustomerHistory> customerHistory;
@@ -53,6 +54,11 @@ public class Customer extends User
     public ArrayList<CustomerHistory> getHistory()
     {
         return this.customerHistory;
+    }
+
+    public void setHistory(ArrayList<CustomerHistory> list)
+    {
+        this.customerHistory = list;
     }
 
     public String getHistoryString()

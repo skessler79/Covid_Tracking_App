@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,7 +56,11 @@ public class IntroductoryActivity extends AppCompatActivity
         nameSplash.animate().translationY(height).setDuration(1000).setStartDelay(3600);
         lottieAnimationView.animate().translationY(height).setDuration(1000).setStartDelay(3600);
 
-        checkUserProfile();
+//        if(fAuth.getCurrentUser() != null)
+//        {
+//            checkUserProfile();
+//        }
+
 
         new Handler().postDelayed(new Runnable()
         {
@@ -84,6 +89,16 @@ public class IntroductoryActivity extends AppCompatActivity
         }, 4400);
     }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        if(fAuth.getCurrentUser() != null)
+        {
+            checkUserProfile();
+        }
+    }
 
     private void checkUserProfile()
     {

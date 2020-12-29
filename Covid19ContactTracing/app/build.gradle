@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'com.yarolegovich:sliding-root-nav:1.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
