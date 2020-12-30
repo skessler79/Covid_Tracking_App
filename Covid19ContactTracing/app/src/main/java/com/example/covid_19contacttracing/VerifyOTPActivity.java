@@ -18,12 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +37,9 @@ public class VerifyOTPActivity extends AppCompatActivity
     private EditText inputCode1, inputCode2, inputCode3, inputCode4, inputCode5, inputCode6;
     private Button verifyBtn;
     private String verificationId;
+
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,6 +60,10 @@ public class VerifyOTPActivity extends AppCompatActivity
         inputCode5 = findViewById(R.id.input_otp_5);
         inputCode6 = findViewById(R.id.input_otp_6);
         verifyBtn = findViewById(R.id.otp_button_verify);
+
+        // Initializing Firebase
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         setupOTPInputs();
 
@@ -102,10 +113,7 @@ public class VerifyOTPActivity extends AppCompatActivity
                                     if(task.isSuccessful())
                                     {
                                         // TODO : Check if user is already in database
-                                        Intent intent = new Intent(getApplicationContext(), UserAddDetailsActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                        finish();
+                                        checkUserProfile();
                                     }
                                     else
                                     {
@@ -150,6 +158,32 @@ public class VerifyOTPActivity extends AppCompatActivity
                             }
                         }
                 );
+            }
+        });
+    }
+
+    private void checkUserProfile()
+    {
+        DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
+                // If user has already registered previously
+                if(documentSnapshot.exists())
+                {
+                    startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
+                    finish();
+                }
+                // If user is a new user
+                else
+                {
+                    Intent intent = new Intent(getApplicationContext(), TestAddDetailsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
@@ -290,7 +324,6 @@ public class VerifyOTPActivity extends AppCompatActivity
                 if (!s.toString().trim().isEmpty())
                 {
                     hideKeyboard();
-//                    verifyBtn.requestFocus();
                 }
             }
 

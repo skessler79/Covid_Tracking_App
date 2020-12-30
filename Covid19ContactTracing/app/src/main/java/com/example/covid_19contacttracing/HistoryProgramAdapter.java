@@ -10,12 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class HistoryProgramAdapter extends RecyclerView.Adapter<HistoryProgramAdapter.ViewHolder>
 {
     Context context;
-    String[] programNameList;
-    String[] programDescriptionList;
-    int[] images;
+    ArrayList<String> programNameList;
+    ArrayList<String> programDescriptionList;
+    ArrayList<Integer> images;
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -31,7 +33,7 @@ public class HistoryProgramAdapter extends RecyclerView.Adapter<HistoryProgramAd
         }
     }
 
-    public HistoryProgramAdapter(Context context, String[] programNameList, String[] programDescriptionList, int[] images)
+    public HistoryProgramAdapter(Context context, ArrayList<String> programNameList, ArrayList<String> programDescriptionList, ArrayList<Integer> images)
     {
         this.context = context;
         this.programNameList = programNameList;
@@ -52,9 +54,9 @@ public class HistoryProgramAdapter extends RecyclerView.Adapter<HistoryProgramAd
     @Override
     public void onBindViewHolder(@NonNull HistoryProgramAdapter.ViewHolder holder, int position)
     {
-        holder.rowName.setText(programNameList[position]);
-        holder.rowDescription.setText(programDescriptionList[position]);
-        holder.rowImage.setImageResource(images[position]);
+        holder.rowName.setText(programNameList.get(position));
+        holder.rowDescription.setText(programDescriptionList.get(position));
+        holder.rowImage.setImageResource(images.get(position));
     }
 
     @Override
@@ -62,7 +64,7 @@ public class HistoryProgramAdapter extends RecyclerView.Adapter<HistoryProgramAd
     {
         try
         {
-            return programNameList.length;
+            return programNameList.size();
         }
         catch(Exception e)
         {

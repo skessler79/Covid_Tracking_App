@@ -2,11 +2,13 @@ package com.example.covid_19contacttracing;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Customer extends User implements Serializable
 {
     private CustStatus status;
     private ArrayList<CustomerHistory> customerHistory;
+    private ArrayList<Map<String, String>> history;
 
     public Customer()
     {
@@ -35,7 +37,7 @@ public class Customer extends User implements Serializable
     {
         shop.checkIn(this);
 
-        // Testing putposes only
+        // Testing purposes only
         if(this.name.equals("Dog"))
         {
             customerHistory.add(new CustomerHistory(shop, (System.currentTimeMillis() / 1000L) + 3700));
@@ -56,9 +58,14 @@ public class Customer extends User implements Serializable
         return this.customerHistory;
     }
 
-    public void setHistory(ArrayList<CustomerHistory> list)
+    public ArrayList<Map<String, String>> getHist()
     {
-        this.customerHistory = list;
+        return this.history;
+    }
+
+    public void setHist(ArrayList<Map<String, String>> hist)
+    {
+        this.history = hist;
     }
 
     public String getHistoryString()

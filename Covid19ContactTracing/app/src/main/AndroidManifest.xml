@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
-        <activity android:name=".CustomerHistoryActivity"></activity>
+        <activity
+            android:name=".TestAddDetailsActivity"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar">
+        </activity>
+        <activity android:name=".CustomerHistoryActivity" />
         <activity
             android:name=".VerifyOTPActivity"
             android:screenOrientation="portrait"
@@ -24,7 +28,7 @@
             android:name=".SendOTPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".TestDrawerActivity"
             android:theme="@style/Theme.UserProfile" />

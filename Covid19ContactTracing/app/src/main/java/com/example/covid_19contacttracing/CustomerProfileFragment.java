@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,9 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomerProfileFragment extends Fragment implements View.OnClickListener
 {
@@ -99,9 +103,55 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getContext(), CustomerHistoryActivity.class);
-                intent.putExtra("customer", customer);
-                startActivity(intent);
+                // Getting user history from Firebase
+                DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot)
+                    {
+                        ArrayList<Map<String, String>> list = (ArrayList<Map<String, String>>) documentSnapshot.get("history");
+                        ArrayList<Map<String, String>> newList = new ArrayList<>();
+
+                        if(list.size() <= 0)
+                        {
+                            Toast.makeText(getContext(), "You have no check-in history.", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            for(int i = list.size() - 1; i >= 0; --i)
+                            {
+                                String id = list.get(i).get("shop");
+                                String timeStr = String.valueOf(list.get(i).get("time"));
+                                Map<String, String> mapA = new HashMap<>();
+                                mapA.put("time", timeStr);
+
+                                DocumentReference shopRef = fStore.collection("shops").document(id);
+                                int finalI = i;
+                                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                                {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot)
+                                    {
+                                        Log.d("testhistory", "onSuccess: Called");
+                                        String shopName = documentSnapshot.getString("name");
+                                        mapA.put("shop", shopName);
+                                        newList.add(mapA);
+                                        customer.setHist(newList);
+
+                                        if(finalI == 0)
+                                        {
+                                            Intent intent = new Intent(getContext(), CustomerHistoryActivity.class);
+                                            intent.putExtra("customer", customer);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                });
             }
         });
 

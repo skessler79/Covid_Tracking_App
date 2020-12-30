@@ -188,22 +188,21 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
                 // Updating shops history in Cloud Firestore
                 DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
                 shopRef.update("history", FieldValue.arrayUnion(shopHistory));
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+
+                // Alert dialog for checking-in
+                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
                 {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot)
                     {
-                        String fullName = documentSnapshot.getString("fullName");
-                        Toast.makeText(TestDrawerActivity.this, fullName, Toast.LENGTH_SHORT).show();
+                        if(documentSnapshot.exists())
+                        {
+                            String shopName = documentSnapshot.getString("name");
+                            showQRSuccessMessage(shopName);
+                        }
                     }
                 });
 
-                // Alert dialog for checking-in
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(result.getContents());
-                builder.setTitle("Check-in Successful");
-                AlertDialog dialog = builder.create();
-                dialog.show();
             }
             else
             {
@@ -214,5 +213,14 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void showQRSuccessMessage(String shopName)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Successfully checked-in to " + shopName);
+        builder.setTitle("Thank you!");
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -5,6 +5,6 @@
     android:text="State of Residence"
     android:textSize="18sp"
     android:paddingTop="10dp"
-    android:textColor="#E9EAEE">
+    android:textColor="#666666">
 
 </CheckedTextView>
