@@ -75,7 +75,7 @@ public class IntroductoryActivity extends AppCompatActivity
                         break;
 
                     case 1:
-                        startActivity(new Intent(getApplicationContext(), UserAddDetailsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), TestAddDetailsActivity.class));
                         finish();
                         break;
 

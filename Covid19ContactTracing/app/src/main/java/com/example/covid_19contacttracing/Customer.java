@@ -50,7 +50,6 @@ public class Customer extends User implements Serializable
         {
             customerHistory.add(new CustomerHistory(shop, System.currentTimeMillis() / 1000L));
         }
-
     }
 
     public ArrayList<CustomerHistory> getHistory()

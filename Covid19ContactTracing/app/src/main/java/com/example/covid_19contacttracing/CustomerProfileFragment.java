@@ -171,7 +171,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(false);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);       // TODO : Try to change to QR code types only
-        integrator.setPrompt("Scanner Code");
+        integrator.setPrompt("Place a QR code inside the viewfinder to scan it.");
         integrator.initiateScan();
     }
 }

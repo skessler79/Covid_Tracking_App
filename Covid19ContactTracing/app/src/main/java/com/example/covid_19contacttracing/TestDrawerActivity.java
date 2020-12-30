@@ -40,7 +40,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
     private static final int POS_CLOSE = 0;
     private static final int POS_DASHBOARD = 1;
     private static final int POS_MY_PROFILE = 2;
-    private static final int POS_NEARBY_RES = 3;
+    private static final int POS_STATISTICS = 3;
     private static final int POS_SETTINGS = 4;
     private static final int POS_ABOUT_US = 5;
     private static final int POS_LOGOUT = 7;
@@ -84,7 +84,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
                 createItemFor(POS_CLOSE),
                 createItemFor(POS_DASHBOARD).setChecked(true),
                 createItemFor(POS_MY_PROFILE),
-                createItemFor(POS_NEARBY_RES),
+                createItemFor(POS_STATISTICS),
                 createItemFor(POS_SETTINGS),
                 createItemFor(POS_ABOUT_US),
                 new DrawerSpaceItem(260),
