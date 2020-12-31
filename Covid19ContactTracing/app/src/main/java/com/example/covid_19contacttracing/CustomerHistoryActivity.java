@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.Format;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -41,8 +43,7 @@ public class CustomerHistoryActivity extends AppCompatActivity
         programDescriptionList = new ArrayList<>();
         programImages = new ArrayList<>();
 
-        Customer customer = (Customer) getIntent().getSerializableExtra("customer");
-        ArrayList<Map<String, String>> list = customer.getHist();
+        ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("list");
         for(int i = 0; i < list.size(); ++i)
         {
             String name = list.get(i).get("shop");

@@ -39,7 +39,7 @@ public class QRScannerActivity extends AppCompatActivity implements View.OnClick
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(false);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);       // TODO : Try to change to QR code types only
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);       // TODO : Try to change to QR code types only
         integrator.setPrompt("Scanner Code");
         integrator.initiateScan();
     }

@@ -1,24 +1,18 @@
 package com.example.covid_19contacttracing;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,12 +79,13 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
                 {
                     String fullName = documentSnapshot.getString("fullName");
                     String phoneNumber = fAuth.getCurrentUser().getPhoneNumber();
+                    String email = documentSnapshot.getString("email");
                     String status = documentSnapshot.getString("status");
 
-                    customer = new Customer(fullName, phoneNumber, CustStatus.valueOf(status));
+                    customer = new Customer(fullName, phoneNumber, email, CustStatus.valueOf(status));
 
                     pName.setText(customer.getName());
-                    pEmail.setText(documentSnapshot.getString("email"));
+                    pEmail.setText(customer.getEmail());
                     pPhone.setText(customer.getPhone());
                     pStatus.setText(customer.getStatus().toString().toUpperCase());
                 }
@@ -110,51 +104,11 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot)
                     {
-                        ArrayList<Map<String, String>> list = (ArrayList<Map<String, String>>) documentSnapshot.get("history");
-                        ArrayList<Map<String, String>> newList = new ArrayList<>();
-
-                        if(list.size() <= 0)
-                        {
-                            Toast.makeText(getContext(), "You have no check-in history.", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            for(int i = list.size() - 1; i >= 0; --i)
-                            {
-                                String id = list.get(i).get("shop");
-                                String timeStr = String.valueOf(list.get(i).get("time"));
-                                Map<String, String> mapA = new HashMap<>();
-                                mapA.put("time", timeStr);
-
-                                DocumentReference shopRef = fStore.collection("shops").document(id);
-                                int finalI = i;
-                                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-                                {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot)
-                                    {
-                                        Log.d("testhistory", "onSuccess: Called");
-                                        String shopName = documentSnapshot.getString("name");
-                                        mapA.put("shop", shopName);
-                                        newList.add(mapA);
-                                        customer.setHist(newList);
-
-                                        if(finalI == 0)
-                                        {
-                                            Intent intent = new Intent(getContext(), CustomerHistoryActivity.class);
-                                            intent.putExtra("customer", customer);
-                                            startActivity(intent);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-
+                        customer.showHistory(getContext(), documentSnapshot);
                     }
                 });
             }
         });
-
         return root;
     }
 
@@ -167,11 +121,56 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
     // Check-in with QR code
     private void scanCode()
     {
-        IntentIntegrator integrator = new IntentIntegrator(getActivity());
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(CustomerProfileFragment.this);
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(false);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);       // TODO : Try to change to QR code types only
         integrator.setPrompt("Place a QR code inside the viewfinder to scan it.");
         integrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null)
+        {
+            if(result.getContents() != null)
+            {
+                customer.checkIn(result);
+
+                // Alert dialog for checking-in
+                DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
+                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot)
+                    {
+                        if(documentSnapshot.exists())
+                        {
+                            String shopName = documentSnapshot.getString("name");
+                            showQRSuccessMessage(shopName);
+                        }
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(getContext(), "No Results", Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void showQRSuccessMessage(String shopName)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Successfully checked-in to " + shopName);
+        builder.setTitle("Thank you!");
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

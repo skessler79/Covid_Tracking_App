@@ -4,7 +4,7 @@ public class User
 {
     protected String name;
     protected String phone;
-
+    protected String email;
 
     public String getName()
     {
@@ -24,6 +24,16 @@ public class User
     public void setPhone(String phone)
     {
         this.phone = phone;
+    }
+
+    public String getEmail()
+    {
+        return this.email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
     public String toString()

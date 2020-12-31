@@ -13,12 +13,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Covid19ContactTracing">
+        android:theme="@style/Theme.Covid19ContactTracing"
+        xmlns:tools="http://schemas.android.com/tools">
         <activity
             android:name=".TestAddDetailsActivity"
-            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar">
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".CustomerHistoryActivity" />
+        <activity
+            android:name=".CustomerHistoryActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".VerifyOTPActivity"
             android:screenOrientation="portrait"
@@ -31,13 +35,15 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".TestDrawerActivity"
-            android:theme="@style/Theme.UserProfile" />
+            android:theme="@style/Theme.UserProfile"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CustomerProfileActivity"
             android:theme="@style/Theme.UserProfile" />
         <activity
             android:name=".IntroductoryActivity"
-            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar">
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +57,10 @@
         <activity android:name=".QRScannerActivity" />
         <activity
             android:name=".CaptureAct"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 

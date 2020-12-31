@@ -112,7 +112,6 @@ public class VerifyOTPActivity extends AppCompatActivity
                                     verifyBtn.setVisibility(View.VISIBLE);
                                     if(task.isSuccessful())
                                     {
-                                        // TODO : Check if user is already in database
                                         checkUserProfile();
                                     }
                                     else

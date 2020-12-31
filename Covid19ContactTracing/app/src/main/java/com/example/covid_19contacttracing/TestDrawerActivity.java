@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -162,65 +163,5 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
-    }
-
-    // Return result from QR scan. Unfortunately need to put this code in the drawer activity. Putting it into fragment doesn't work.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null)
-        {
-            if(result.getContents() != null)
-            {
-                Long currentTime = System.currentTimeMillis() / 1000L;
-                // Initializing Firebase
-                fAuth = FirebaseAuth.getInstance();
-                fStore = FirebaseFirestore.getInstance();
-
-                CustomerHistoryTest customerHistory = new CustomerHistoryTest(currentTime, result.getContents());
-                CustomerHistoryTest shopHistory = new CustomerHistoryTest(currentTime, fAuth.getCurrentUser().getUid());
-
-                // Updating user history in Cloud Firestore
-                DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
-                docRef.update("history", FieldValue.arrayUnion(customerHistory));
-
-                // Updating shops history in Cloud Firestore
-                DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
-                shopRef.update("history", FieldValue.arrayUnion(shopHistory));
-
-                // Alert dialog for checking-in
-                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-                {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot)
-                    {
-                        if(documentSnapshot.exists())
-                        {
-                            String shopName = documentSnapshot.getString("name");
-                            showQRSuccessMessage(shopName);
-                        }
-                    }
-                });
-
-            }
-            else
-            {
-                Toast.makeText(this, "No Results", Toast.LENGTH_LONG).show();
-            }
-        }
-        else
-        {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    private void showQRSuccessMessage(String shopName)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Successfully checked-in to " + shopName);
-        builder.setTitle("Thank you!");
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }
