@@ -2,8 +2,6 @@ package com.example.covid_19contacttracing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CustomerProfileFragment extends Fragment implements View.OnClickListener
 {

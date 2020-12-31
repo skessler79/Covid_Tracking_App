@@ -56,7 +56,7 @@ public class CustomerHistoryActivity extends AppCompatActivity
 
             SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
             String hourString = hourFormat.format(currentTime);
-            int hourInt = Integer.valueOf(hourString);
+            int hourInt = Integer.parseInt(hourString);
 
             if(hourInt >= 6 && hourInt < 18)
             {

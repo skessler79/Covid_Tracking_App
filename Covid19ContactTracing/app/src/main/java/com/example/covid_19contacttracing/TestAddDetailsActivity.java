@@ -89,6 +89,7 @@ public class TestAddDetailsActivity extends AppCompatActivity implements Adapter
                         user.put("email", userEmail);
                         user.put("status", "Normal");
                         user.put("history", history);
+                        user.put("role", "Customer");
 
                         // On complete event listener for Firestore
                         docRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>()
