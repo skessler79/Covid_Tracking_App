@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,8 +36,7 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
     FirebaseFirestore fStore;
 
     // Declaring Views
-    TextView pName, pPhone, pEmail, pStatus;
-    Button checkInBtn, historyBtn;
+    Button restaurantBtn, customerBtn;
 
     // Creating Customer Object
     Customer customer;
@@ -49,14 +47,10 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
     {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_admin_profile, container, false);
         // Initializing Views
-        pName = root.findViewById(R.id.userName);
-        pPhone = root.findViewById(R.id.userPhone);
-        pEmail = root.findViewById(R.id.userEmail);
-        pStatus = root.findViewById(R.id.userStatus);
-        checkInBtn = root.findViewById(R.id.checkInBtn);
-        historyBtn = root.findViewById(R.id.historyBtn);
+        restaurantBtn = root.findViewById(R.id.adminRestaurantsBtn);
+        customerBtn = root.findViewById(R.id.historyBtn);
 
-        checkInBtn.setOnClickListener(this);
+        restaurantBtn.setOnClickListener(this);
 
         // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();
@@ -77,16 +71,11 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
                     String status = documentSnapshot.getString("status");
 
                     customer = new Customer(fullName, phoneNumber, email, CustStatus.valueOf(status));
-
-                    pName.setText(customer.getName());
-                    pEmail.setText(customer.getEmail());
-                    pPhone.setText(customer.getPhone());
-                    pStatus.setText(customer.getStatus().toString().toUpperCase());
                 }
             }
         });
 
-        historyBtn.setOnClickListener(new View.OnClickListener()
+        customerBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
