@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/lightGrayColor"
     tools:context=".AdminShopActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:divider="@color/lightGrayColor"
+        >
+
+    </ListView>
+
+    <!--now check how it looks-->
+    <!--friends as you can see custom listview show its divider
+    now let's hide it's divider i have a background color that is gray color-->
+    <!-- this color is very dark-->
+    <!--so friends this looks much better now
+    thank for watching this is special tutorial for beginners-->
+
+</LinearLayout>

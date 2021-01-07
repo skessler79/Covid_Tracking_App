@@ -36,7 +36,7 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
     FirebaseFirestore fStore;
 
     // Declaring Views
-    Button restaurantBtn, customerBtn;
+    Button shopBtn, customerBtn;
 
     // Creating Customer Object
     Customer customer;
@@ -47,10 +47,15 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
     {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_admin_profile, container, false);
         // Initializing Views
-        restaurantBtn = root.findViewById(R.id.adminRestaurantsBtn);
-        customerBtn = root.findViewById(R.id.historyBtn);
+        shopBtn = root.findViewById(R.id.adminShopBtn);
+        customerBtn = root.findViewById(R.id.adminCustomerBtn);
 
-        restaurantBtn.setOnClickListener(this);
+        shopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AdminShopActivity.class));
+            }
+        });
 
         // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();

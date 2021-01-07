@@ -41,61 +41,68 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.433" />
+            app:layout_constraintVertical_bias="0.44" />
 
         <Button
             android:id="@+id/adminMasterVisitBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="160dp"
             android:background="@drawable/button_scan_background"
             android:text="VIEW MASTER VISIT"
             android:textColor="#03AE7D"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="394dp" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.133" />
 
         <Button
             android:id="@+id/adminCustomerBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="236dp"
             android:background="@drawable/button_scan_background"
             android:text="VIEW CUSTOMERS"
             android:textColor="#03AE7D"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="469dp" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.133" />
 
         <Button
-            android:id="@+id/adminRestaurantsBtn"
+            android:id="@+id/adminShopBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="316dp"
             android:background="@drawable/button_scan_background"
             android:text="VIEW SHOPS"
             android:textColor="#03AE7D"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="544dp" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.133" />
 
         <ImageView
             android:id="@+id/adminImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/adminRestaurantsBtn"
+            app:layout_constraintBottom_toTopOf="@+id/adminShopBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.372"
+            app:layout_constraintVertical_bias="0.535"
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
 
