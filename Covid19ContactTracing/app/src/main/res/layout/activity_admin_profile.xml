@@ -18,46 +18,72 @@
         android:src="@drawable/image_visibility"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="434dp"
-        android:layout_height="766dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/adminName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.469" />
+
+        <Button
+            android:id="@+id/adminMasterVisitBtn"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_scan_background"
+            android:text="VIEW MASTER VISIT"
+            android:textColor="#03AE7D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="394dp" />
 
         <Button
             android:id="@+id/adminCustomerBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="503dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/button_scan_background"
             android:text="VIEW CUSTOMERS"
             android:textColor="#03AE7D"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            tools:layout_editor_absoluteY="469dp" />
 
         <Button
             android:id="@+id/adminRestaurantsBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="503dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/button_scan_background"
-            android:text="VIEW RESTAURANTS"
+            android:text="VIEW SHOPS"
             android:textColor="#03AE7D"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:layout_editor_absoluteY="544dp" />
 
         <ImageView
             android:id="@+id/imageView10"
@@ -66,9 +92,10 @@
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toTopOf="@+id/adminRestaurantsBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.372"
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
 
