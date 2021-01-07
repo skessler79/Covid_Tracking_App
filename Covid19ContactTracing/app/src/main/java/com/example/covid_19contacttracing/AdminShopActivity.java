@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,95 +17,104 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class AdminShopActivity extends AppCompatActivity {
 
+    //Declare Firebase
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
+    //Declare Views
     ListView listView;
 
-    String mTitle[] = {"Facebook", "WhatsApp", "Twitter", "Instagram", "Youtube"};
-    String mDescription[] = {"Facebook Description", "WhatsApp Description", "Twitter Description", "Instagram Description", "Youtube Description"};
-    int images[] = {R.drawable.facebook, R.drawable.whatsapp, R.drawable.twitter, R.drawable.instagram, R.drawable.youtube};
+    ArrayList<String> mName = new ArrayList<String>();
+    ArrayList<String> mStatus = new ArrayList<String>();
+    ArrayList<String> shopId = new ArrayList<String>();
+    //String mName[] = {"Facebook", "WhatsApp", "Twitter", "Instagram", "Youtube"};
+    //String mStatus[] = {"Facebook Description", "WhatsApp Description", "Twitter Description", "Instagram Description", "Youtube Description"};
+    //int images[] = {};
+
+    List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_shop);
 
+        // Initializing Firebase
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        //initializing Views
         listView = findViewById(R.id.listView);
 
-        MyAdapter adapter = new MyAdapter(this, mTitle, mDescription, images);
-        listView.setAdapter(adapter);
+
+        // Getting shop info from Firebase
+        fStore.collection("shops").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    Map<String, Object> tempShopLists = new HashMap<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        //THIS SECTION MIGHT NOT BE NEEDED BY I WILL KEEP IT JUST IN CASE
+                        //Basically make a new json structure array to keep all the datas
+                        /*=================================================================
+                        // gets name, phone, manager etc
+                        tempShopLists=document.getData();
+
+                        // add shopId key into the hash map
+                        tempShopLists.put("shopId", document.getId());
+
+                        //append shopLists array
+                        shopLists.add(tempShopLists);
+                        ==================================================================*/
+
+                        //get attributes (modify here for ASC or DESC)
+                        mName.add(document.getData().get("name").toString());
+                        mStatus.add(document.getData().get("status").toString());
+                        shopId.add(document.getId());
+
+                    }
+                    //set Adapter class to create rows
+                    MyAdapter adapter = new MyAdapter(AdminShopActivity.this, mName, mStatus);
+                    listView.setAdapter(adapter);
+                    Log.d("success",   "name==>" + mName);
+                    Log.d("success",   "status==>" + mStatus);
+                } else {
+                    //TODO: more proper error handling
+                    Log.d("success", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position == 0) {
-                    Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
-                    // this intent put our 0 index image to another activity
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("image", images[0]);
-                    intent.putExtras(bundle);
-                    // now put title and description to another activity
-                    intent.putExtra("title", mTitle[0]);
-                    intent.putExtra("description", mDescription[0]);
-                    // also put your position
-                    intent.putExtra("position", ""+0);
-                    startActivity(intent);
-
-
-                }
-                if (position == 1) {
-                    Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
-                    // this intent put our 0 index image to another activity
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("image", images[1]);
-                    intent.putExtras(bundle);
-                    // now put title and description to another activity
-                    intent.putExtra("title", mTitle[1]);
-                    intent.putExtra("description", mDescription[1]);
-                    // also put your position
-                    intent.putExtra("position", ""+1);
-                    startActivity(intent);
-                }
-                if (position == 2) {
-                    Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
-                    // this intent put our 0 index image to another activity
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("image", images[2]);
-                    intent.putExtras(bundle);
-                    // now put title and description to another activity
-                    intent.putExtra("title", mTitle[2]);
-                    intent.putExtra("description", mDescription[2]);
-                    // also put your position
-                    intent.putExtra("position", ""+2);
-                    startActivity(intent);
-                }
-                if (position == 3) {
-                    Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
-                    // this intent put our 0 index image to another activity
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("image", images[3]);
-                    intent.putExtras(bundle);
-                    // now put title and description to another activity
-                    intent.putExtra("title", mTitle[3]);
-                    intent.putExtra("description", mDescription[3]);
-                    // also put your position
-                    intent.putExtra("position", ""+3);
-                    startActivity(intent);
-                }
-                if (position == 4) {
-                    Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
-                    // this intent put our 0 index image to another activity
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("image", images[4]);
-                    intent.putExtras(bundle);
-                    // now put title and description to another activity
-                    intent.putExtra("title", mTitle[4]);
-                    intent.putExtra("description", mDescription[4]);
-                    // also put your position
-                    intent.putExtra("position", ""+4);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
+                // this intent put our 0 index image to another activity
+                Bundle bundle = new Bundle();
+                intent.putExtras(bundle);
+                // now put title and description to another activity
+                intent.putExtra("shopId", shopId.get(position));
+                startActivity(intent);
             }
         });
     }
@@ -112,16 +122,14 @@ public class AdminShopActivity extends AppCompatActivity {
     class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
-        String rTitle[];
-        String rDescription[];
-        int rImages[];
+        ArrayList<String> rName = new ArrayList<String>();
+        ArrayList<String> rStatus = new ArrayList<String>();
 
-        MyAdapter (Context c, String title[], String description[], int imgs[]) {
-            super(c, R.layout.shop_list_single_item, R.id.textView1, title);
+        MyAdapter (Context c, ArrayList<String> name,ArrayList<String> status) {
+            super(c, R.layout.shop_list_single_item, R.id.textView1, name);
             this.context = c;
-            this.rTitle = title;
-            this.rDescription = description;
-            this.rImages = imgs;
+            this.rName = name;
+            this.rStatus = status;
         }
 
         @NonNull
@@ -135,9 +143,8 @@ public class AdminShopActivity extends AppCompatActivity {
             TextView myTitle = row.findViewById(R.id.textView1);
             TextView myDescription = row.findViewById(R.id.textView2);
 
-            images.setImageResource(rImages[position]);
-            myTitle.setText(rTitle[position]);
-            myDescription.setText(rDescription[position]);
+            myTitle.setText(rName.get(position));
+            myDescription.setText(rStatus.get(position));
 
             return row;
         }

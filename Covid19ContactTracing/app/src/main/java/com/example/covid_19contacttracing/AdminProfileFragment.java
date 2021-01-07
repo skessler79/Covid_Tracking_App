@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,7 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
     FirebaseFirestore fStore;
 
     // Declaring Views
+    TextView adminName;
     Button shopBtn, customerBtn;
 
     // Creating Customer Object
@@ -45,10 +47,12 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
+
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_admin_profile, container, false);
         // Initializing Views
         shopBtn = root.findViewById(R.id.adminShopBtn);
         customerBtn = root.findViewById(R.id.adminCustomerBtn);
+        adminName = root.findViewById(R.id.adminName);
 
         shopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +75,7 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
                 if(documentSnapshot.exists())
                 {
                     String fullName = documentSnapshot.getString("fullName");
-                    String phoneNumber = fAuth.getCurrentUser().getPhoneNumber();
-                    String email = documentSnapshot.getString("email");
-                    String status = documentSnapshot.getString("status");
-
-                    customer = new Customer(fullName, phoneNumber, email, CustStatus.valueOf(status));
+                    adminName.setText("Welcome, " +fullName);
                 }
             }
         });

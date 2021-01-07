@@ -5,14 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.WriterException;
+
 public class AdminShopProfileActivity extends AppCompatActivity {
 
-    ImageView imageView;
-    TextView title, description;
-    int position;
+    //Declare View
+    ImageView qrCodeImage;
+    TextView shopName, shopStatus;
+
+    //Declare firebase
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
+    //Creating Objects
+    Shop shop;
+    Admin admin = new Admin();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,87 +41,53 @@ public class AdminShopProfileActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            // aslo set in menifest
+            // also set in menifest
         }
 
-        imageView = findViewById(R.id.another_imageView);
-        title = findViewById(R.id.titleText);
-        description = findViewById(R.id.descriptionText);
+        qrCodeImage = findViewById(R.id.qrCodeImage);
+        shopName = findViewById(R.id.shopName);
+        shopStatus = findViewById(R.id.shopStatus);
 
-        if (position == 0) {
-            Intent intent = getIntent();
+        Intent intent = getIntent();
 
-            Bundle bundle = this.getIntent().getExtras();
-            int pic = bundle.getInt("image");
-            String aTitle = intent.getStringExtra("title");
-            String aDescription = intent.getStringExtra("description");
+        Bundle bundle = this.getIntent().getExtras();
+        String shopId = intent.getStringExtra("shopId");
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
-            imageView.setImageResource(pic);
-            title.setText(aTitle);
-            description.setText(aDescription);
+        // Getting user info from Firebase
+        DocumentReference docRef = fStore.collection("shops").document(shopId);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
+                if(documentSnapshot.exists())
+                {
+                    String name = documentSnapshot.getString("name");
+                    String phone = documentSnapshot.getString("phone");
+                    String manager = documentSnapshot.getString("manager");
+                    String status = documentSnapshot.getString("status");
 
-            actionBar.setTitle(aTitle);
-        }
+                    shop = new Shop(name, phone, status.equals(ShopStatus.Normal.name())?ShopStatus.Normal:ShopStatus.Case, manager);
 
-        if (position == 1) {
-            Intent intent = getIntent();
+                    shopName.setText(shop.getName());
+                    shopStatus.setText(shop.getStatus().name());
 
-            Bundle bundle = this.getIntent().getExtras();
-            int pic = bundle.getInt("image");
-            String aTitle = intent.getStringExtra("title");
-            String aDescription = intent.getStringExtra("description");
+                    try{
+                        qrCodeImage.setImageBitmap(admin.generateQR("COVIDTRACE-"+shopId));
+                    }catch(Exception e){
+                        Log.e("Error!", "onSuccess: ",  e);
+                        e.printStackTrace();
+                    }
 
-            imageView.setImageResource(pic);
-            title.setText(aTitle);
-            description.setText(aDescription);
+                }
+            }
+        });
 
-            actionBar.setTitle(aTitle);
-        }
 
-        if (position == 2) {
-            Intent intent = getIntent();
 
-            Bundle bundle = this.getIntent().getExtras();
-            int pic = bundle.getInt("image");
-            String aTitle = intent.getStringExtra("title");
-            String aDescription = intent.getStringExtra("description");
-
-            imageView.setImageResource(pic);
-            title.setText(aTitle);
-            description.setText(aDescription);
-
-            actionBar.setTitle(aTitle);
-        }
-
-        if (position == 3) {
-            Intent intent = getIntent();
-
-            Bundle bundle = this.getIntent().getExtras();
-            int pic = bundle.getInt("image");
-            String aTitle = intent.getStringExtra("title");
-            String aDescription = intent.getStringExtra("description");
-
-            imageView.setImageResource(pic);
-            title.setText(aTitle);
-            description.setText(aDescription);
-
-            actionBar.setTitle(aTitle);
-        }
-
-        if (position == 4) {
-            Intent intent = getIntent();
-
-            Bundle bundle = this.getIntent().getExtras();
-            int pic = bundle.getInt("image");
-            String aTitle = intent.getStringExtra("title");
-            String aDescription = intent.getStringExtra("description");
-
-            imageView.setImageResource(pic);
-            title.setText(aTitle);
-            description.setText(aDescription);
-
-            actionBar.setTitle(aTitle);
-        }
+        actionBar.setTitle("Shop Details");
 
     }
 

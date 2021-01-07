@@ -2,6 +2,7 @@ package com.example.covid_19contacttracing;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.WriterException;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.Serializable;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 public class Admin extends User {
     private CustStatus status;
@@ -40,8 +45,12 @@ public class Admin extends User {
     { }
 
     // generate QR code
-    public void generateQR()
-    { }
+    public Bitmap generateQR(String shopId)
+    {
+        QRGEncoder qrgEncoder = new QRGEncoder(shopId, null, QRGContents.Type.TEXT, 10);
+
+        return qrgEncoder.getBitmap();
+    }
 
     // Opens shop list page
     public void showShopList()
