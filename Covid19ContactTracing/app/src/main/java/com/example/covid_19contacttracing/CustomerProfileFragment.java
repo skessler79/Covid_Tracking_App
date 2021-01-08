@@ -25,7 +25,8 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
 {
     private static final String EXTRA_TEXT = "text";
 
-    public static CustomerProfileFragment createFor(String text) {
+    public static CustomerProfileFragment createFor(String text)
+    {
         CustomerProfileFragment fragment = new CustomerProfileFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);

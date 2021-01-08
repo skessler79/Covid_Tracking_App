@@ -154,6 +154,17 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
     @Override
     public void onItemSelected(int position)
     {
+        Fragment selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+
+        if(position == POS_MY_PROFILE)
+        {
+            selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+        }
+
+        if(position == POS_STATISTICS)
+        {
+            selectedScreen = StatisticsFragment.createFor(screenTitles[position]);
+        }
         if (position == POS_LOGOUT) {
             fAuth.signOut();
             Intent intent = new Intent(getApplicationContext(), SendOTPActivity.class);
@@ -162,7 +173,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
             finish();
         }
         slidingRootNav.closeMenu();
-        Fragment selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+
         showFragment(selectedScreen);
     }
 

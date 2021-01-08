@@ -63,6 +63,13 @@ public class Customer extends User implements Serializable
         customerHistory.put(String.valueOf(currentTime), result.getContents());
         CustomerHistoryTest shopHistory = new CustomerHistoryTest(currentTime, fAuth.getCurrentUser().getUid());
 
+        // Updating master history in Cloud Firestore
+//        Map<String, Object> history = new HashMap<>();
+//        history.put("time", currentTime);
+//        history.put("shop", result.getContents());
+//        history.put("customer", fAuth.getCurrentUser().getUid());
+//        fStore.collection("history").add(history);
+
         // Updating user history in Cloud Firestore
         DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
         docRef.update("history", FieldValue.arrayUnion(customerHistory));
