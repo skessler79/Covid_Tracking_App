@@ -25,7 +25,8 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
 {
     private static final String EXTRA_TEXT = "text";
 
-    public static CustomerProfileFragment createFor(String text) {
+    public static CustomerProfileFragment createFor(String text)
+    {
         CustomerProfileFragment fragment = new CustomerProfileFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TEXT, text);
@@ -123,6 +124,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         integrator.initiateScan();
     }
 
+    // Result from QR scan
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
@@ -166,6 +168,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         }
     }
 
+    // Shows alert dialog upon successful QR scan
     private void showQRSuccessMessage(String shopName)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

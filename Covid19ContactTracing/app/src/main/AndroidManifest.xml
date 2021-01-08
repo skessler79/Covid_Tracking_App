@@ -4,6 +4,7 @@
     package="com.example.covid_19contacttracing">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -15,6 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
+        <activity
+            android:name=".StatisticActivity"
+            android:theme="@style/Theme.UserProfile">
+        </activity>
         <activity android:name=".AdminCustomerProfileActivity" android:parentActivityName=".AdminCustomerListActivity"/>
         <activity android:name=".AdminCustomerListActivity"  android:parentActivityName=".TestDrawerActivity"/>
         <activity android:name=".AdminShopProfileActivity"  android:parentActivityName=".AdminShopListActivity"/>
@@ -23,6 +28,10 @@
             android:name=".TestAddDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
+        <activity
+            android:name=".TestAddDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"></activity>
         <activity
             android:name=".CustomerHistoryActivity"
             android:screenOrientation="portrait" />

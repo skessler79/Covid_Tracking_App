@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener
 {
+    // Menu options
     private static final int POS_CLOSE = 0;
     private static final int POS_DASHBOARD = 1;
     private static final int POS_MY_PROFILE = 2;
@@ -34,11 +35,13 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
     private static final int POS_ABOUT_US = 5;
     private static final int POS_LOGOUT = 7;
 
+    // Icons and titles of menu options
     private String[] screenTitles;
     private Drawable[] screenIcons;
 
     private SlidingRootNav slidingRootNav;
 
+    // Declaring firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     private static final String TAG = "TestDrawerActivity";
@@ -48,6 +51,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_drawer);
 
+        // Initializing toolbar
         Toolbar toolbar = findViewById(R.id.drawer_toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,10 +59,12 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        // Initializing slidingRootNav
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withDragDistance(180)
                 .withRootViewScale(0.75f)
-                .withRootViewElevation(25)
+                .withRootViewElevation(10)
+                .withRootViewYTranslation(4)
                 .withToolbarMenuToggle(toolbar)
                 .withMenuOpened(false)
                 .withContentClickableWhenMenuOpened(false)
@@ -89,7 +95,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         adapter.setSelected(POS_DASHBOARD);
     }
 
-    @SuppressWarnings("rawtypes")
+    // Creates individual drawer item
     private DrawerSimpleItem createItemFor(int position)
     {
         return new DrawerSimpleItem(screenIcons[position], screenTitles[position])
@@ -126,6 +132,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
         return icons;
     }
 
+    // Quits app when back button is pressed
     @Override
     public void onBackPressed()
     {
@@ -135,6 +142,17 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
     @Override
     public void onItemSelected(int position)
     {
+        Fragment selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+
+        if(position == POS_MY_PROFILE)
+        {
+            selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+        }
+
+        if(position == POS_STATISTICS)
+        {
+            selectedScreen = StatisticsFragment.createFor(screenTitles[position]);
+        }
         if (position == POS_LOGOUT) {
             fAuth.signOut();
             Intent intent = new Intent(getApplicationContext(), SendOTPActivity.class);
@@ -143,6 +161,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
             finish();
         }
         slidingRootNav.closeMenu();
+
         // Getting user info from Firebase
         DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
