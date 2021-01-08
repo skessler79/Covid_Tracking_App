@@ -21,7 +21,7 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:src="@mipmap/ic_launcher"
-        android:id="@+id/image"
+        android:id="@+id/itemImage"
         />
 
     <LinearLayout
@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1"
+            android:id="@+id/ItemName"
             android:text="Main Title"
             android:textColor="@color/blackColor"
             android:textStyle="bold"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
+            android:id="@+id/itemDescription"
             android:text="Sub Title"
             android:textColor="@color/grayColor"
             android:layout_margin="5dp"
