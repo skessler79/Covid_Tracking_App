@@ -1,11 +1,14 @@
 package com.example.covid_19contacttracing;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,31 +30,71 @@ import java.util.Map;
 
 public class StatisticActivity extends AppCompatActivity
 {
-    private TextView mTextViewResult;
-    private RequestQueue mQueue;
+    // Declaring Views
+    private TextView stat_card_cases, stat_card_deaths, stat_card_recovered, stat_card_location, stat_card_updated;
+    private Button malaysia_button, global_button;
+    private ImageView outbreak_map;
 
-    private final String url = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/total";
+    boolean selected = false;
+
+    private final String urlGlobal = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/total";
     private final String urlMalaysia = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/total?country=Malaysia";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistic);
+        setContentView(R.layout.activity_statistics);
 
-        mTextViewResult = findViewById(R.id.text_view_result);
+        // Initializing views
+        stat_card_cases = findViewById(R.id.stat_card_cases);
+        stat_card_deaths = findViewById(R.id.stat_card_deaths);
+        stat_card_recovered = findViewById(R.id.stat_card_recovered);
+        stat_card_location = findViewById(R.id.stat_card_location);
+        stat_card_updated = findViewById(R.id.stat_card_updated);
+        outbreak_map = findViewById(R.id.outbreak_map);
 
+        malaysia_button = findViewById(R.id.malaysia_button);
+        global_button = findViewById(R.id.global_button);
 
-        mQueue = Volley.newRequestQueue(this);
-        jsonParse(url);
-        try
-        {
-            Thread.sleep(500);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
         jsonParse(urlMalaysia);
+
+        malaysia_button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(selected)
+                {
+                    malaysia_button.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_scan_background));
+                    global_button.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_user_history_background));
+                    malaysia_button.setTextColor(Color.parseColor("#000000"));
+                    global_button.setTextColor(Color.parseColor("#FFFFFF"));
+
+
+                    jsonParse(urlMalaysia);
+                    selected = false;
+                }
+            }
+        });
+
+        global_button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(!selected)
+                {
+                    global_button.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_scan_background));
+                    malaysia_button.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_user_history_background));
+                    malaysia_button.setTextColor(Color.parseColor("#FFFFFF"));
+                    global_button.setTextColor(Color.parseColor("#000000"));
+
+                    jsonParse(urlGlobal);
+                    selected = true;
+                }
+            }
+        });
     }
 
     public void jsonParse(String url) {
@@ -68,13 +111,27 @@ public class StatisticActivity extends AppCompatActivity
                     Long deaths = data.getLong("deaths");
                     Long recovered = data.getLong("recovered");
                     String location = data.getString("location");
-                    mTextViewResult.append(location + " Covid-19 Statistics : \n\n");
-                    mTextViewResult.append("Total cases : " + String.valueOf(confirmed) + "\n" +
-                                           "Total recoveries : " + String.valueOf(recovered) + "\n" +
-                                           "Total deaths : " + String.valueOf(deaths) + "\n\n");
+                    String updated = data.getString("lastReported");
+
+                    stat_card_cases.setText(String.format("%,d", confirmed));
+                    stat_card_deaths.setText(String.format("%,d", deaths));
+                    stat_card_recovered.setText(String.format("%,d", recovered));
+                    stat_card_location.setText(location);
+                    stat_card_updated.setText(updated.substring(0, 10));
+
+                    if(location.equals("Malaysia"))
+                    {
+                        outbreak_map.setImageResource(R.drawable.outbreak_map_malaysia);
+                    }
+                    else
+                    {
+                        outbreak_map.setImageResource(R.drawable.outbreak_map_world);
+                    }
+
 
                 } catch (Exception e)
                 {
+                    Toast.makeText(StatisticActivity.this, "TEST", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -99,52 +156,6 @@ public class StatisticActivity extends AppCompatActivity
         queue.add(request);
 
     }
-
-//    private void jsonParse()
-//    {
-//        String url = "https://api.myjson.com/bins/kp9wz";
-//
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>()
-//        {
-//            @Override
-//            public void onResponse(JSONObject response)
-//            {
-//                try
-//                {
-//                    JSONArray jsonArray = response.getJSONArray("employees");
-//                    for(int i = 0; i < jsonArray.length(); ++i)
-//                    {
-//                        JSONObject employee = jsonArray.getJSONObject(i);
-//
-//                        String firstName = employee.getString("firstname");
-//                        int age = employee.getInt("age");
-//                        String mail = employee.getString("mail");
-//
-//                        mTextViewResult.append(firstName + " , " + String.valueOf(age) + " , " + mail + "\n\n");
-//                    }
-//                } catch (JSONException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                error.printStackTrace();
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//            HashMap<String, String> headers = new HashMap<String, String>();
-//            //headers.put("Content-Type", "application/json");
-//            headers.put("key", "Value");
-//            return headers;
-//        };
-//        mQueue.add(request);
-//    }
 
 }
 

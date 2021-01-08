@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
-        <activity android:name=".StatisticActivity">
+        <activity
+            android:name=".StatisticActivity"
+            android:theme="@style/Theme.UserProfile">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
