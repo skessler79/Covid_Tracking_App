@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,13 +16,11 @@ import com.google.zxing.integration.android.IntentResult;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Customer extends User implements Serializable
 {
     private CustStatus status;
-    private ArrayList<HashMap<String, String>> history;
 
     static FirebaseAuth fAuth;
     static FirebaseFirestore fStore;
@@ -81,7 +77,6 @@ public class Customer extends User implements Serializable
     {
         ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) documentSnapshot.get("history");
         ArrayList<HashMap<String, String>> newList = new ArrayList<>();
-        final List<Boolean> done = new ArrayList<>();
 
         if(list.isEmpty())
         {
@@ -125,10 +120,6 @@ public class Customer extends User implements Serializable
     @Override
     public String toString()
     {
-        StringBuilder str = new StringBuilder("");
-        str.append(this.name + " , ");
-        str.append(this.phone + " , ");
-        str.append(this.status);
-        return str.toString();
+        return this.name + " , " + this.phone + " , " + this.status;
     }
 }

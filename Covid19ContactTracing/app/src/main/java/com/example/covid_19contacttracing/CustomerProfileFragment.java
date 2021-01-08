@@ -123,6 +123,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         integrator.initiateScan();
     }
 
+    // Result from QR scan
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
@@ -159,6 +160,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         }
     }
 
+    // Shows alert dialog upon successful QR scan
     private void showQRSuccessMessage(String shopName)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
