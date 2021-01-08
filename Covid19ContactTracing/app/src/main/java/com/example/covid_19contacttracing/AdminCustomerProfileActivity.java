@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,46 +13,46 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AdminShopProfileActivity extends AppCompatActivity {
+public class AdminCustomerProfileActivity extends AppCompatActivity {
 
     //Declare View
-    ImageView qrCodeImage;
-    TextView shopName, shopStatus;
+//    ImageView customerImage;
+    TextView customerName, customerStatus;
 
     //Declare firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
     //Creating Objects
-    Shop shop;
+    Customer customer;
     Admin admin = new Admin();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_shop_profile);
+        setContentView(R.layout.activity_admin_customer_profile);
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {// handles the 'back' button
+        if (actionBar != null) { // handles the 'back' button
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
 
-        qrCodeImage = findViewById(R.id.qrCodeImage);
-        shopName = findViewById(R.id.shopName);
-        shopStatus = findViewById(R.id.shopStatus);
+//        customerImage = findViewById(R.id.customerImage);
+        customerName = findViewById(R.id.customerName);
+        customerStatus = findViewById(R.id.customerStatus);
 
         Intent intent = getIntent();
 
         Bundle bundle = this.getIntent().getExtras();
-        String shopId = intent.getStringExtra("shopId");
+        String userId = intent.getStringExtra("userId");
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
         // Getting user info from Firebase
-        DocumentReference docRef = fStore.collection("shops").document(shopId);
+        DocumentReference docRef = fStore.collection("users").document(userId);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
         {
             @Override
@@ -63,28 +61,22 @@ public class AdminShopProfileActivity extends AppCompatActivity {
                 if(documentSnapshot.exists())
                 {
                     // get attributes
-                    String name = documentSnapshot.getString("name");
-                    String phone = documentSnapshot.getString("phone");
-                    String manager = documentSnapshot.getString("manager");
+                    String name = documentSnapshot.getString("fullName");
+//                    String phone = documentSnapshot.getString("phone");
+                    String email = documentSnapshot.getString("email");
                     String status = documentSnapshot.getString("status");
 
-                    shop = new Shop(name, phone, ShopStatus.valueOf(status), manager);
+                    customer = new Customer(name, "0123456789", email, CustStatus.valueOf(status));
 
-                    shopName.setText(shop.getName());
-                    shopStatus.setText(shop.getStatus().name());
-
-                    try{
-                        qrCodeImage.setImageBitmap(admin.generateQR("COVIDTRACE-"+shopId)); // add identifier to shop id and pass to generator
-                    }catch(Exception e){
-                        Log.e("Error!", "onSuccess: ",  e);
-                        e.printStackTrace();
-                    }
-
+                    customerName.setText(customer.getName());
+                    customerStatus.setText(customer.getStatus().name());
                 }
             }
         });
 
-        actionBar.setTitle("Shop Details");
+
+
+        actionBar.setTitle("Customer Profile");
 
     }
 }

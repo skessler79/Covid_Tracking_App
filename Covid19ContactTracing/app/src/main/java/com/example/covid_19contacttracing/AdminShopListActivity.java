@@ -2,6 +2,7 @@ package com.example.covid_19contacttracing;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -29,21 +30,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminShopActivity extends AppCompatActivity {
+public class AdminShopListActivity extends AppCompatActivity {
 
     //Declare Firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
     //Declare Views
-    ListView listView;
+    ListView shopList;
 
     ArrayList<String> mName = new ArrayList<String>();
     ArrayList<String> mStatus = new ArrayList<String>();
     ArrayList<String> shopId = new ArrayList<String>();
-    //String mName[] = {"Facebook", "WhatsApp", "Twitter", "Instagram", "Youtube"};
-    //String mStatus[] = {"Facebook Description", "WhatsApp Description", "Twitter Description", "Instagram Description", "Youtube Description"};
-    //int images[] = {};
 
     List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
 
@@ -58,8 +56,14 @@ public class AdminShopActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         //initializing Views
-        listView = findViewById(R.id.adminShopListView);
+        shopList = findViewById(R.id.adminShopListView);
 
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {// handles the 'back' button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
 
         // Getting shop info from Firebase
         fStore.collection("shops").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -88,8 +92,8 @@ public class AdminShopActivity extends AppCompatActivity {
 
                     }
                     //set Adapter class to create rows
-                    MyAdapter adapter = new MyAdapter(AdminShopActivity.this, mName, mStatus);
-                    listView.setAdapter(adapter);
+                    MyAdapter adapter = new MyAdapter(AdminShopListActivity.this, mName, mStatus);
+                    shopList.setAdapter(adapter);
                     Log.d("success",   "name==>" + mName);
                     Log.d("success",   "status==>" + mStatus);
                 } else {
@@ -101,7 +105,7 @@ public class AdminShopActivity extends AppCompatActivity {
 
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        shopList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
