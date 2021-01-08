@@ -17,6 +17,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -44,6 +46,7 @@ public class CustomerHistoryActivity extends AppCompatActivity
         programImages = new ArrayList<>();
 
         ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("list");
+        Collections.sort(list, new TimeComparator());
         for(int i = 0; i < list.size(); ++i)
         {
             String name = list.get(i).get("shop");
@@ -74,5 +77,17 @@ public class CustomerHistoryActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
         programAdapter = new HistoryProgramAdapter(this, programNameList, programDescriptionList, programImages);
         recyclerView.setAdapter(programAdapter);
+    }
+}
+
+class TimeComparator implements Comparator<Map<String, String>>
+{
+
+    @Override
+    public int compare(Map<String, String> first, Map<String, String> second)
+    {
+        String firstTime = first.get("time");
+        String secondTime = second.get("time");
+        return secondTime.compareTo(firstTime);
     }
 }

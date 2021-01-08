@@ -58,31 +58,41 @@ public class Customer extends User implements Serializable
     public void checkIn(IntentResult result)
     {
         Long currentTime = System.currentTimeMillis() / 1000L;
-
-        Map<String, String> customerHistory = new HashMap<>();
-        customerHistory.put(String.valueOf(currentTime), result.getContents().replace("COVIDTRACE-", ""));
-        CustomerHistoryTest shopHistory = new CustomerHistoryTest(currentTime, fAuth.getCurrentUser().getUid());
+        
+        String shopId = result.getContents().replace("COVIDTRACE-", "");
+        final String[] historyId = new String[1];
 
         // Updating master history in Cloud Firestore
-//        Map<String, Object> history = new HashMap<>();
-//        history.put("time", currentTime);
-//        history.put("shop", result.getContents());
-//        history.put("customer", fAuth.getCurrentUser().getUid());
-//        fStore.collection("history").add(history);
+        Map<String, Object> history = new HashMap<>();
+        history.put("time", currentTime);
+        history.put("shop", shopId);
+        history.put("customer", fAuth.getCurrentUser().getUid());
+        fStore.collection("history")
+                .add(history)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference)
+                    {
+                        historyId[0] = documentReference.getId();
 
-        // Updating user history in Cloud Firestore
-        DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
-        docRef.update("history", FieldValue.arrayUnion(customerHistory));
+                        // Updating user history in Cloud Firestore
+                        DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+                        docRef.update("history", FieldValue.arrayUnion(historyId[0]));
 
-        // Updating shops history in Cloud Firestore
-        DocumentReference shopRef = fStore.collection("shops").document(result.getContents().replace("COVIDTRACE-", ""));
-        shopRef.update("history", FieldValue.arrayUnion(shopHistory));
+                        // Updating shops history in Cloud Firestore
+                        DocumentReference shopRef = fStore.collection("shops").document(shopId);
+                        shopRef.update("history", FieldValue.arrayUnion(historyId[0]));
+                    }
+                });
+
+
     }
 
     // Opens customer history page
     public void showHistory(Context context, DocumentSnapshot documentSnapshot)
     {
-        ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) documentSnapshot.get("history");
+        ArrayList<String> list = (ArrayList<String>) documentSnapshot.get("history");
         ArrayList<HashMap<String, String>> newList = new ArrayList<>();
 
         if(list.isEmpty())
@@ -93,33 +103,36 @@ public class Customer extends User implements Serializable
         {
             for(int i = list.size() - 1; i >= 0; --i)
             {
-                for(Map.Entry<String, String> entry : list.get(i).entrySet())
+                int count = 0;
+                int finalI = i;
+                DocumentReference docRef = fStore.collection("history").document(list.get(i));
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
                 {
-                    String timeStr = entry.getKey();
-                    HashMap<String, String> mapA = new HashMap<>();
-                    mapA.put("time", timeStr);
-
-                    DocumentReference shopRef = fStore.collection("shops").document(entry.getValue());
-                    int finalI = i;
-                    shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot)
                     {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot)
+                        HashMap<String, String> mapA = new HashMap<>();
+                        mapA.put("time", documentSnapshot.get("time").toString());
+                        DocumentReference shopRef = fStore.collection("shops").document(documentSnapshot.get("shop").toString());
+                        shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
                         {
-                            Log.d("testhistory", "onSuccess: Called");
-                            String shopName = documentSnapshot.getString("name");
-                            mapA.put("shop", shopName);
-                            newList.add(mapA);
-
-                            if(finalI == 0)
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot)
                             {
-                                Intent intent = new Intent(context, CustomerHistoryActivity.class);
-                                intent.putExtra("list", newList);
-                                context.startActivity(intent);
+                                mapA.put("shop", documentSnapshot.getString("name"));
+                                newList.add(mapA);
+
+                                if(newList.size() >= list.size())
+                                {
+                                    Intent intent = new Intent(context, CustomerHistoryActivity.class);
+                                    intent.putExtra("list", newList);
+                                    context.startActivity(intent);
+                                }
+
                             }
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             }
         }
     }

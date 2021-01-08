@@ -144,15 +144,6 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
     {
         Fragment selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
 
-        if(position == POS_MY_PROFILE)
-        {
-            selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
-        }
-
-        if(position == POS_STATISTICS)
-        {
-            selectedScreen = StatisticsFragment.createFor(screenTitles[position]);
-        }
         if (position == POS_LOGOUT) {
             fAuth.signOut();
             Intent intent = new Intent(getApplicationContext(), SendOTPActivity.class);
@@ -177,6 +168,14 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
                     // select fragment to show based on user role
                     if (role.equals("Customer")){
                         selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+                        if(position == POS_MY_PROFILE)
+                        {
+                            selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+                        }
+                        else if(position == POS_STATISTICS)
+                        {
+                            selectedScreen = StatisticsFragment.createFor(screenTitles[position]);
+                        }
                     }
                     else {
                         selectedScreen = AdminProfileFragment.createFor(screenTitles[position]);
