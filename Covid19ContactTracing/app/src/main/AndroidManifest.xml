@@ -20,6 +20,14 @@
             android:name=".StatisticActivity"
             android:theme="@style/Theme.UserProfile">
         </activity>
+        <activity android:name=".AdminCustomerProfileActivity" android:parentActivityName=".AdminCustomerListActivity"/>
+        <activity android:name=".AdminCustomerListActivity"  android:parentActivityName=".TestDrawerActivity"/>
+        <activity android:name=".AdminShopProfileActivity"  android:parentActivityName=".AdminShopListActivity"/>
+        <activity android:name=".AdminShopListActivity" android:parentActivityName=".TestDrawerActivity"/>
+        <activity
+            android:name=".TestAddDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
         <activity
             android:name=".TestAddDetailsActivity"
             android:screenOrientation="portrait"

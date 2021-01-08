@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "444793718526-9h8v8bsi8tcmudjevgltcrd7eo6h5vnj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.covid_19contacttracing",
+            "certificate_hash": "0debdad221d51449bd212c0a32234e89270449e8"
+          }
+        },
+        {
           "client_id": "444793718526-j6mpkb3jd2lssmanktibi909839sq639.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.covid_19contacttracing",
             "certificate_hash": "f781c1815c2226d19957c10348250d740242745f"
+          }
+        },
+        {
+          "client_id": "444793718526-ujvvrr072n29jahmbrm2ka87fuje69qc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.covid_19contacttracing",
+            "certificate_hash": "3d8c3ed84f2de1e472bebc2295759570a47ec170"
           }
         },
         {

@@ -16,4 +16,11 @@
     <color name="otp_text_primary">#212121</color>
     <color name="otp_text_secondary">#757575</color>
     <color name="otp_color_divider">#BDBDBD</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="blackColor">#000</color>
+    <color name="grayColor">#a9a9a9</color>
+    <color name="lightGrayColor">#fafafa</color>
+    <color name="whiteColor">#fff</color>
 </resources>

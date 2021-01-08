@@ -133,22 +133,29 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         {
             if(result.getContents() != null)
             {
-                customer.checkIn(result);
-
-                // Alert dialog for checking-in
-                DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
-                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                if(result.getContents().startsWith("COVIDTRACE-"))
                 {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot)
+                    customer.checkIn(result);
+
+                    // Alert dialog for checking-in
+                    DocumentReference shopRef = fStore.collection("shops").document(result.getContents().replace("COVIDTRACE-", ""));
+                    shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
                     {
-                        if(documentSnapshot.exists())
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot)
                         {
-                            String shopName = documentSnapshot.getString("name");
-                            showQRSuccessMessage(shopName);
+                            if(documentSnapshot.exists())
+                            {
+                                String shopName = documentSnapshot.getString("name");
+                                showQRSuccessMessage(shopName);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "This is not a valid QR code for checking in.", Toast.LENGTH_LONG).show();
+                }
             }
             else
             {
