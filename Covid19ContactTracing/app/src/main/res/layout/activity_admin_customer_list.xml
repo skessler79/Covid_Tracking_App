@@ -18,11 +18,4 @@
 
     </ListView>
 
-    <!--now check how it looks-->
-    <!--friends as you can see custom listview show its divider
-    now let's hide it's divider i have a background color that is gray color-->
-    <!-- this color is very dark-->
-    <!--so friends this looks much better now
-    thank for watching this is special tutorial for beginners-->
-
 </LinearLayout>

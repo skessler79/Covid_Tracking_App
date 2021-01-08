@@ -43,6 +43,4 @@
         android:textSize="26sp"
         android:textStyle="italic" />
 
-    <!-- i think this looks better for another activity-->
-
 </RelativeLayout>
