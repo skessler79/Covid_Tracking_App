@@ -47,7 +47,7 @@ public class Admin extends User {
     // generate QR code
     public Bitmap generateQR(String shopId)
     {
-        QRGEncoder qrgEncoder = new QRGEncoder(shopId, null, QRGContents.Type.TEXT, 10);
+        QRGEncoder qrgEncoder = new QRGEncoder(shopId, null, QRGContents.Type.TEXT, 120);
 
         return qrgEncoder.getBitmap();
     }
