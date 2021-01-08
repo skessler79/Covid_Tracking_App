@@ -28,7 +28,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/button_scan_background"
         android:text="Malaysia"
-        android:textColor="#000000"
+        android:textColor="@color/primary_blue"
         app:layout_constraintEnd_toStartOf="@+id/global_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,9 @@
         android:layout_height="38dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/button_user_history_background"
+        android:background="@drawable/button_statistic_unselected"
         android:text="Global"
+        android:textColor="#000000"
         app:layout_constraintBaseline_toBaselineOf="@+id/malaysia_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -509,6 +510,16 @@
             android:scaleType="fitXY"
             app:srcCompat="@drawable/outbreak_map_malaysia" />
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="30dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/otp_background_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
