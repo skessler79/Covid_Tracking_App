@@ -64,7 +64,7 @@ public class Customer extends User implements Serializable
         Long currentTime = System.currentTimeMillis() / 1000L;
 
         Map<String, String> customerHistory = new HashMap<>();
-        customerHistory.put(String.valueOf(currentTime), result.getContents());
+        customerHistory.put(String.valueOf(currentTime), result.getContents().replace("COVIDTRACE-", ""));
         CustomerHistoryTest shopHistory = new CustomerHistoryTest(currentTime, fAuth.getCurrentUser().getUid());
 
         // Updating user history in Cloud Firestore
@@ -72,7 +72,7 @@ public class Customer extends User implements Serializable
         docRef.update("history", FieldValue.arrayUnion(customerHistory));
 
         // Updating shops history in Cloud Firestore
-        DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
+        DocumentReference shopRef = fStore.collection("shops").document(result.getContents().replace("COVIDTRACE-", ""));
         shopRef.update("history", FieldValue.arrayUnion(shopHistory));
     }
 
