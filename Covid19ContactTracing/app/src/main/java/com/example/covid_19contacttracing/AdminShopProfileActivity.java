@@ -64,6 +64,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
             {
                 if(documentSnapshot.exists())
                 {
+                    // get attributes
                     String name = documentSnapshot.getString("name");
                     String phone = documentSnapshot.getString("phone");
                     String manager = documentSnapshot.getString("manager");
@@ -75,7 +76,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
                     shopStatus.setText(shop.getStatus().name());
 
                     try{
-                        qrCodeImage.setImageBitmap(admin.generateQR("COVIDTRACE-"+shopId));
+                        qrCodeImage.setImageBitmap(admin.generateQR("COVIDTRACE-"+shopId)); // add identifier to shop id and pass to generator
                     }catch(Exception e){
                         Log.e("Error!", "onSuccess: ",  e);
                         e.printStackTrace();

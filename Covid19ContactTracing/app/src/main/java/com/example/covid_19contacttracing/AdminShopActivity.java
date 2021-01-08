@@ -18,11 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -61,7 +58,7 @@ public class AdminShopActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         //initializing Views
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.adminShopListView);
 
 
         // Getting shop info from Firebase
@@ -126,7 +123,7 @@ public class AdminShopActivity extends AppCompatActivity {
         ArrayList<String> rStatus = new ArrayList<String>();
 
         MyAdapter (Context c, ArrayList<String> name,ArrayList<String> status) {
-            super(c, R.layout.shop_list_single_item, R.id.textView1, name);
+            super(c, R.layout.single_item, R.id.ItemName, name);
             this.context = c;
             this.rName = name;
             this.rStatus = status;
@@ -137,11 +134,11 @@ public class AdminShopActivity extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View row = layoutInflater.inflate(R.layout.shop_list_single_item, parent, false);
+            View row = layoutInflater.inflate(R.layout.single_item, parent, false);
 
-            ImageView images = row.findViewById(R.id.image);
-            TextView myTitle = row.findViewById(R.id.textView1);
-            TextView myDescription = row.findViewById(R.id.textView2);
+            ImageView images = row.findViewById(R.id.itemImage);
+            TextView myTitle = row.findViewById(R.id.ItemName);
+            TextView myDescription = row.findViewById(R.id.itemDescription);
 
             myTitle.setText(rName.get(position));
             myDescription.setText(rStatus.get(position));
