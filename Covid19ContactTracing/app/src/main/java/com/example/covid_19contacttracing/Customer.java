@@ -58,7 +58,7 @@ public class Customer extends User implements Serializable
     public void checkIn(IntentResult result)
     {
         Long currentTime = System.currentTimeMillis() / 1000L;
-        
+
         String shopId = result.getContents().replace("COVIDTRACE-", "");
         final String[] historyId = new String[1];
 
@@ -85,8 +85,6 @@ public class Customer extends User implements Serializable
                         shopRef.update("history", FieldValue.arrayUnion(historyId[0]));
                     }
                 });
-
-
     }
 
     // Opens customer history page
@@ -128,7 +126,6 @@ public class Customer extends User implements Serializable
                                     intent.putExtra("list", newList);
                                     context.startActivity(intent);
                                 }
-
                             }
                         });
                     }
