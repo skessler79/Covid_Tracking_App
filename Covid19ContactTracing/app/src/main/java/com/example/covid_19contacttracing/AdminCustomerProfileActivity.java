@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.zxing.WriterException;
 
 public class AdminCustomerProfileActivity extends AppCompatActivity {
 
@@ -38,10 +35,9 @@ public class AdminCustomerProfileActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {
+        if (actionBar != null) { // handles the 'back' button
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            // also set in menifest
         }
 
 //        customerImage = findViewById(R.id.customerImage);
@@ -83,11 +79,4 @@ public class AdminCustomerProfileActivity extends AppCompatActivity {
         actionBar.setTitle("Customer Profile");
 
     }
-
-    // now check it
-    // so friends this works perfectly..
-    // friedns i have made some changes with list view, i hope you guys like these change with listview
-    // first add card library in build.gradle
-    // now move in row xml
-    // now in activity main.xml
 }

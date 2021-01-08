@@ -2,6 +2,7 @@ package com.example.covid_19contacttracing;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -41,9 +42,6 @@ public class AdminShopListActivity extends AppCompatActivity {
     ArrayList<String> mName = new ArrayList<String>();
     ArrayList<String> mStatus = new ArrayList<String>();
     ArrayList<String> shopId = new ArrayList<String>();
-    //String mName[] = {"Facebook", "WhatsApp", "Twitter", "Instagram", "Youtube"};
-    //String mStatus[] = {"Facebook Description", "WhatsApp Description", "Twitter Description", "Instagram Description", "Youtube Description"};
-    //int images[] = {};
 
     List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
 
@@ -60,6 +58,12 @@ public class AdminShopListActivity extends AppCompatActivity {
         //initializing Views
         shopList = findViewById(R.id.adminShopListView);
 
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {// handles the 'back' button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
 
         // Getting shop info from Firebase
         fStore.collection("shops").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -2,6 +2,7 @@ package com.example.covid_19contacttracing;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -41,10 +42,6 @@ public class AdminCustomerListActivity extends AppCompatActivity {
     ArrayList<String> mName = new ArrayList<String>();
     ArrayList<String> mStatus = new ArrayList<String>();
     ArrayList<String> userId = new ArrayList<String>();
-    //String mName[] = {"Facebook", "WhatsApp", "Twitter", "Instagram", "Youtube"};
-    //String mStatus[] = {"Facebook Description", "WhatsApp Description", "Twitter Description", "Instagram Description", "Youtube Description"};
-    //int images[] = {};
-
     List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
 
     @Override
@@ -60,6 +57,12 @@ public class AdminCustomerListActivity extends AppCompatActivity {
         //initializing Views
         customerList = findViewById(R.id.adminCustomerListView);
 
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {// handles the 'back' button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
 
         // Getting shop info from Firebase
         fStore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -68,7 +71,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Map<String, Object> tempShopLists = new HashMap<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //THIS SECTION MIGHT NOT BE NEEDED BY I WILL KEEP IT JUST IN CASE
+                        //THIS SECTION MIGHT NOT BE NEEDED BUT I WILL KEEP IT JUST IN CASE
                         //Basically make a new json structure array to keep all the datas
                         /*=================================================================
                         // gets name, phone, manager etc

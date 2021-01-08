@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.zxing.WriterException;
 
 public class AdminShopProfileActivity extends AppCompatActivity {
 
@@ -38,10 +37,9 @@ public class AdminShopProfileActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {
+        if (actionBar != null) {// handles the 'back' button
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            // also set in menifest
         }
 
         qrCodeImage = findViewById(R.id.qrCodeImage);
@@ -86,16 +84,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
         actionBar.setTitle("Shop Details");
 
     }
-
-    // now check it
-    // so friends this works perfectly..
-    // friedns i have made some changes with list view, i hope you guys like these change with listview
-    // first add card library in build.gradle
-    // now move in row xml
-    // now in activity main.xml
 }

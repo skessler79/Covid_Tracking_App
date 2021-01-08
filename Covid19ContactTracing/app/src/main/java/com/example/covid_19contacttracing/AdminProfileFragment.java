@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class AdminProfileFragment extends Fragment implements View.OnClickListener
+public class AdminProfileFragment extends Fragment
 {
     private static final String EXTRA_TEXT = "text";
 
@@ -89,9 +89,4 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
         });
         return root;
     }
-
-    @Override
-    public void onClick(View v)
-    { }
-
 }
