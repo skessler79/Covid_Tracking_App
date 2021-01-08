@@ -15,8 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
-        <activity android:name=".AdminShopProfileActivity"></activity>
-        <activity android:name=".AdminShopActivity" />
+        <activity android:name=".AdminCustomerProfileActivity"></activity>
+        <activity android:name=".AdminCustomerListActivity" />
+        <activity android:name=".AdminShopProfileActivity" />
+        <activity android:name=".AdminShopListActivity" />
         <activity
             android:name=".TestAddDetailsActivity"
             android:screenOrientation="portrait"

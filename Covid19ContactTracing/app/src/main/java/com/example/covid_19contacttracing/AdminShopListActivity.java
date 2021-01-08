@@ -29,14 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminShopActivity extends AppCompatActivity {
+public class AdminShopListActivity extends AppCompatActivity {
 
     //Declare Firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
     //Declare Views
-    ListView listView;
+    ListView shopList;
 
     ArrayList<String> mName = new ArrayList<String>();
     ArrayList<String> mStatus = new ArrayList<String>();
@@ -58,7 +58,7 @@ public class AdminShopActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         //initializing Views
-        listView = findViewById(R.id.adminShopListView);
+        shopList = findViewById(R.id.adminShopListView);
 
 
         // Getting shop info from Firebase
@@ -88,8 +88,8 @@ public class AdminShopActivity extends AppCompatActivity {
 
                     }
                     //set Adapter class to create rows
-                    MyAdapter adapter = new MyAdapter(AdminShopActivity.this, mName, mStatus);
-                    listView.setAdapter(adapter);
+                    MyAdapter adapter = new MyAdapter(AdminShopListActivity.this, mName, mStatus);
+                    shopList.setAdapter(adapter);
                     Log.d("success",   "name==>" + mName);
                     Log.d("success",   "status==>" + mStatus);
                 } else {
@@ -101,7 +101,7 @@ public class AdminShopActivity extends AppCompatActivity {
 
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        shopList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 

@@ -54,13 +54,6 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
         customerBtn = root.findViewById(R.id.adminCustomerBtn);
         adminName = root.findViewById(R.id.adminName);
 
-        shopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AdminShopActivity.class));
-            }
-        });
-
         // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -80,21 +73,18 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
             }
         });
 
+        shopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AdminShopListActivity.class));
+            }
+        });
+
         customerBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                // Getting user history from Firebase
-                DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-                {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot)
-                    {
-                        customer.showHistory(getContext(), documentSnapshot);
-                    }
-                });
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AdminCustomerListActivity.class));
             }
         });
         return root;
@@ -102,63 +92,6 @@ public class AdminProfileFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v)
-    {
-        scanCode();
-    }
+    { }
 
-    // Check-in with QR code
-    private void scanCode()
-    {
-        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(AdminProfileFragment.this);
-        integrator.setCaptureActivity(CaptureAct.class);
-        integrator.setOrientationLocked(false);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);       // TODO : Try to change to QR code types only
-        integrator.setPrompt("Place a QR code inside the viewfinder to scan it.");
-        integrator.initiateScan();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null)
-        {
-            if(result.getContents() != null)
-            {
-                customer.checkIn(result);
-
-                // Alert dialog for checking-in
-                DocumentReference shopRef = fStore.collection("shops").document(result.getContents());
-                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-                {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot)
-                    {
-                        if(documentSnapshot.exists())
-                        {
-                            String shopName = documentSnapshot.getString("name");
-                            showQRSuccessMessage(shopName);
-                        }
-                    }
-                });
-            }
-            else
-            {
-                Toast.makeText(getContext(), "No Results", Toast.LENGTH_LONG).show();
-            }
-        }
-        else
-        {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    private void showQRSuccessMessage(String shopName)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Successfully checked-in to " + shopName);
-        builder.setTitle("Thank you!");
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }
