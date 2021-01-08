@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.covid_19contacttracing">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -7,22 +8,22 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <application
+    <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Covid19ContactTracing"
-        xmlns:tools="http://schemas.android.com/tools">
+        android:theme="@style/Theme.Covid19ContactTracing">
+        <activity android:name=".AdminShopProfileActivity"></activity>
+        <activity android:name=".AdminShopActivity" />
         <activity
             android:name=".TestAddDetailsActivity"
-            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
         <activity
             android:name=".CustomerHistoryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".VerifyOTPActivity"
             android:screenOrientation="portrait"
@@ -35,15 +36,15 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".TestDrawerActivity"
-            android:theme="@style/Theme.UserProfile"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UserProfile" />
         <activity
             android:name=".CustomerProfileActivity"
             android:theme="@style/Theme.UserProfile" />
         <activity
             android:name=".IntroductoryActivity"
-            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,10 +59,10 @@
         <activity
             android:name=".CaptureAct"
             android:screenOrientation="portrait"
-            tools:replace="screenOrientation"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>

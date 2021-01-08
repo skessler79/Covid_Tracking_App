@@ -220,7 +220,7 @@
             app:layout_constraintVertical_bias="0.142" />
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/adminImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="8dp"

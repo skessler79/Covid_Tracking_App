@@ -1,39 +1,27 @@
 package com.example.covid_19contacttracing;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener
@@ -53,7 +41,7 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-
+    private static final String TAG = "TestDrawerActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -155,8 +143,30 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
             finish();
         }
         slidingRootNav.closeMenu();
-        Fragment selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
-        showFragment(selectedScreen);
+        // Getting user info from Firebase
+        DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
+                if(documentSnapshot.exists())
+                {
+                    String role = documentSnapshot.getString("role");
+
+                    Fragment selectedScreen;
+                    // select fragment to show based on user role
+                    if (role.equals("Customer")){
+                        selectedScreen = CustomerProfileFragment.createFor(screenTitles[position]);
+                    }
+                    else {
+                        selectedScreen = AdminProfileFragment.createFor(screenTitles[position]);
+                    }
+                    showFragment(selectedScreen);
+
+                }
+            }
+        });
     }
 
     private void showFragment(Fragment fragment) {
