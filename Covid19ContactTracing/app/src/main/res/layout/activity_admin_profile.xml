@@ -175,7 +175,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/adminHistoryBtn"
+                        android:id="@+id/adminMasterHistoryBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/flag_transparent" />

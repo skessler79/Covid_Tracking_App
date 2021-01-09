@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
 
     //Declare View
     ImageView qrCodeImage;
-    TextView shopName, shopStatus;
+    TextView shopName, phoneNumber, managerName, shopStatus;
 
     //Declare firebase
     FirebaseAuth fAuth;
@@ -43,8 +44,10 @@ public class AdminShopProfileActivity extends AppCompatActivity {
         }
 
         qrCodeImage = findViewById(R.id.qrCodeImage);
-        shopName = findViewById(R.id.shopName);
-        shopStatus = findViewById(R.id.shopStatus);
+        shopName = findViewById(R.id.shop_name);
+        phoneNumber = findViewById(R.id.phone_number);
+        managerName = findViewById(R.id.manager_name);
+        shopStatus = findViewById(R.id.status);
 
         Intent intent = getIntent();
 
@@ -71,15 +74,17 @@ public class AdminShopProfileActivity extends AppCompatActivity {
                     shop = new Shop(name, phone, ShopStatus.valueOf(status), manager);
 
                     shopName.setText(shop.getName());
+                    phoneNumber.setText(shop.getPhone());
+                    managerName.setText(shop.getManager());
                     shopStatus.setText(shop.getStatus().name());
 
                     try{
                         qrCodeImage.setImageBitmap(admin.generateQR("COVIDTRACE-"+shopId)); // add identifier to shop id and pass to generator
+                        qrCodeImage.setVisibility(View.VISIBLE);
                     }catch(Exception e){
                         Log.e("Error!", "onSuccess: ",  e);
                         e.printStackTrace();
                     }
-
                 }
             }
         });

@@ -144,6 +144,7 @@ public class AdminShopListActivity extends AppCompatActivity {
             TextView myTitle = row.findViewById(R.id.ItemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
+            images.setImageResource(R.drawable.admin_shop_icon);
             myTitle.setText(rName.get(position));
             myDescription.setText(rStatus.get(position));
 
