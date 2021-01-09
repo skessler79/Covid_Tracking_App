@@ -27,9 +27,9 @@ public class HistoryProgramAdapter extends RecyclerView.Adapter<HistoryProgramAd
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            rowName = itemView.findViewById(R.id.history_text_view1);
-            rowDescription = itemView.findViewById(R.id.history_text_view2);
-            rowImage = itemView.findViewById(R.id.history_image_view);
+            rowName = itemView.findViewById(R.id.itemName);
+            rowDescription = itemView.findViewById(R.id.itemDescription);
+            rowImage = itemView.findViewById(R.id.itemImage);
         }
     }
 
@@ -46,7 +46,7 @@ public class HistoryProgramAdapter extends RecyclerView.Adapter<HistoryProgramAd
     public HistoryProgramAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.history_single_item, parent, false);
+        View view = inflater.inflate(R.layout.single_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

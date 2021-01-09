@@ -127,7 +127,7 @@ public class AdminShopListActivity extends AppCompatActivity {
         ArrayList<String> rStatus = new ArrayList<String>();
 
         MyAdapter (Context c, ArrayList<String> name,ArrayList<String> status) {
-            super(c, R.layout.single_item, R.id.ItemName, name);
+            super(c, R.layout.single_item, R.id.itemName, name);
             this.context = c;
             this.rName = name;
             this.rStatus = status;
@@ -141,7 +141,7 @@ public class AdminShopListActivity extends AppCompatActivity {
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);
 
             ImageView images = row.findViewById(R.id.itemImage);
-            TextView myTitle = row.findViewById(R.id.ItemName);
+            TextView myTitle = row.findViewById(R.id.itemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
             images.setImageResource(R.drawable.admin_shop_icon);
