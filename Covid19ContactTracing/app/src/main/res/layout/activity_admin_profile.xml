@@ -84,7 +84,7 @@
                         android:includeFontPadding="false"
                         android:text="View Shops"
                         android:textColor="#303030"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <Button
                         android:id="@+id/adminShopBtn"
@@ -120,8 +120,9 @@
                         android:layout_height="wrap_content"
                         android:text="View Customers"
                         android:includeFontPadding="false"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textColor="#303030"
+                        android:gravity="center"
                         android:layout_marginTop="80dp"
                         android:fontFamily="sans-serif-black"
                         android:layout_centerHorizontal="true"/>
@@ -172,7 +173,7 @@
                         android:includeFontPadding="false"
                         android:text="View History"
                         android:textColor="#303030"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <Button
                         android:id="@+id/adminMasterHistoryBtn"
@@ -207,8 +208,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Under Construction"
+                        android:paddingHorizontal="10dp"
                         android:includeFontPadding="false"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:gravity="center"
                         android:textColor="#303030"
                         android:layout_marginTop="75dp"
@@ -259,9 +261,10 @@
                         android:fontFamily="sans-serif-black"
                         android:includeFontPadding="false"
                         android:text="Under Construction"
+                        android:paddingHorizontal="10dp"
                         android:gravity="center"
                         android:textColor="#303030"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -295,8 +298,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Under Construction"
+                        android:paddingHorizontal="10dp"
                         android:includeFontPadding="false"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textColor="#303030"
                         android:layout_marginTop="75dp"
                         android:gravity="center"
