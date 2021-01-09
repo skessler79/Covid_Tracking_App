@@ -38,7 +38,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
     FirebaseFirestore fStore;
 
     // Declaring Views
-    TextView pName, pPhone, pEmail, pStatus;
+    TextView pName, pNameUpper, pPhone, pEmail, pStatus;
     Button checkInBtn, historyBtn;
 
     // Creating Customer Object
@@ -50,10 +50,11 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
     {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_customer_profile, container, false);
         // Initializing Views
-        pName = root.findViewById(R.id.userName);
-        pPhone = root.findViewById(R.id.userPhone);
-        pEmail = root.findViewById(R.id.userEmail);
-        pStatus = root.findViewById(R.id.userStatus);
+        pName = root.findViewById(R.id.user_name);
+        pNameUpper = root.findViewById(R.id.profile_name);
+        pPhone = root.findViewById(R.id.phone_number);
+        pEmail = root.findViewById(R.id.email_address);
+        pStatus = root.findViewById(R.id.status_label);
         checkInBtn = root.findViewById(R.id.checkInBtn);
         historyBtn = root.findViewById(R.id.historyBtn);
 
@@ -80,9 +81,10 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
                     customer = new Customer(fullName, phoneNumber, email, CustStatus.valueOf(status));
 
                     pName.setText(customer.getName());
+                    pNameUpper.setText(customer.getName());
                     pEmail.setText(customer.getEmail());
                     pPhone.setText(customer.getPhone());
-                    pStatus.setText(customer.getStatus().toString().toUpperCase());
+                    pStatus.setText(customer.getStatus().toString());
                 }
             }
         });
@@ -119,7 +121,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(CustomerProfileFragment.this);
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(false);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);       // TODO : Try to change to QR code types only
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setPrompt("Place a QR code inside the viewfinder to scan it.");
         integrator.initiateScan();
     }
