@@ -132,7 +132,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
         ArrayList<String> rStatus = new ArrayList<String>();
 
         MyAdapter (Context context, ArrayList<String> name,ArrayList<String> status) {
-            super(context, R.layout.single_item, R.id.ItemName, name);
+            super(context, R.layout.single_item, R.id.itemName, name);
             this.context = context;
             this.rName = name;
             this.rStatus = status;
@@ -146,12 +146,12 @@ public class AdminCustomerListActivity extends AppCompatActivity {
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);
 
             listImage = row.findViewById(R.id.itemImage);
-            TextView myTitle = row.findViewById(R.id.ItemName);
+            TextView myTitle = row.findViewById(R.id.itemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
             myTitle.setText(rName.get(position));
             myDescription.setText(rStatus.get(position));
-            listImage.setImageResource(R.drawable.profile);
+            listImage.setImageResource(R.drawable.admin_user_account_icon);
             return row;
         }
     }
