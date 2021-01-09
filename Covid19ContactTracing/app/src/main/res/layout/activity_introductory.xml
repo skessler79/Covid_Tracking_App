@@ -10,7 +10,7 @@
         android:id="@+id/imgSplash"
         android:layout_width="wrap_content"
         android:layout_height="1000dp"
-        android:src="@drawable/bg"
+        android:src="@drawable/bg_blue"
         app:layout_constraintVertical_bias="0"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
