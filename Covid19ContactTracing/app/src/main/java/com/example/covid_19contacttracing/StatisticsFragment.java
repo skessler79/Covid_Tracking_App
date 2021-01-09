@@ -92,10 +92,10 @@ public class StatisticsFragment extends Fragment
             {
                 if(selected)
                 {
-                    malaysia_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_scan_background));
-                    global_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_user_history_background));
-                    malaysia_button.setTextColor(Color.parseColor("#000000"));
-                    global_button.setTextColor(Color.parseColor("#FFFFFF"));
+                    malaysia_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_statistic_selected));
+                    global_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_statistic_unselected));
+                    malaysia_button.setTextColor(ContextCompat.getColor(getContext(), R.color.primary_blue));
+                    global_button.setTextColor(Color.parseColor("#000000"));
 
                     stat_card_cases.setText(String.format("%,d", malaysiaStats.confirmed));
                     stat_card_deaths.setText(String.format("%,d", malaysiaStats.deaths));
@@ -116,10 +116,10 @@ public class StatisticsFragment extends Fragment
             {
                 if(!selected)
                 {
-                    global_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_scan_background));
-                    malaysia_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_user_history_background));
-                    malaysia_button.setTextColor(Color.parseColor("#FFFFFF"));
-                    global_button.setTextColor(Color.parseColor("#000000"));
+                    global_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_statistic_selected));
+                    malaysia_button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.button_statistic_unselected));
+                    malaysia_button.setTextColor(Color.parseColor("#000000"));
+                    global_button.setTextColor(ContextCompat.getColor(getContext(), R.color.primary_blue));
 
                     stat_card_cases.setText(String.format("%,d", globalStats.confirmed));
                     stat_card_deaths.setText(String.format("%,d", globalStats.deaths));
