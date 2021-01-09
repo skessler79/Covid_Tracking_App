@@ -42,7 +42,7 @@
             app:layout_constraintVertical_bias="0.504" />
 
         <Button
-            android:id="@+id/adminMasterVisitBtn"
+            android:id="@+id/adminMasterHistoryBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="160dp"

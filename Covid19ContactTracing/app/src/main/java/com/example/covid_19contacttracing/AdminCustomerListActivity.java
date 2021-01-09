@@ -38,6 +38,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
 
     //Declare Views
     ListView customerList;
+    ImageView listImage;
 
     ArrayList<String> mName = new ArrayList<String>();
     ArrayList<String> mStatus = new ArrayList<String>();
@@ -144,13 +145,13 @@ public class AdminCustomerListActivity extends AppCompatActivity {
 
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);
 
-            ImageView images = row.findViewById(R.id.itemImage);
+            listImage = row.findViewById(R.id.itemImage);
             TextView myTitle = row.findViewById(R.id.ItemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
             myTitle.setText(rName.get(position));
             myDescription.setText(rStatus.get(position));
-
+            listImage.setImageResource(R.drawable.profile);
             return row;
         }
     }
