@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,8 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 public class AdminProfileFragment extends Fragment
 {
@@ -38,7 +34,7 @@ public class AdminProfileFragment extends Fragment
 
     // Declaring Views
     TextView adminName;
-    Button shopBtn, customerBtn;
+    Button shopBtn, customerBtn, masterVisitBtn;
 
     // Creating Customer Object
     Customer customer;
@@ -53,6 +49,7 @@ public class AdminProfileFragment extends Fragment
         shopBtn = root.findViewById(R.id.adminShopBtn);
         customerBtn = root.findViewById(R.id.adminCustomerBtn);
         adminName = root.findViewById(R.id.adminName);
+        masterVisitBtn = root.findViewById(R.id.adminMasterHistoryBtn);
 
         // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();
@@ -85,6 +82,14 @@ public class AdminProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AdminCustomerListActivity.class));
+            }
+        });
+
+        masterVisitBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AdminMasterHistoryActivity.class));
             }
         });
         return root;

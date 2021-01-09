@@ -38,6 +38,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
 
     //Declare Views
     ListView customerList;
+    ImageView listImage;
 
     ArrayList<String> mName = new ArrayList<String>();
     ArrayList<String> mStatus = new ArrayList<String>();
@@ -113,12 +114,12 @@ public class AdminCustomerListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminCustomerProfileActivity.class);
                 // this intent put our 0 index image to another activity
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);
                 // now put title and description to another activity
-                intent.putExtra("shopId", userId.get(position));
+                intent.putExtra("userId", userId.get(position));
                 startActivity(intent);
             }
         });
@@ -144,13 +145,13 @@ public class AdminCustomerListActivity extends AppCompatActivity {
 
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);
 
-            ImageView images = row.findViewById(R.id.itemImage);
+            listImage = row.findViewById(R.id.itemImage);
             TextView myTitle = row.findViewById(R.id.ItemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
             myTitle.setText(rName.get(position));
             myDescription.setText(rStatus.get(position));
-
+            listImage.setImageResource(R.drawable.profile);
             return row;
         }
     }
