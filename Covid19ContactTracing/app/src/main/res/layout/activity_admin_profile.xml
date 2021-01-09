@@ -1,108 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/c19_background"
-        android:scaleType="centerCrop"/>
+        android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/image_visibility"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:padding="20dp"
+            android:background="@color/profileBlue">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/profile_pic" />
 
-        <TextView
-            android:id="@+id/adminName"
+            <TextView
+                android:id="@+id/adminName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#333333"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginTop="28dp"
+                android:includeFontPadding="false"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Administrator"
+                android:includeFontPadding="false"
+                android:textColor="#404040"
+                android:textSize="14sp"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_below="@id/adminName"
+                android:layout_marginLeft="10dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/adminShopBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/adminImage"
-            app:layout_constraintVertical_bias="0.504" />
+            android:padding="20dp"
+            android:layout_marginTop="-75dp">
 
-        <Button
-            android:id="@+id/adminMasterHistoryBtn"
-            android:layout_width="300dp"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="6dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/admin_shop_icon"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="80dp"
+                        android:fontFamily="sans-serif-black"
+                        android:includeFontPadding="false"
+                        android:text="View Shops"
+                        android:textColor="#303030"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/adminShopBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/flag_transparent" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="6dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/admin_customer_icon"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Customers"
+                        android:includeFontPadding="false"
+                        android:textSize="18sp"
+                        android:textColor="#303030"
+                        android:layout_marginTop="80dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_centerHorizontal="true"/>
+
+                    <Button
+                        android:id="@+id/adminCustomerBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/flag_transparent" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="160dp"
-            android:background="@drawable/button_scan_background"
-            android:text="VIEW MASTER VISIT"
-            android:textColor="#03AE7D"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.133" />
+            android:padding="20dp"
+            android:layout_marginTop="-40dp">
 
-        <Button
-            android:id="@+id/adminCustomerBtn"
-            android:layout_width="300dp"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="6dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/admin_history_icon"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="80dp"
+                        android:fontFamily="sans-serif-black"
+                        android:includeFontPadding="false"
+                        android:text="View History"
+                        android:textColor="#303030"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/adminHistoryBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/flag_transparent" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="6dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/admin_construction_icon"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Under Construction"
+                        android:includeFontPadding="false"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="#303030"
+                        android:layout_marginTop="75dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_centerHorizontal="true"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="236dp"
-            android:background="@drawable/button_scan_background"
-            android:text="VIEW CUSTOMERS"
-            android:textColor="#03AE7D"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.133" />
+            android:padding="20dp"
+            android:layout_marginTop="-40dp">
 
-        <Button
-            android:id="@+id/adminShopBtn"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="316dp"
-            android:background="@drawable/button_scan_background"
-            android:text="VIEW SHOPS"
-            android:textColor="#03AE7D"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.133" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="6dp"
+                android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/adminImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/adminShopBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.535"
-            app:srcCompat="@drawable/ic_baseline_person_24" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/admin_construction_icon"
+                        android:layout_centerHorizontal="true" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="75dp"
+                        android:fontFamily="sans-serif-black"
+                        android:includeFontPadding="false"
+                        android:text="Under Construction"
+                        android:gravity="center"
+                        android:textColor="#303030"
+                        android:textSize="18sp" />
 
-</RelativeLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="6dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/admin_construction_icon"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Under Construction"
+                        android:includeFontPadding="false"
+                        android:textSize="18sp"
+                        android:textColor="#303030"
+                        android:layout_marginTop="75dp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_centerHorizontal="true"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

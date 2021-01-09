@@ -65,7 +65,7 @@ public class AdminProfileFragment extends Fragment
                 if(documentSnapshot.exists())
                 {
                     String fullName = documentSnapshot.getString("fullName");
-                    adminName.setText("Welcome, " +fullName);
+                    adminName.setText(fullName);
                 }
             }
         });
