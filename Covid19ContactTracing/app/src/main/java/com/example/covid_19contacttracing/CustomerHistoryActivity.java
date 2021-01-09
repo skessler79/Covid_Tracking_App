@@ -1,5 +1,6 @@
 package com.example.covid_19contacttracing;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,13 @@ public class CustomerHistoryActivity extends AppCompatActivity
         programNameList = new ArrayList<>();
         programDescriptionList = new ArrayList<>();
         programImages = new ArrayList<>();
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {// handles the 'back' button
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
 
         ArrayList<HashMap<String, String>> list = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("list");
         Collections.sort(list, new TimeComparator());

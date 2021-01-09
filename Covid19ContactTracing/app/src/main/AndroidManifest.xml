@@ -39,6 +39,7 @@
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
         <activity
             android:name=".CustomerHistoryActivity"
+            android:parentActivityName=".TestDrawerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".VerifyOTPActivity"
