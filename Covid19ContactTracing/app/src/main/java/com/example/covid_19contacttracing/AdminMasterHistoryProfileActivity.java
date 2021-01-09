@@ -54,6 +54,7 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         String historyId = intent.getStringExtra("historyId");
+
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
@@ -82,7 +83,7 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            openDialog();
+                            openDialog(historyId);
                         }
                     });
                 }
@@ -95,8 +96,8 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
 
     }
 
-    public void openDialog () {
-        FlagDialog flagDialog = new FlagDialog();
+    public void openDialog (String historyId) {
+        FlagDialog flagDialog = new FlagDialog(historyId);
         flagDialog.show(getSupportFragmentManager(), "flag dialog");
     }
 }

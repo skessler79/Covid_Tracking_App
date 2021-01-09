@@ -33,8 +33,11 @@ public class Admin extends User {
     }
 
     // flag customers with id given
-    public void flagCustomer()
-    { }
+    public void flag(String customerId, String shopId)
+    {
+        Log.d("success", "customerId in dialog: " + customerId);
+        Log.d("success", "shopId in dialog: " + shopId);
+    }
 
     // generate QR code
     public Bitmap generateQR(String shopId)
