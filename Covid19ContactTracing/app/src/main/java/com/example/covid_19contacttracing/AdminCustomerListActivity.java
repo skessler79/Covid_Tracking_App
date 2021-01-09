@@ -99,8 +99,6 @@ public class AdminCustomerListActivity extends AppCompatActivity {
                     //set Adapter class to create rows
                     MyAdapter adapter = new MyAdapter(AdminCustomerListActivity.this, mName, mStatus);
                     customerList.setAdapter(adapter);
-                    Log.d("success",   "name==>" + mName);
-                    Log.d("success",   "status==>" + mStatus);
                 } else {
                     //TODO: more proper error handling
                     Log.d("success", "Error getting documents: ", task.getException());

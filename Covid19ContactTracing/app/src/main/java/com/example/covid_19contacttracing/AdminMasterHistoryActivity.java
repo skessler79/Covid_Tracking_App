@@ -131,8 +131,6 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
                     }
 
                     //set Adapter class to create rows
-                    Log.d("success", "history time==>" + Arrays.toString(historyTime));
-                    Log.d("success", "history id==>" + historyId);
                     MyAdapter adapter = new MyAdapter(AdminMasterHistoryActivity.this, mShopName, mCustomerName, imageChoice, historyTime);
                     customerList.setAdapter(adapter);
                 } else {
@@ -178,8 +176,6 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
             // Initializing Firebase
             fAuth = FirebaseAuth.getInstance();
             fStore = FirebaseFirestore.getInstance();
-            Log.d("success", "shopName==>"+ name);
-            Log.d("success", "customerName==>"+ customerName);
             this.context = context;
             this.rName = name;
             this.rStatus = customerName;

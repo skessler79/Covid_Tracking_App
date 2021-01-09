@@ -34,6 +34,7 @@ public class FlagDialog extends AppCompatDialogFragment {
     private String historyId;
     private String customerId;
     private String shopId;
+    private long time;
 
     public FlagDialog (){
         super();
@@ -78,6 +79,7 @@ public class FlagDialog extends AppCompatDialogFragment {
                 {
                     customerId = documentSnapshot.getString("customer");
                     shopId = documentSnapshot.getString("shop");
+                    time = documentSnapshot.getLong("time");
                 }
             }
         });
@@ -90,7 +92,7 @@ public class FlagDialog extends AppCompatDialogFragment {
         }).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                admin.flag(customerId, shopId);
+                admin.flag(getContext(),customerId, shopId, time);
             }
         });
         return builder.create();

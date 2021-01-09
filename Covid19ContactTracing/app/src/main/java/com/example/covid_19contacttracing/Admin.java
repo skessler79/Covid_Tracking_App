@@ -1,10 +1,17 @@
 package com.example.covid_19contacttracing;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -17,9 +24,10 @@ import java.util.Map;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
+import static java.lang.Math.abs;
+
 public class Admin extends User {
-    private CustStatus status;
-    private ArrayList<HashMap<String, String>> history;
+    private ArrayList<String> shopHistory;
     private Map<String, Object> query;
 
     static FirebaseAuth fAuth;
@@ -33,10 +41,15 @@ public class Admin extends User {
     }
 
     // flag customers with id given
-    public void flag(String customerId, String shopId)
+    public void flag(Context context, String customerId, String shopId, long time)
     {
-        Log.d("success", "customerId in dialog: " + customerId);
-        Log.d("success", "shopId in dialog: " + shopId);
+
+
+    }
+
+    // customer flagging logic
+    private void flagCustomer (ArrayList<String> historyList, long time, String originalId){
+
     }
 
     // generate QR code
@@ -47,30 +60,7 @@ public class Admin extends User {
         return qrgEncoder.getBitmap();
     }
 
-    public Map<String,Object>getQueryById(String type, String id){
-        query = new HashMap<>();
-        // Getting user info from Firebase
-        DocumentReference docRef = fStore.collection(type).document(id);
-        Log.d("success", "i was here");
-        Log.d("success", "admin type==>"+type);
-        Log.d("success", "admin id==>"+id);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-        {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot)
-            {
-                Log.d("success", "I was here");
-                query =  documentSnapshot.getData();
-                Log.d("success", "admin data===>" + query.toString());
-            }
-        });
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return query;
-    }
+    public void getQueryById(String type, String id){}
 
     // Opens shop list page
     public void showShopList()
