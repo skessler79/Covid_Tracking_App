@@ -151,7 +151,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
 
             myTitle.setText(rName.get(position));
             myDescription.setText(rStatus.get(position));
-            listImage.setImageResource(R.drawable.profile);
+            listImage.setImageResource(R.drawable.admin_user_account_icon);
             return row;
         }
     }

@@ -28,7 +28,7 @@ public class TestAddDetailsActivity extends AppCompatActivity implements Adapter
 {
 
     // Connecting to Firebase Authentication and Firestore Database
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
     // Declaring Views variables
@@ -60,10 +60,10 @@ public class TestAddDetailsActivity extends AppCompatActivity implements Adapter
         statesSpinner.setOnItemSelectedListener(this);
 
         // Initializing firebase variables
-        firebaseAuth = FirebaseAuth.getInstance();
+        fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        userID = firebaseAuth.getCurrentUser().getUid();
+        userID = fAuth.getCurrentUser().getUid();
 
         // Connecting to Firestore Database for users
         DocumentReference docRef = fStore.collection("users").document(userID);
@@ -86,6 +86,7 @@ public class TestAddDetailsActivity extends AppCompatActivity implements Adapter
                         ArrayList<CustomerHistory> history = new ArrayList<>();
                         user.put("fullName", name);
                         user.put("currentState", selectedState);
+                        user.put("phone", fAuth.getCurrentUser().getPhoneNumber());
                         user.put("email", userEmail);
                         user.put("status", "Normal");
                         user.put("history", history);

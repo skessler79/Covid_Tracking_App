@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class UserAddDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     // Connecting to Firebase Authentication and Firestore Database
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
     // Declaring Views variables
@@ -57,10 +58,10 @@ public class UserAddDetailsActivity extends AppCompatActivity implements Adapter
         statesSpinner.setOnItemSelectedListener(this);
 
         // Initializing firebase variables
-        firebaseAuth = FirebaseAuth.getInstance();
+        fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        userID = firebaseAuth.getCurrentUser().getUid();
+        userID = fAuth.getCurrentUser().getUid();
 
         // Connecting to Firestore Database for users
         DocumentReference docRef = fStore.collection("users").document(userID);
@@ -78,11 +79,13 @@ public class UserAddDetailsActivity extends AppCompatActivity implements Adapter
                     // Check if email is correct format
                     if(userEmail.trim().matches(emailPattern))
                     {
+                        Log.d("logtest", "Log result = ");
                         String name = fullName.getText().toString();
                         Map<String, Object> user = new HashMap<>();
                         ArrayList<CustomerHistory> history = new ArrayList<>();
                         user.put("fullName", name);
                         user.put("currentState", selectedState);
+                        user.put("phone", fAuth.getCurrentUser().getPhoneNumber());
                         user.put("email", userEmail);
                         user.put("status", "Normal");
                         user.put("history", history);

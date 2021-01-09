@@ -1,46 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".AdminCustomerProfileActivity">
+    android:padding="40dp"
+    tools:context=".AdminCustomerProfileActivity"
+    android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/customerImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="90dp"
-        android:src="@mipmap/ic_launcher"
-        app:srcCompat="@drawable/ic_baseline_person_24" />
+        android:id="@+id/qrCodeImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/admin_user_account_icon" />
 
-    <TextView
-        android:id="@+id/customerName"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/customerImage"
-        android:layout_marginTop="23dp"
-        android:gravity="center"
-        android:text="User Name"
-        android:textColor="@color/blackColor"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp">
 
-    <TextView
-        android:id="@+id/customerStatus"
+        <ImageView
+            android:id="@+id/display_name_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/person_small_icon"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="50dp"
+            android:layout_marginTop="6dp"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:layout_below="@id/display_name_desc"/>
+
+        <TextView
+            android:id="@+id/display_name_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Display Name"
+            android:paddingLeft="50dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/otp_text_secondary"
+            android:textSize="14sp"
+            android:layout_above="@id/display_name_icon" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/customerName"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:text="Normal"
-        android:textSize="26sp"
-        android:textStyle="italic" />
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/phone_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/phone_small_icon"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="50dp"
+            android:layout_marginTop="6dp"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:layout_below="@id/phone_number_desc"/>
+
+        <TextView
+            android:id="@+id/phone_number_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:paddingLeft="50dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/otp_text_secondary"
+            android:textSize="14sp"
+            android:layout_above="@id/phone_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/email_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/email_small_icon"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/email_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="50dp"
+            android:layout_marginTop="6dp"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:layout_below="@id/email_address_desc"/>
+
+        <TextView
+            android:id="@+id/email_address_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            android:paddingLeft="50dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/otp_text_secondary"
+            android:textSize="14sp"
+            android:layout_above="@id/email_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/state_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/state_icon_small"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="50dp"
+            android:layout_marginTop="6dp"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:layout_below="@id/state_desc"/>
+
+        <TextView
+            android:id="@+id/state_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current State"
+            android:paddingLeft="50dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/otp_text_secondary"
+            android:textSize="14sp"
+            android:layout_above="@id/state_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/status_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/status_icon_small"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="50dp"
+            android:layout_marginTop="6dp"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:layout_below="@id/status_desc"/>
+
+        <TextView
+            android:id="@+id/status_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:paddingLeft="50dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/otp_text_secondary"
+            android:textSize="14sp"
+            android:layout_above="@id/status_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
