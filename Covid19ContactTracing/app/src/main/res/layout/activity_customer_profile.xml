@@ -1,252 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerProfileActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/c19_background"
-        android:scaleType="centerCrop"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/image_visibility"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.38" />
-
-        <TextView
-            android:id="@+id/userPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-        <TextView
-            android:id="@+id/userEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userPhone" />
-
         <RelativeLayout
-            android:id="@+id/relativeLayout"
-            android:layout_width="130dp"
-            android:layout_height="10dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/line_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userEmail"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:padding="20dp"
+            android:background="@color/profileBlue">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/profile_pic" />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#333333"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginTop="28dp"
+                android:includeFontPadding="false"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:includeFontPadding="false"
+                android:textColor="#404040"
+                android:textSize="14sp"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_below="@id/profile_name"
+                android:layout_marginLeft="10dp" />
+
+        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-            app:layout_constraintVertical_bias="0.056">
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_marginTop="-75dp">
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="LOW"
-                    android:textColor="#FFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="RISK"
-                    android:textColor="#FFF"
-                    android:textSize="12sp" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="10dp"
+                android:layout_margin="10dp">
 
                 <RelativeLayout
-                    android:layout_width="70dp"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/line_background" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/status_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/status_icon"
+                        android:layout_centerHorizontal="true" />
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/status_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Normal"
+                        android:includeFontPadding="false"
+                        android:textSize="24sp"
+                        android:textColor="#303030"
+                        android:layout_marginTop="60dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_centerHorizontal="true" />
 
-                <TextView
-                    android:id="@+id/userStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NORMAL"
-                    android:textColor="#FFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/status_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:textColor="@color/otp_text_secondary"
+                        android:includeFontPadding="false"
+                        android:textSize="14sp"
+                        android:layout_below="@id/status_label"
+                        android:layout_centerHorizontal="true"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="STATUS"
-                    android:textColor="#FFF"
-                    android:textSize="12sp" />
+                </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="70dp"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/line_background" />
+            </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NONE"
-                    android:textColor="#FFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SYMPTOMS"
-                    android:textColor="#FFF"
-                    android:textSize="12sp" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardElevation="10dp"
+                android:layout_margin="10dp">
 
                 <RelativeLayout
-                    android:layout_width="70dp"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/line_background" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/risk_icon"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:id="@+id/risk_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Low"
+                        android:includeFontPadding="false"
+                        android:textSize="24sp"
+                        android:textColor="#303030"
+                        android:layout_marginTop="60dp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:id="@+id/risk_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Risk"
+                        android:textColor="@color/otp_text_secondary"
+                        android:includeFontPadding="false"
+                        android:textSize="14sp"
+                        android:layout_below="@id/risk_label"
+                        android:layout_centerHorizontal="true"/>
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/checkInBtn"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/button_scan_background"
-            android:text="C H E C K - I N"
-            android:textColor="#03AE7D"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.133" />
-
-        <Button
-            android:id="@+id/historyBtn"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/button_user_history_background"
-            android:text="H I S T O R Y"
-            android:textColor="#FFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkInBtn"
-            app:layout_constraintVertical_bias="0.142" />
-
-        <ImageView
-            android:id="@+id/adminImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/userName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75"
-            app:srcCompat="@drawable/ic_baseline_person_24" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/userProfileToolbar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:background="#00FFFFFF"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingHorizontal="40dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:id="@+id/user_name_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/person_small_icon"
+                    android:layout_alignParentBottom="true"/>
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selwyn Darryl Kessler"
+                    android:paddingLeft="50dp"
+                    android:layout_marginTop="6dp"
+                    android:includeFontPadding="false"
+                    android:textSize="16sp"
+                    android:layout_below="@id/user_name_desc"/>
+
+                <TextView
+                    android:id="@+id/user_name_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Display Name"
+                    android:paddingLeft="50dp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/otp_text_secondary"
+                    android:textSize="14sp"
+                    android:layout_above="@id/user_name_icon" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_alignParentBottom="true"/>
 
-</RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/phone_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/phone_small_icon"
+                    android:layout_alignParentBottom="true"/>
+
+                <TextView
+                    android:id="@+id/phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+601131444209"
+                    android:paddingLeft="50dp"
+                    android:layout_marginTop="6dp"
+                    android:includeFontPadding="false"
+                    android:textSize="16sp"
+                    android:layout_below="@id/phone_number_desc"/>
+
+                <TextView
+                    android:id="@+id/phone_number_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number"
+                    android:paddingLeft="50dp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/otp_text_secondary"
+                    android:textSize="14sp"
+                    android:layout_above="@id/phone_icon" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_alignParentBottom="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/email_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/email_small_icon"
+                    android:layout_alignParentBottom="true"/>
+
+                <TextView
+                    android:id="@+id/email_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="selwyn.kessler79@gmail.com"
+                    android:paddingLeft="50dp"
+                    android:layout_marginTop="6dp"
+                    android:includeFontPadding="false"
+                    android:textSize="16sp"
+                    android:layout_below="@id/email_address_desc"/>
+
+                <TextView
+                    android:id="@+id/email_address_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email Address"
+                    android:paddingLeft="50dp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/otp_text_secondary"
+                    android:textSize="14sp"
+                    android:layout_above="@id/email_icon" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_alignParentBottom="true"/>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/checkInBtn"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginVertical="15dp"
+                android:text="CHECK-IN"
+                android:background="@drawable/button_scan_background"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/historyBtn"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="HISTORY"
+                android:background="@drawable/button_user_history_background"
+                android:textColor="@color/profileBlue"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>

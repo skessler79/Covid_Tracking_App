@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.covid_19contacttracing">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -16,22 +23,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
+
         <activity
             android:name=".StatisticActivity"
-            android:theme="@style/Theme.UserProfile">
-        </activity>
-        <activity android:name=".AdminCustomerProfileActivity" android:parentActivityName=".AdminCustomerListActivity"/>
-        <activity android:name=".AdminCustomerListActivity"  android:parentActivityName=".TestDrawerActivity"/>
-        <activity android:name=".AdminShopProfileActivity"  android:parentActivityName=".AdminShopListActivity"/>
-        <activity android:name=".AdminShopListActivity" android:parentActivityName=".TestDrawerActivity"/>
+            android:theme="@style/Theme.UserProfile" />
+        <activity
+            android:name=".AdminCustomerProfileActivity"
+            android:parentActivityName=".AdminCustomerListActivity" />
+        <activity
+            android:name=".AdminCustomerListActivity"
+            android:parentActivityName=".TestDrawerActivity" />
+        <activity
+            android:name=".AdminShopProfileActivity"
+            android:parentActivityName=".AdminShopListActivity" />
+        <activity
+            android:name=".AdminShopListActivity"
+            android:parentActivityName=".TestDrawerActivity" />
         <activity
             android:name=".TestAddDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
-        <activity
-            android:name=".TestAddDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"></activity>
         <activity
             android:name=".CustomerHistoryActivity"
             android:screenOrientation="portrait" />
@@ -48,9 +59,6 @@
         <activity
             android:name=".TestDrawerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.UserProfile" />
-        <activity
-            android:name=".CustomerProfileActivity"
             android:theme="@style/Theme.UserProfile" />
         <activity
             android:name=".IntroductoryActivity"
