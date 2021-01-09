@@ -23,12 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
-<<<<<<< HEAD
         <activity android:name=".AdminMasterHistoryProfileActivity" android:parentActivityName=".AdminMasterHistoryActivity"/>
         <activity android:name=".AdminMasterHistoryActivity"  android:parentActivityName=".TestDrawerActivity"/>
-=======
-
->>>>>>> 9a45adf18cfd8b850cbcae1553f727d921bff99e
         <activity
             android:name=".StatisticActivity"
             android:theme="@style/Theme.UserProfile" />
