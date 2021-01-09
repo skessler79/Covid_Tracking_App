@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,11 +16,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
 
     //Declare View
-    ImageView customerImage;
-    TextView customerName, customerStatus;
+    TextView historyShop, historyDescription;
+    Button button;
 
     //Declare firebase
     FirebaseAuth fAuth;
@@ -41,19 +47,18 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
             actionBar.setDisplayShowHomeEnabled(true);
         }
 
-        customerImage = findViewById(R.id.customerImage);
-        customerName = findViewById(R.id.customerName);
-        customerStatus = findViewById(R.id.customerStatus);
+        historyShop = findViewById(R.id.masterHistoryShop);
+        historyDescription = findViewById(R.id.masterHistoryDescription);
 
         Intent intent = getIntent();
 
         Bundle bundle = this.getIntent().getExtras();
-        String userId = intent.getStringExtra("userId");
+        String historyId = intent.getStringExtra("historyId");
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
         // Getting user info from Firebase
-        DocumentReference docRef = fStore.collection("users").document(userId);
+        DocumentReference docRef = fStore.collection("history").document(historyId);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
         {
             @Override
@@ -62,15 +67,24 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
                 if(documentSnapshot.exists())
                 {
                     // get attributes
-                    String name = documentSnapshot.getString("fullName");
+                    String shopName = documentSnapshot.getString("shopName");
 //                    String phone = documentSnapshot.getString("phone");
-                    String email = documentSnapshot.getString("email");
-                    String status = documentSnapshot.getString("status");
+                    String customerName = documentSnapshot.getString("customerName");
+                    String getTime = documentSnapshot.get("time").toString();
+                    Date currentTime = new Date(Long.valueOf(getTime) * 1000L);
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                    String dateString = formatter.format(currentTime);
 
-                    customer = new Customer(name, "0123456789", email, CustStatus.valueOf(status));
 
-                    customerName.setText(customer.getName());
-                    customerStatus.setText(customer.getStatus().name());
+                    historyShop.setText(shopName);
+                    historyDescription.setText("visited by " + customerName + " at " + dateString);
+                    button = (Button) findViewById(R.id.adminFlagBtn);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openDialog();
+                        }
+                    });
                 }
             }
         });
@@ -79,5 +93,10 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
 
         actionBar.setTitle("Customer Profile");
 
+    }
+
+    public void openDialog () {
+        FlagDialog flagDialog = new FlagDialog();
+        flagDialog.show(getSupportFragmentManager(), "flag dialog");
     }
 }

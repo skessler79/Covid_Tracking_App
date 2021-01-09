@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.Query.Direction;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +54,8 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
     ArrayList<String> mShopName = new ArrayList<String>();
     ArrayList<String> mCustomerName = new ArrayList<String>();
     ArrayList<String> historyId = new ArrayList<String>();
-    ArrayList<String> historyTime = new ArrayList<String>();
     ArrayList<Integer> imageChoice = new ArrayList<>();
+    String historyTime[];
     List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
 
     @Override
@@ -77,11 +79,12 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
         }
 
         // Getting history info from Firebase
-        fStore.collection("history").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        fStore.collection("history").orderBy("time",Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    Map<String, Object> tempShopLists = new HashMap<>();
+                    int i = 0;
+                    historyTime = new String[task.getResult().size()];
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
                         String tempHistoryId = document.getId();
@@ -92,24 +95,24 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
                         historyId.add(tempHistoryId);
 
                         // get customer name
-                        String getCustomerId = document.getData().get("customer").toString();
+                        String getCustomerName = document.getData().get("customerName").toString();
 //                        String getCustomerName = admin.getQueryById("users",getCustomerId).toString();
 //                        Log.d("success", "customerData==>"+ getCustomerName);
-                        mCustomerName.add(getCustomerId);
+                        mCustomerName.add(getCustomerName);
 
 
                         //get shop name
-                        String getShopId = document.getData().get("shop").toString();
+                        String getShopName = document.getData().get("shopName").toString();
 //                        String getShopName = admin.getQueryById("shops",getShopId).get("name").toString();
-                        mShopName.add(getShopId);
+                        mShopName.add(getShopName);
 
                         //get shop time
                         String getTime = document.getData().get("time").toString();
 
                         Date currentTime = new Date(Long.valueOf(getTime) * 1000L);
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss Z", Locale.getDefault());
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                         String dateString = formatter.format(currentTime);
-                        historyTime.add(dateString);
+                        historyTime[i]  = dateString;
 
                         //get determinant for the day and night photo
                         SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
@@ -124,40 +127,14 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
                         {
                             imageChoice.add(R.drawable.night);
                         }
+                        i++;
                     }
-                    for(int i = 0; i < mCustomerName.size(); i++){
-                        DocumentReference docRef1 = fStore.collection("users").document(mCustomerName.get(i));
-                        int finalI = i;
-                        docRef1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-                        {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot)
-                            {
-                                if(documentSnapshot.exists()){
-                                    mCustomerName.set(finalI,documentSnapshot.getString("fullName"));
-                                }
-                            }
-                        });
-                        DocumentReference docRef2 = fStore.collection("shops").document(mShopName.get(i));
-
-                        docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
-                        {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot)
-                            {
-                                if(documentSnapshot.exists()){
-                                    mShopName.set(finalI,documentSnapshot.getString("name"));
-                                }
-                            }
-                        });
-                    }
-
-                    Log.d("success", "customerName==>"+ mCustomerName);
 
                     //set Adapter class to create rows
-                    MyAdapter adapter = new MyAdapter(AdminMasterHistoryActivity.this, mShopName, mCustomerName, imageChoice);
+                    Log.d("success", "history time==>" + Arrays.toString(historyTime));
+                    Log.d("success", "history id==>" + historyId);
+                    MyAdapter adapter = new MyAdapter(AdminMasterHistoryActivity.this, mShopName, mCustomerName, imageChoice, historyTime);
                     customerList.setAdapter(adapter);
-                    Log.d("success", "historyId==>"+ historyId);
                 } else {
                     //TODO: more proper error handling
                     Log.d("success", "Error getting documents: ", task.getException());
@@ -171,12 +148,12 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminMasterHistoryProfileActivity.class);
                 // this intent put our 0 index image to another activity
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);
                 // now put title and description to another activity
-                intent.putExtra("shopId", historyId.get(position));
+                intent.putExtra("historyId", historyId.get(position));
                 startActivity(intent);
             }
         });
@@ -185,8 +162,9 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
     class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
-        ArrayList<String> rName = new ArrayList<String>();
-        ArrayList<String> rStatus = new ArrayList<String>();
+        ArrayList<String> rName;
+        ArrayList<String> rStatus;
+        String[] rHistoryTime;
         ArrayList<Integer> rImages;
         private String title;
         private String description;
@@ -195,7 +173,7 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
         FirebaseAuth fAuth;
         FirebaseFirestore fStore;
 
-        MyAdapter (Context context, ArrayList<String> name,ArrayList<String> customerName, ArrayList<Integer> images) {
+        MyAdapter (Context context, ArrayList<String> name,ArrayList<String> customerName, ArrayList<Integer> images, String[] historyTime ) {
             super(context, R.layout.single_item, R.id.ItemName, name);
             // Initializing Firebase
             fAuth = FirebaseAuth.getInstance();
@@ -206,6 +184,7 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
             this.rName = name;
             this.rStatus = customerName;
             this.rImages = images;
+            this.rHistoryTime = historyTime;
         }
 
         @NonNull
@@ -220,7 +199,7 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
             myTitle.setText(rName.get(position));
-            myDescription.setText(rStatus.get(position));
+            myDescription.setText(rStatus.get(position)+" visited at " + historyTime[position]);
             listImage.setImageResource(rImages.get(position));
             return row;
         }

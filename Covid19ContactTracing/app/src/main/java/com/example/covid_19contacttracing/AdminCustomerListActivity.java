@@ -114,12 +114,12 @@ public class AdminCustomerListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getApplicationContext(), AdminShopProfileActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminCustomerProfileActivity.class);
                 // this intent put our 0 index image to another activity
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);
                 // now put title and description to another activity
-                intent.putExtra("shopId", userId.get(position));
+                intent.putExtra("userId", userId.get(position));
                 startActivity(intent);
             }
         });
