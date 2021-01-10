@@ -168,7 +168,7 @@ public class Admin extends User {
         return qrgEncoder.getBitmap();
     }
 
-    public void randomeVisitGenerator(String type, String id){
+    public void randomeVisitGenerator(){
         ArrayList<String> shopIdList = new  ArrayList<String>();
         ArrayList<String> customerIdList = new  ArrayList<String>();
         fStore.collection("users").whereEqualTo("role", "Customer").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -207,7 +207,7 @@ public class Admin extends User {
 
     }
 
-    public void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
+    private void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
         currentTime = System.currentTimeMillis() / 1000L;
 
         final String[] historyId = new String[1];

@@ -34,10 +34,11 @@ public class AdminProfileFragment extends Fragment
 
     // Declaring Views
     TextView adminName;
-    Button shopBtn, customerBtn, masterVisitBtn;
+    Button shopBtn, customerBtn, masterVisitBtn, randomVisitGeneratorBtn;
 
     // Creating Customer Object
     Customer customer;
+    Admin admin;
 
     @Nullable
     @Override
@@ -50,10 +51,14 @@ public class AdminProfileFragment extends Fragment
         customerBtn = root.findViewById(R.id.adminCustomerBtn);
         adminName = root.findViewById(R.id.adminName);
         masterVisitBtn = root.findViewById(R.id.adminMasterHistoryBtn);
+        randomVisitGeneratorBtn = root.findViewById(R.id.adminRandomVisitGeneratorBtn);
 
         // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+
+        // Initializing admin
+        admin = new Admin();
 
         // Getting user info from Firebase
         DocumentReference docRef = fStore.collection("users").document(fAuth.getCurrentUser().getUid());
@@ -90,6 +95,14 @@ public class AdminProfileFragment extends Fragment
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AdminMasterHistoryActivity.class));
+            }
+        });
+
+        randomVisitGeneratorBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                admin.randomeVisitGenerator();
             }
         });
         return root;
