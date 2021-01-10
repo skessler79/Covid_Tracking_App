@@ -53,6 +53,7 @@ public class StatisticsFragment extends Fragment
     Stats malaysiaStats;
     Stats globalStats;
 
+    // API URLs
     private final String urlGlobal = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/total";
     private final String urlMalaysia = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/total?country=Malaysia";
 
@@ -85,6 +86,7 @@ public class StatisticsFragment extends Fragment
 
         jsonParse();
 
+        // Clicking Malaysia button
         malaysia_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -109,6 +111,7 @@ public class StatisticsFragment extends Fragment
             }
         });
 
+        // Clicking global button
         global_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -136,6 +139,7 @@ public class StatisticsFragment extends Fragment
         return root;
     }
 
+    // Parsing HTTP GET request data
     public void jsonParse() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JsonObjectRequest requestMalaysia = new JsonObjectRequest(Request.Method.GET, urlGlobal, null, new Response.Listener<JSONObject>()

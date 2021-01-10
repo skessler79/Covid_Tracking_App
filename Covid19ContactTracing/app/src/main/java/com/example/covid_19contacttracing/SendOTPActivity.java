@@ -27,6 +27,7 @@ public class SendOTPActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_o_t_p);
 
+        // Initializing Views
         final EditText inputMobile = findViewById(R.id.otp_input_mobile);
         final Button buttonGetOTP = findViewById(R.id.otp_button_get);
 
@@ -45,6 +46,7 @@ public class SendOTPActivity extends AppCompatActivity
 
         }
 
+        // Cliking get OTP button
         buttonGetOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

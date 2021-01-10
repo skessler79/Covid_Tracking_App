@@ -34,6 +34,7 @@ public class CustomerProfileFragment extends Fragment implements View.OnClickLis
         return fragment;
     }
 
+    // Declaring Firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 

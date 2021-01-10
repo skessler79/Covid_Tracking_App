@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestAddDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+public class AddDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
 
     // Connecting to Firebase Authentication and Firestore Database
@@ -100,12 +99,12 @@ public class TestAddDetailsActivity extends AppCompatActivity implements Adapter
                             {
                                 if(task.isSuccessful())
                                 {
-                                    startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                 }
                                 else
                                 {
-                                    Toast.makeText(TestAddDetailsActivity.this, "Data is not inserted.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddDetailsActivity.this, "Data is not inserted.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -117,7 +116,7 @@ public class TestAddDetailsActivity extends AppCompatActivity implements Adapter
                 }
                 else
                 {
-                    Toast.makeText(TestAddDetailsActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddDetailsActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

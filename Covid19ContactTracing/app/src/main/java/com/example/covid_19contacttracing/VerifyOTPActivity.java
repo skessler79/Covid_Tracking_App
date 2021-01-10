@@ -3,7 +3,6 @@ package com.example.covid_19contacttracing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -104,22 +103,22 @@ public class VerifyOTPActivity extends AppCompatActivity
                     );
                     FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
+                            progressBar.setVisibility(View.GONE);
+                            verifyBtn.setVisibility(View.VISIBLE);
+                            if(task.isSuccessful())
                             {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task)
-                                {
-                                    progressBar.setVisibility(View.GONE);
-                                    verifyBtn.setVisibility(View.VISIBLE);
-                                    if(task.isSuccessful())
-                                    {
-                                        checkUserProfile();
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(VerifyOTPActivity.this, "The verification code entered was invalid.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                                checkUserProfile();
+                            }
+                            else
+                            {
+                                Toast.makeText(VerifyOTPActivity.this, "The verification code entered was invalid.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -135,28 +134,27 @@ public class VerifyOTPActivity extends AppCompatActivity
                         TimeUnit.SECONDS,
                         VerifyOTPActivity.this,
                         new PhoneAuthProvider.OnVerificationStateChangedCallbacks()
-                        {
-                            @Override
-                            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential)
-                            {
+                {
+                    @Override
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential)
+                    {
 
-                            }
+                    }
 
-                            @Override
-                            public void onVerificationFailed(@NonNull FirebaseException e)
-                            {
+                    @Override
+                    public void onVerificationFailed(@NonNull FirebaseException e)
+                    {
 
-                                Toast.makeText(VerifyOTPActivity.this, "OTP Verification Failed", Toast.LENGTH_SHORT).show();
-                            }
+                        Toast.makeText(VerifyOTPActivity.this, "OTP Verification Failed", Toast.LENGTH_SHORT).show();
+                    }
 
-                            @Override
-                            public void onCodeSent(@NonNull String newVerificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken)
-                            {
-                                verificationId = newVerificationId;
-                                Toast.makeText(VerifyOTPActivity.this, "OTP Sent", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
+                    @Override
+                    public void onCodeSent(@NonNull String newVerificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken)
+                    {
+                        verificationId = newVerificationId;
+                        Toast.makeText(VerifyOTPActivity.this, "OTP Sent", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -172,13 +170,13 @@ public class VerifyOTPActivity extends AppCompatActivity
                 // If user has already registered previously
                 if(documentSnapshot.exists())
                 {
-                    startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 }
                 // If user is a new user
                 else
                 {
-                    Intent intent = new Intent(getApplicationContext(), TestAddDetailsActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AddDetailsActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
