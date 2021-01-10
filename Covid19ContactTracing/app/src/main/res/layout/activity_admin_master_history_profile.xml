@@ -9,34 +9,24 @@
 
     <Button
         android:id="@+id/adminFlagBtn"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
         android:layout_below="@+id/masterHistoryDescription"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="80dp"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="160dp"
         android:background="@drawable/button_scan_background"
         android:text="Flag this visit"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/masterHistoryDescription"
-        app:layout_constraintVertical_bias="0.133" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/masterHistoryShop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="170dp"
         android:gravity="center"
         android:text="User Name"
         android:textColor="@color/blackColor"

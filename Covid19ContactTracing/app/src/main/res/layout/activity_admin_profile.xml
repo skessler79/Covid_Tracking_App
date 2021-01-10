@@ -201,13 +201,13 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="20dp"
-                        android:src="@drawable/admin_construction_icon"
+                        android:src="@drawable/admin_test_icon"
                         android:layout_centerHorizontal="true" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Under Construction"
+                        android:text="Add Random Visits"
                         android:paddingHorizontal="10dp"
                         android:includeFontPadding="false"
                         android:textSize="16sp"
@@ -217,10 +217,11 @@
                         android:fontFamily="sans-serif-black"
                         android:layout_centerHorizontal="true"/>
 
-                    <ImageView
+                    <Button
+                        android:id="@+id/adminRandomGeneratorBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#80000000" />
+                        android:background="@drawable/flag_transparent" />
 
                     <Button
                         android:id="@+id/adminRandomVisitGeneratorBtn"
