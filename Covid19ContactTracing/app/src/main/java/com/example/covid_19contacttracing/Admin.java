@@ -37,14 +37,29 @@ import static java.lang.Math.abs;
  * @author Theerapob Loo @ Loo Wei Xiong
  */
 public class Admin extends User {
+    /**
+     * Holds the customer status as an array list.
+     */
     private ArrayList<String> shopHistory;
-    private Map<String, Object> query;
 
+    /**
+     * object of random class
+     */
     private Random rand;
 
+    /**
+     * Stores the Firebase Authentication instance.
+     */
     private static FirebaseAuth fAuth;
+
+    /**
+     * Stores the Cloud Firestore instance.
+     */
     private static FirebaseFirestore fStore;
 
+    /**
+     * Default constructor for Admin class.
+     */
     public Admin()
     {
         // Initializing Firebase
@@ -55,7 +70,13 @@ public class Admin extends User {
         rand = new Random();
     }
 
+
     // generate QR code
+    /**
+     * generate qr code.
+     *
+     * @param shopId The id to be passed it to generate te qr code.
+     */
     public Bitmap generateQR(String shopId)
     {
         //generate qr code with given text
@@ -65,6 +86,14 @@ public class Admin extends User {
     }
 
     // flag customers with id given
+    /**
+     * flag the visit for case.
+     *
+     * @param context The context of the current activity.
+     * @param customerId The id of the customer of the occurance of history.
+     * @param shopId The id of the shop of the occurance of history.
+     * @param time the time of the occurance of history.
+     */
     public void flag(Context context, String customerId, String shopId, long time)
     {
         // Declare Document References
@@ -114,14 +143,21 @@ public class Admin extends User {
                 if(documentSnapshot.exists())
                 {
                     shopHistory = (ArrayList<String>) documentSnapshot.get("history");
-                    flagLogic(shopHistory, time , customerId);
+                    flagCloseLogic(shopHistory, time , customerId);
                 }
             }
         });
     }
 
+    /**
+     * logic for the close contact flagging.
+     *
+     * @param historyList An array list of visit history of the cased shop.
+     * @param time The time that the customer visited.
+     * @param originalId the id of the flagged customer.
+     */
     // flagging logic to check whether the user is close contact or not
-    private void flagLogic (ArrayList<String> historyList, long time, String originalId){
+    private void flagCloseLogic (ArrayList<String> historyList, long time, String originalId){
 
         final int[] counter = {0};
         for (int i = 0 ; i < historyList.size();i++){
@@ -168,6 +204,11 @@ public class Admin extends User {
         }
     }
 
+    /**
+     * generates random visits
+     *
+     *@param context The context of the current activity.
+     */
     // method for generating random visits
     public void randomVisitGenerator(Context context){
         ArrayList<String> shopIdList = new  ArrayList<String>();
@@ -194,7 +235,7 @@ public class Admin extends User {
                                     Log.d("success", "randomShopID==>"+ randomShopID);
                                     Log.d("success", "randomCustomerId==>"+ randomCustomerId);
                                     Log.d("success", "currentTime==>"+ currentTime);
-                                    randomVisitGeneratorLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime);
+                                    randomVisitGeneratorCheckInLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime);
                                 }
                                 Toast.makeText(context, "Successfully generated random visits", Toast.LENGTH_SHORT).show();
                             } else {
@@ -209,8 +250,15 @@ public class Admin extends User {
         });
     }
 
+    /**
+     * handles the checkin logic for visit generator
+     *
+     * @param shopId The randomly generated shop id.
+     * @param customerId The randomly generated customer id.
+     * @param currentTime The randomly generated time.
+     */
     // some method to handle logic of checking in
-    private void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
+    private void randomVisitGeneratorCheckInLogic(String shopId, String customerId, Long currentTime){
 
         final String[] historyId = new String[1];
 
