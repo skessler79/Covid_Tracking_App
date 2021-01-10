@@ -16,20 +16,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
-        <activity android:name=".AdminMasterHistoryProfileActivity" android:parentActivityName=".AdminMasterHistoryActivity"/>
-        <activity android:name=".AdminMasterHistoryActivity"  android:parentActivityName=".MainActivity"/>
+        <activity android:name=".AdminMasterHistoryProfileActivity"
+            android:parentActivityName=".AdminMasterHistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AdminMasterHistoryActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminCustomerProfileActivity"
-            android:parentActivityName=".AdminCustomerListActivity" />
+            android:parentActivityName=".AdminCustomerListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminCustomerListActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminShopProfileActivity"
-            android:parentActivityName=".AdminShopListActivity" />
+            android:parentActivityName=".AdminShopListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminShopListActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AddDetailsActivity"
             android:screenOrientation="portrait"
