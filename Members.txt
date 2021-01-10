@@ -1,0 +1,12 @@
+1191302679	Selwyn Darryl Kessler
+1191302553	Theerapob Loo @ Loo Wei Xiong
+
+TASK DISTRIBUTION
+1. Customer and shop	-	80% Selwyn Darryl Kessler
+						-	20% Theerapob Loo @ Loo Wei Xiong
+
+2. Admin				-	80% Theerapob Loo @ Loo Wei Xiong
+						-	20% Selwyn Darryl Kessler
+
+3. Javadoc				- 	50% Selwyn Darryl Kessler
+						-	50% Theerapob Loo @ Loo Wei Xiong
