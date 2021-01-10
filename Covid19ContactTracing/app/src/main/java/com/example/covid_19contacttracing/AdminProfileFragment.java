@@ -30,15 +30,15 @@ public class AdminProfileFragment extends Fragment
     }
 
     // Declaring firestore variables
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     // Declaring Views
-    TextView adminName;
-    Button shopBtn, customerBtn, masterVisitBtn, randomVisitGeneratorBtn;
+    private TextView adminName;
+    private Button shopBtn, customerBtn, masterVisitBtn, randomVisitGeneratorBtn;
 
     // Creating Admin Object
-    Admin admin;
+    private Admin admin;
 
     @Nullable
     @Override

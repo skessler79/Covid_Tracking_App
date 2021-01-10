@@ -33,16 +33,16 @@ import java.util.Map;
 public class AdminCustomerListActivity extends AppCompatActivity {
 
     //Declare Firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     //Declare Views
-    ListView customerList;
-    ImageView listImage;
+    private ListView customerList;
+    private ImageView listImage;
 
-    ArrayList<String> mName = new ArrayList<>();
-    ArrayList<String> mStatus = new ArrayList<>();
-    ArrayList<String> userId = new ArrayList<>();
+    private ArrayList<String> customerName = new ArrayList<>();
+    private ArrayList<String> customerStatus = new ArrayList<>();
+    private ArrayList<String> userId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +75,8 @@ public class AdminCustomerListActivity extends AppCompatActivity {
                         //get attributes
                         Boolean isCustomer = document.getData().get("role").toString().equals("Customer"); // check if the user is admin or customer
                         if (isCustomer){
-                            mName.add(document.getData().get("fullName").toString());
-                            mStatus.add(document.getData().get("status").toString());
+                            customerName.add(document.getData().get("fullName").toString());
+                            customerStatus.add(document.getData().get("status").toString());
                             userId.add(document.getId());
                         }
                         else{
@@ -84,7 +84,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
                         }
                     }
                     //set Adapter class to create rows
-                    MyAdapter adapter = new MyAdapter(AdminCustomerListActivity.this, mName, mStatus);
+                    MyAdapter adapter = new MyAdapter(AdminCustomerListActivity.this, customerName, customerStatus);
                     customerList.setAdapter(adapter);
                 } else {
                     Log.w("failed", "Error getting documents: ", task.getException());

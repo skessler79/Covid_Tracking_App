@@ -19,15 +19,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AdminShopProfileActivity extends AppCompatActivity {
 
     //Declare View
-    ImageView qrCodeImage;
-    TextView shopName, phoneNumber, managerName, shopStatus;
+    private ImageView qrCodeImage;
+    private TextView shopName, phoneNumber, managerName, shopStatus;
 
     //Declare firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     //Creating Objects
-    Admin admin;
+    private Admin admin;
 
 
     @Override

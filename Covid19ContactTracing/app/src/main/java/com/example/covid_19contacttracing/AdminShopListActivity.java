@@ -33,15 +33,15 @@ import java.util.Map;
 public class AdminShopListActivity extends AppCompatActivity {
 
     //Declare Firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     //Declare Views
-    ListView shopList;
+    private ListView shopList;
 
-    ArrayList<String> shopName = new ArrayList<>();
-    ArrayList<String> shopStatus = new ArrayList<>();
-    ArrayList<String> shopId = new ArrayList<>();
+    private ArrayList<String> shopName = new ArrayList<>();
+    private ArrayList<String> shopStatus = new ArrayList<>();
+    private ArrayList<String> shopId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

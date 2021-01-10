@@ -16,11 +16,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AdminCustomerProfileActivity extends AppCompatActivity {
 
     //Declare View
-    TextView customerName, customerPhoneNumber, customerEmail, customerState, customerStatus;
+    private TextView customerName, customerPhoneNumber, customerEmail, customerState, customerStatus;
 
     //Declare firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

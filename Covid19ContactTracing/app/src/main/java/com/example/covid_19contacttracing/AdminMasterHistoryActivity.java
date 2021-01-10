@@ -28,31 +28,27 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class AdminMasterHistoryActivity extends AppCompatActivity {
 
     //Declare Firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     //Declare Views
-    ListView customerList;
-    ImageView listImage;
+    private ListView customerList;
+    private ImageView listImage;
 
     //Create object
-    Admin admin = new Admin();
+    private Admin admin = new Admin();
 
-    ArrayList<String> mShopName = new ArrayList<String>();
-    ArrayList<String> mCustomerName = new ArrayList<String>();
-    ArrayList<String> historyId = new ArrayList<String>();
-    ArrayList<Integer> imageChoice = new ArrayList<>();
-    String historyTime[];
-    List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
+    private ArrayList<String> mShopName = new ArrayList<>();
+    private ArrayList<String> mCustomerName = new ArrayList<>();
+    private ArrayList<String> historyId = new ArrayList<>();
+    private ArrayList<Integer> imageChoice = new ArrayList<>();
+    private String historyTime[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +126,7 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
                     MyAdapter adapter = new MyAdapter(AdminMasterHistoryActivity.this, mShopName, mCustomerName, imageChoice, historyTime);
                     customerList.setAdapter(adapter);
                 } else {
-                    //TODO: more proper error handling
-                    Log.d("success", "Error getting documents: ", task.getException());
+                    Log.w("failed", "Error getting documents: ", task.getException());
                 }
             }
         });
@@ -155,11 +150,11 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
 
     class MyAdapter extends ArrayAdapter<String> {
 
-        Context context;
-        ArrayList<String> rName;
-        ArrayList<String> rStatus;
-        String[] rHistoryTime;
-        ArrayList<Integer> rImages;
+        private Context context;
+        private ArrayList<String> rShopName;
+        private ArrayList<String> rCustomerName;
+        private String[] rHistoryTime;
+        private ArrayList<Integer> rImages;
         private String title;
         private String description;
 
@@ -167,14 +162,14 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
         FirebaseAuth fAuth;
         FirebaseFirestore fStore;
 
-        MyAdapter (Context context, ArrayList<String> name,ArrayList<String> customerName, ArrayList<Integer> images, String[] historyTime ) {
-            super(context, R.layout.single_item, R.id.itemName, name);
+        MyAdapter (Context context, ArrayList<String> shopName,ArrayList<String> customerName, ArrayList<Integer> images, String[] historyTime ) {
+            super(context, R.layout.single_item, R.id.itemName, shopName);
             // Initializing Firebase
             fAuth = FirebaseAuth.getInstance();
             fStore = FirebaseFirestore.getInstance();
             this.context = context;
-            this.rName = name;
-            this.rStatus = customerName;
+            this.rShopName = shopName;
+            this.rCustomerName = customerName;
             this.rImages = images;
             this.rHistoryTime = historyTime;
         }
@@ -190,8 +185,8 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
             TextView myTitle = row.findViewById(R.id.itemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
-            myTitle.setText(rName.get(position));
-            myDescription.setText(rStatus.get(position)+" visited at " + historyTime[position]);
+            myTitle.setText(rShopName.get(position));
+            myDescription.setText(rCustomerName.get(position)+" visited at " + historyTime[position]);
             listImage.setImageResource(rImages.get(position));
             return row;
         }

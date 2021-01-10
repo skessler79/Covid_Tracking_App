@@ -23,17 +23,12 @@ import java.util.Locale;
 public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
 
     //Declare View
-    TextView historyShop, historyDescription;
-    Button button;
+    private TextView historyShop, historyDescription;
+    private Button button;
 
     //Declare firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-
-    //Creating Objects
-    Customer customer;
-    Admin admin = new Admin();
-
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +45,8 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
         historyShop = findViewById(R.id.masterHistoryShop);
         historyDescription = findViewById(R.id.masterHistoryDescription);
 
+        //get intent
         Intent intent = getIntent();
-
-        Bundle bundle = this.getIntent().getExtras();
         String historyId = intent.getStringExtra("historyId");
 
         fAuth = FirebaseAuth.getInstance();
@@ -76,9 +70,9 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                     String dateString = formatter.format(currentTime);
 
-
                     historyShop.setText(shopName);
                     historyDescription.setText("visited by " + customerName + " at " + dateString);
+
                     button = (Button) findViewById(R.id.adminFlagBtn);
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -90,6 +84,7 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
             }
         });
 
+        //set title of current activity
         actionBar.setTitle("Visit History");
 
     }
