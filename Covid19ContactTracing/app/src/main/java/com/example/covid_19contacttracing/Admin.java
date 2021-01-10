@@ -168,7 +168,7 @@ public class Admin extends User {
         return qrgEncoder.getBitmap();
     }
 
-    public void randomeVisitGenerator(){
+    public void randomVisitGenerator(Context context){
         ArrayList<String> shopIdList = new  ArrayList<String>();
         ArrayList<String> customerIdList = new  ArrayList<String>();
         fStore.collection("users").whereEqualTo("role", "Customer").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -189,10 +189,13 @@ public class Admin extends User {
                                     int randomShopID = rand.nextInt(shopIdList.size());
                                     int randomCustomerId = rand.nextInt(customerIdList.size());
                                     int randomTimeDifference = rand.nextInt(18000);
-                                    Long currentTime = System.currentTimeMillis() / 1000L;
-
-                                    randomVisitGeneratorLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime-randomTimeDifference);
+                                    Long currentTime = (System.currentTimeMillis() / 1000L) - randomTimeDifference;
+                                    Log.d("success", "randomShopID==>"+ randomShopID);
+                                    Log.d("success", "randomCustomerId==>"+ randomCustomerId);
+                                    Log.d("success", "currentTime==>"+ currentTime);
+                                    randomVisitGeneratorLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime);
                                 }
+                                Toast.makeText(context, "Successfully generated random visits", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("success", "Error getting documents: ", task.getException());
                             }
@@ -208,7 +211,6 @@ public class Admin extends User {
     }
 
     private void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
-        currentTime = System.currentTimeMillis() / 1000L;
 
         final String[] historyId = new String[1];
 

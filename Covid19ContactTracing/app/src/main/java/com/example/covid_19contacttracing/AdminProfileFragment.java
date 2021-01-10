@@ -102,7 +102,7 @@ public class AdminProfileFragment extends Fragment
         {
             @Override
             public void onClick(View v) {
-                admin.randomeVisitGenerator();
+                admin.randomVisitGenerator(getContext());
             }
         });
         return root;
