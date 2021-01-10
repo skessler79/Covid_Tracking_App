@@ -90,9 +90,7 @@ public class AdminMasterHistoryProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
-        actionBar.setTitle("Customer Profile");
+        actionBar.setTitle("Visit History");
 
     }
 
