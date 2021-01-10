@@ -2,31 +2,21 @@ package com.example.covid_19contacttracing;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -77,13 +67,14 @@ public class Admin extends User {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Succesfully flagged user", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Succesfully flagged current visit", Toast.LENGTH_SHORT).show();
                         Log.d("success", "DocumentSnapshot successfully updated! (Customer Case)");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Error flagging current visit", Toast.LENGTH_SHORT).show();
                         Log.w("failed", "Error updating document (Customer Case)", e);
                     }
                 });
@@ -106,11 +97,9 @@ public class Admin extends User {
     // customer flagging logic
     private void flagCustomer (ArrayList<String> historyList, long time, String originalId){
 
-        Log.d("success", "inside flag customer method");
         final int[] counter = {0};
         for (int i = 0 ; i < historyList.size();i++){
             DocumentReference historyRef = fStore.collection("history").document(historyList.get(i));
-            Log.d("success", "inside loop" + i);
             historyRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
             {
                 @Override
@@ -118,34 +107,39 @@ public class Admin extends User {
                 {
                     String tempCustomerId = documentSnapshot.getString("customer");
                     long tempTime = parseLong(documentSnapshot.getLong("time").toString());
-                    counter[0]++;
-                    Log.d("success", "inside first query");
-                    Log.d("success", "time different " + abs((tempTime) - time));
-                    Log.d("success", "value of customerId" + tempCustomerId);
-                    Log.d("success", "value of originalId" + originalId);
+
                     // check if its shorter than 1 hour or equals to the case customer
                     if (abs((tempTime) - time) <= 3600 && !(tempCustomerId.equals(originalId))){
-                        DocumentReference customerRef = fStore.collection("user").document(tempCustomerId);
-                        Log.d("success", "inside if statement");
-                        // flag the current customer as close case
-                        customerRef
-                                .update("status", "Close")
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("success", "DocumentSnapshot successfully updated! (Close Case)");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("failed", "Error updating document (Close Case)", e);
-                                    }
-                                });
+                        DocumentReference customerRef = fStore.collection("users").document(tempCustomerId);
+                        customerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                        {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot)
+                            {
+                                if(documentSnapshot.exists() && !(documentSnapshot.get("status").equals("Case")))
+                                {
+                                    // flag the current customer as close case
+                                    customerRef
+                                            .update("status", "Close")
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("success", "DocumentSnapshot successfully updated! (Close Case)");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("failed", "Error updating document (Close Case)", e);
+                                                }
+                                            });
+                                }
+                            }
+                        });
+
                     }
                 }
             });
-            Log.d("success", "end of  loop" + i);
         }
     }
 
@@ -168,3 +162,4 @@ public class Admin extends User {
     public void showMasterHistory()
     { }
 }
+
