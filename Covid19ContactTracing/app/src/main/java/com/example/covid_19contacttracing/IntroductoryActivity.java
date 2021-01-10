@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,12 +55,6 @@ public class IntroductoryActivity extends AppCompatActivity
         nameSplash.animate().translationY(height).setDuration(1000).setStartDelay(3600);
         lottieAnimationView.animate().translationY(height).setDuration(1000).setStartDelay(3600);
 
-//        if(fAuth.getCurrentUser() != null)
-//        {
-//            checkUserProfile();
-//        }
-
-
         new Handler().postDelayed(new Runnable()
         {
             @Override
@@ -75,12 +68,12 @@ public class IntroductoryActivity extends AppCompatActivity
                         break;
 
                     case 1:
-                        startActivity(new Intent(getApplicationContext(), TestAddDetailsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), AddDetailsActivity.class));
                         finish();
                         break;
 
                     case 2:
-                        startActivity(new Intent(getApplicationContext(), TestDrawerActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                         break;
                 }
