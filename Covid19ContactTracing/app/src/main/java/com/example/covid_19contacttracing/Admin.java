@@ -8,15 +8,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -28,14 +39,19 @@ public class Admin extends User {
     private ArrayList<String> shopHistory;
     private Map<String, Object> query;
 
-    static FirebaseAuth fAuth;
-    static FirebaseFirestore fStore;
+    private Random rand;
+
+    private static FirebaseAuth fAuth;
+    private static FirebaseFirestore fStore;
 
     public Admin()
     {
         // Initializing Firebase
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+
+        // Initializing random class
+        rand = new Random();
     }
 
     // flag customers with id given
@@ -152,7 +168,93 @@ public class Admin extends User {
         return qrgEncoder.getBitmap();
     }
 
-    public void getQueryById(String type, String id){}
+    public void randomeVisitGenerator(String type, String id){
+        ArrayList<String> shopIdList = new  ArrayList<String>();
+        ArrayList<String> customerIdList = new  ArrayList<String>();
+        fStore.collection("users").whereEqualTo("role", "Customer").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        customerIdList.add(document.getId());
+                    }
+                    fStore.collection("shops").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    shopIdList.add(document.getId());
+                                }
+                                for ( int i = 0; i < 30; i++){
+                                    int randomShopID = rand.nextInt(shopIdList.size());
+                                    int randomCustomerId = rand.nextInt(customerIdList.size());
+                                    int randomTimeDifference = rand.nextInt(18000);
+                                    Long currentTime = System.currentTimeMillis() / 1000L;
+
+                                    randomVisitGeneratorLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime-randomTimeDifference);
+                                }
+                            } else {
+                                Log.d("success", "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+                } else {
+                    Log.d("success", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+
+    }
+
+    public void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
+        currentTime = System.currentTimeMillis() / 1000L;
+
+        final String[] historyId = new String[1];
+
+        // Updating master history in Cloud Firestore
+        Map<String, Object> history = new HashMap<>();
+        history.put("time", currentTime);
+        history.put("shop", shopId);
+        history.put("customer", fAuth.getCurrentUser().getUid());
+
+        DocumentReference docRef = fStore.collection("users").document(customerId);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot)
+            {
+                history.put("customerName", documentSnapshot.getString("fullName"));
+
+                DocumentReference shopRef = fStore.collection("shops").document(shopId);
+                shopRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
+                {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot)
+                    {
+                        history.put("shopName", documentSnapshot.getString("name"));
+
+                        fStore.collection("history").add(history).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                        {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference)
+                            {
+                                historyId[0] = documentReference.getId();
+
+                                // Updating user history in Cloud Firestore
+                                DocumentReference docRef = fStore.collection("users").document(customerId);
+                                docRef.update("history", FieldValue.arrayUnion(historyId[0]));
+
+                                // Updating shops history in Cloud Firestore
+                                DocumentReference shopRef = fStore.collection("shops").document(shopId);
+                                shopRef.update("history", FieldValue.arrayUnion(historyId[0]));
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     // Opens shop list page
     public void showShopList()
