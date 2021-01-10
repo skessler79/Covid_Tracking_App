@@ -18,13 +18,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  This class consists of methods that handle database operations involving a customer.
+ *
+ * @author Selwyn Darryl Kessler
+ * @author Theerapob Loo @ Loo Wei Xiong
+ */
 public class Customer extends User
 {
+    /**
+     * Holds the customer status as a value of an enum.
+     */
     private CustStatus status;
 
+    /**
+     * Stores the Firebase Authentication instance.
+     */
     static FirebaseAuth fAuth;
+
+    /**
+     * Stores the Cloud Firestore instance.
+     */
     static FirebaseFirestore fStore;
 
+    /**
+     * Default constructor for Customer class.
+     */
     public Customer()
     {
         // Initializing Firebase
@@ -32,6 +51,14 @@ public class Customer extends User
         fStore = FirebaseFirestore.getInstance();
     }
 
+    /**
+     * Parameterized constructor for Customer class.
+     *
+     * @param name Name of the customer.
+     * @param phone Phone number of the customer.
+     * @param email Email address of the customer.
+     * @param status Status of the customer.
+     */
     public Customer(String name, String phone, String email, CustStatus status)
     {
         this.name = name;
@@ -44,17 +71,31 @@ public class Customer extends User
         fStore = FirebaseFirestore.getInstance();
     }
 
+    /**
+     * Returns the status of the customer.
+     *
+     * @return The status of the customer.
+     */
     public CustStatus getStatus()
     {
         return this.status;
     }
 
+    /**
+     * Sets the status of the customer.
+     *
+     * @param status The status of the customer to be set.
+     */
     public void setStatus(CustStatus status)
     {
         this.status = status;
     }
 
-    // Check in with QR code
+    /**
+     * Checks-in to a shop with a QR code.
+     *
+     * @param result The result of the QR code scan.
+     */
     public void checkIn(IntentResult result)
     {
         Long currentTime = System.currentTimeMillis() / 1000L;
@@ -106,7 +147,12 @@ public class Customer extends User
         });
     }
 
-    // Opens customer history page
+    /**
+     * Opens an activity to show the current customer visit history.
+     *
+     * @param context The context of the current activity.
+     * @param documentSnapshot The current customer's document snapshot from Cloud Firestore.
+     */
     public void showHistory(Context context, DocumentSnapshot documentSnapshot)
     {
         ArrayList<String> list = (ArrayList<String>) documentSnapshot.get("history");
@@ -120,8 +166,6 @@ public class Customer extends User
         {
             for(int i = list.size() - 1; i >= 0; --i)
             {
-                int count = 0;
-                int finalI = i;
                 DocumentReference docRef = fStore.collection("history").document(list.get(i));
                 docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
                 {
@@ -145,9 +189,14 @@ public class Customer extends User
         }
     }
 
+    /**
+     * Returns a short string containing the basic info (name, phone, email, status) of the current customer.
+     *
+     * @return A short string containing the basic info of the current customer.
+     */
     @Override
     public String toString()
     {
-        return this.name + " , " + this.phone + " , " + this.status;
+        return this.name + " , " + this.phone + " , " + this.email + " , " + this.status;
     }
 }

@@ -17,29 +17,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19ContactTracing">
         <activity android:name=".AdminMasterHistoryProfileActivity" android:parentActivityName=".AdminMasterHistoryActivity"/>
-        <activity android:name=".AdminMasterHistoryActivity"  android:parentActivityName=".TestDrawerActivity"/>
-        <activity
-            android:name=".StatisticActivity"
-            android:theme="@style/Theme.UserProfile" />
+        <activity android:name=".AdminMasterHistoryActivity"  android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".AdminCustomerProfileActivity"
             android:parentActivityName=".AdminCustomerListActivity" />
         <activity
             android:name=".AdminCustomerListActivity"
-            android:parentActivityName=".TestDrawerActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AdminShopProfileActivity"
             android:parentActivityName=".AdminShopListActivity" />
         <activity
             android:name=".AdminShopListActivity"
-            android:parentActivityName=".TestDrawerActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".TestAddDetailsActivity"
+            android:name=".AddDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar" />
         <activity
             android:name=".CustomerHistoryActivity"
-            android:parentActivityName=".TestDrawerActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".VerifyOTPActivity"
@@ -52,7 +49,7 @@
             android:theme="@style/Theme.Covid19ContactTracing.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".TestDrawerActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.UserProfile" />
         <activity
@@ -65,7 +62,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRScannerActivity" />
         <activity
             android:name=".CaptureAct"
             android:screenOrientation="portrait"

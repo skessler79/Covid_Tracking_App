@@ -24,7 +24,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.Arrays;
 
-public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener
+public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener
 {
     // Menu options
     private static final int POS_CLOSE = 0;
