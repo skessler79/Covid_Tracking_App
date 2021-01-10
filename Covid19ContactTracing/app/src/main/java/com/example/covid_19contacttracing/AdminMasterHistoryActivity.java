@@ -88,14 +88,11 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
 
                         // get customer name
                         String getCustomerName = document.getData().get("customerName").toString();
-//                        String getCustomerName = admin.getQueryById("users",getCustomerId).toString();
-//                        Log.d("success", "customerData==>"+ getCustomerName);
                         mCustomerName.add(getCustomerName);
 
 
                         //get shop name
                         String getShopName = document.getData().get("shopName").toString();
-//                        String getShopName = admin.getQueryById("shops",getShopId).get("name").toString();
                         mShopName.add(getShopName);
 
                         //get shop time

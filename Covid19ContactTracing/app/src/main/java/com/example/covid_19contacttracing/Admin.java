@@ -100,7 +100,6 @@ public class Admin extends User {
         DocumentReference shopRef = fStore.collection("shops").document(shopId);
         DocumentReference customerRef = fStore.collection("users").document(customerId);
 
-        Log.d("success", "customerId-->"+ customerId);
 
         // flag the current shop
         shopRef
@@ -234,8 +233,6 @@ public class Admin extends User {
                                     int randomCustomerId = rand.nextInt(customerIdList.size());
                                     int randomTimeDifference = rand.nextInt(18000);
                                     Long currentTime = (System.currentTimeMillis() / 1000L) - randomTimeDifference;
-                                    Log.d("sucecss", "customer id size==>" + customerIdList.size());
-                                    Log.d("sucecss", "generatedId==>" + customerIdList.get(randomCustomerId));
                                     randomVisitGeneratorCheckInLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime);
                                 }
                                 Toast.makeText(context, "Successfully generated random visits", Toast.LENGTH_SHORT).show();
@@ -267,7 +264,7 @@ public class Admin extends User {
         Map<String, Object> history = new HashMap<>();
         history.put("time", currentTime);
         history.put("shop", shopId);
-        history.put("customer", fAuth.getCurrentUser().getUid());
+        history.put("customer", customerId);
 
         DocumentReference docRef = fStore.collection("users").document(customerId);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()

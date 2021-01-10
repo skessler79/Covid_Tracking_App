@@ -63,7 +63,6 @@ public class FlagDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder((getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.flag_dialog, null);
-        Log.d("success", "historyId in flag dialog ==>" + historyId);
 
         // gets history data by id from firestore
         DocumentReference docRef = fStore.collection("history").document(historyId);
@@ -77,8 +76,7 @@ public class FlagDialog extends AppCompatDialogFragment {
                     customerId = documentSnapshot.getString("customer");
                     shopId = documentSnapshot.getString("shop");
                     time = documentSnapshot.getLong("time");
-                    Log.d("success", "customerId in flag dialog ==>" + customerId);
-                }
+              }
             }
         });
         builder.setView(view).setTitle("Confirmation")
