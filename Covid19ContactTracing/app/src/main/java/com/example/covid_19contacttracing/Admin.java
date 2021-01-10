@@ -76,6 +76,7 @@ public class Admin extends User {
      * generate qr code.
      *
      * @param shopId The id to be passed it to generate te qr code.
+     * @return Bit map of generated qrcode image
      */
     public Bitmap generateQR(String shopId)
     {
