@@ -47,7 +47,7 @@ public class FlagDialog extends AppCompatDialogFragment {
         admin = new Admin();
     }
 
-    public FlagDialog(String mHistoryId){
+    public FlagDialog(String dHistoryId){
         super();
 
         //initialize firebase
@@ -57,7 +57,7 @@ public class FlagDialog extends AppCompatDialogFragment {
         //initialize admin
         admin = new Admin();
 
-        this.historyId = mHistoryId;
+        this.historyId = dHistoryId;
     }
 
     @NonNull
@@ -66,9 +66,10 @@ public class FlagDialog extends AppCompatDialogFragment {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder((getActivity()));
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog, null);
+
+        // gets history data by id from firestore
         DocumentReference docRef = fStore.collection("history").document(historyId);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>()
         {
