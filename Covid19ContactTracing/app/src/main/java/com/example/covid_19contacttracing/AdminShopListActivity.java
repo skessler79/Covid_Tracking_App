@@ -94,8 +94,6 @@ public class AdminShopListActivity extends AppCompatActivity {
                     //set Adapter class to create rows
                     MyAdapter adapter = new MyAdapter(AdminShopListActivity.this, mName, mStatus);
                     shopList.setAdapter(adapter);
-                    Log.d("success",   "name==>" + mName);
-                    Log.d("success",   "status==>" + mStatus);
                 } else {
                     //TODO: more proper error handling
                     Log.d("success", "Error getting documents: ", task.getException());
