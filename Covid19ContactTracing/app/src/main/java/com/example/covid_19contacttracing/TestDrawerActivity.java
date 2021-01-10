@@ -179,9 +179,13 @@ public class TestDrawerActivity extends AppCompatActivity implements DrawerAdapt
                     }
                     else {
                         selectedScreen = AdminProfileFragment.createFor(screenTitles[position]);
+
+                        if(position == POS_STATISTICS)
+                        {
+                            selectedScreen = StatisticsFragment.createFor(screenTitles[position]);
+                        }
                     }
                     showFragment(selectedScreen);
-
                 }
             }
         });

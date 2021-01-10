@@ -20,11 +20,8 @@ import android.widget.TextView;
 
 import com.google.firebase.firestore.Query.Direction;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -172,7 +168,7 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
         FirebaseFirestore fStore;
 
         MyAdapter (Context context, ArrayList<String> name,ArrayList<String> customerName, ArrayList<Integer> images, String[] historyTime ) {
-            super(context, R.layout.single_item, R.id.ItemName, name);
+            super(context, R.layout.single_item, R.id.itemName, name);
             // Initializing Firebase
             fAuth = FirebaseAuth.getInstance();
             fStore = FirebaseFirestore.getInstance();
@@ -191,7 +187,7 @@ public class AdminMasterHistoryActivity extends AppCompatActivity {
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);
 
             listImage = row.findViewById(R.id.itemImage);
-            TextView myTitle = row.findViewById(R.id.ItemName);
+            TextView myTitle = row.findViewById(R.id.itemName);
             TextView myDescription = row.findViewById(R.id.itemDescription);
 
             myTitle.setText(rName.get(position));

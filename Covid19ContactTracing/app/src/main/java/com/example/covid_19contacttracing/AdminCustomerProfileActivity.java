@@ -17,7 +17,7 @@ public class AdminCustomerProfileActivity extends AppCompatActivity {
 
     //Declare View
 //    ImageView customerImage;
-    TextView customerName, customerStatus;
+    TextView customerName, customerPhoneNumber, customerEmail, customerState, customerStatus;
 
     //Declare firebase
     FirebaseAuth fAuth;
@@ -41,8 +41,11 @@ public class AdminCustomerProfileActivity extends AppCompatActivity {
         }
 
 //        customerImage = findViewById(R.id.customerImage);
-        customerName = findViewById(R.id.customerName);
-        customerStatus = findViewById(R.id.customerStatus);
+        customerName = findViewById(R.id.display_name);
+        customerPhoneNumber = findViewById(R.id.phone_number);
+        customerEmail = findViewById(R.id.email_address);
+        customerState = findViewById(R.id.state);
+        customerStatus = findViewById(R.id.status);
 
         Intent intent = getIntent();
 
@@ -62,14 +65,18 @@ public class AdminCustomerProfileActivity extends AppCompatActivity {
                 {
                     // get attributes
                     String name = documentSnapshot.getString("fullName");
-//                    String phone = documentSnapshot.getString("phone");
+                    String phone = documentSnapshot.getString("phone");
                     String email = documentSnapshot.getString("email");
+                    String state = documentSnapshot.getString("currentState");
                     String status = documentSnapshot.getString("status");
 
-                    customer = new Customer(name, "0123456789", email, CustStatus.valueOf(status));
+//                    customer = new Customer(name, "0123456789", email, CustStatus.valueOf(status));
 
-                    customerName.setText(customer.getName());
-                    customerStatus.setText(customer.getStatus().name());
+                    customerName.setText(name);
+                    customerPhoneNumber.setText(phone);
+                    customerEmail.setText(email);
+                    customerState.setText(state);
+                    customerStatus.setText(status);
                 }
             }
         });
