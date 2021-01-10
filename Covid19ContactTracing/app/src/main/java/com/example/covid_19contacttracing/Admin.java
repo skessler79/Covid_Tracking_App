@@ -17,15 +17,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -34,7 +30,12 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 import static java.lang.Long.parseLong;
 import static java.lang.Math.abs;
-
+/**
+ *  This class consists of methods that handle database operations involving a admin.
+ *
+ * @author Selwyn Darryl Kessler
+ * @author Theerapob Loo @ Loo Wei Xiong
+ */
 public class Admin extends User {
     private ArrayList<String> shopHistory;
     private Map<String, Object> query;
@@ -52,6 +53,15 @@ public class Admin extends User {
 
         // Initializing random class
         rand = new Random();
+    }
+
+    // generate QR code
+    public Bitmap generateQR(String shopId)
+    {
+        //generate qr code with given text
+        QRGEncoder qrgEncoder = new QRGEncoder("COVIDTRACE-"+shopId, null, QRGContents.Type.TEXT, 150);
+
+        return qrgEncoder.getBitmap();
     }
 
     // flag customers with id given
@@ -104,14 +114,14 @@ public class Admin extends User {
                 if(documentSnapshot.exists())
                 {
                     shopHistory = (ArrayList<String>) documentSnapshot.get("history");
-                    flagCustomer(shopHistory, time , customerId);
+                    flagLogic(shopHistory, time , customerId);
                 }
             }
         });
     }
 
-    // customer flagging logic
-    private void flagCustomer (ArrayList<String> historyList, long time, String originalId){
+    // flagging logic to check whether the user is close contact or not
+    private void flagLogic (ArrayList<String> historyList, long time, String originalId){
 
         final int[] counter = {0};
         for (int i = 0 ; i < historyList.size();i++){
@@ -152,22 +162,13 @@ public class Admin extends User {
                                 }
                             }
                         });
-
                     }
                 }
             });
         }
     }
 
-
-    // generate QR code
-    public Bitmap generateQR(String shopId)
-    {
-        QRGEncoder qrgEncoder = new QRGEncoder(shopId, null, QRGContents.Type.TEXT, 150);
-
-        return qrgEncoder.getBitmap();
-    }
-
+    // method for generating random visits
     public void randomVisitGenerator(Context context){
         ArrayList<String> shopIdList = new  ArrayList<String>();
         ArrayList<String> customerIdList = new  ArrayList<String>();
@@ -176,7 +177,7 @@ public class Admin extends User {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        customerIdList.add(document.getId());
+                        customerIdList.add(document.getId()); // add all available customerId into
                     }
                     fStore.collection("shops").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -197,24 +198,23 @@ public class Admin extends User {
                                 }
                                 Toast.makeText(context, "Successfully generated random visits", Toast.LENGTH_SHORT).show();
                             } else {
-                                Log.d("success", "Error getting documents: ", task.getException());
+                                Log.w("failed", "Error getting documents: ", task.getException());
                             }
                         }
                     });
                 } else {
-                    Log.d("success", "Error getting documents: ", task.getException());
+                    Log.w("failed", "Error getting documents: ", task.getException());
                 }
             }
         });
-
-
     }
 
+    // some method to handle logic of checking in
     private void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
 
         final String[] historyId = new String[1];
 
-        // Updating master history in Cloud Firestore
+        // Updating master history in  firestore cloud
         Map<String, Object> history = new HashMap<>();
         history.put("time", currentTime);
         history.put("shop", shopId);
@@ -257,13 +257,5 @@ public class Admin extends User {
             }
         });
     }
-
-    // Opens shop list page
-    public void showShopList()
-    { }
-
-    // Opens master history page
-    public void showMasterHistory()
-    { }
 }
 

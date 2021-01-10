@@ -33,17 +33,15 @@ import java.util.Map;
 public class AdminShopListActivity extends AppCompatActivity {
 
     //Declare Firebase
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
 
     //Declare Views
-    ListView shopList;
+    private ListView shopList;
 
-    ArrayList<String> mName = new ArrayList<String>();
-    ArrayList<String> mStatus = new ArrayList<String>();
-    ArrayList<String> shopId = new ArrayList<String>();
-
-    List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
+    private ArrayList<String> shopName = new ArrayList<>();
+    private ArrayList<String> shopStatus = new ArrayList<>();
+    private ArrayList<String> shopId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +56,9 @@ public class AdminShopListActivity extends AppCompatActivity {
         //initializing Views
         shopList = findViewById(R.id.adminShopListView);
 
+        // handles the 'back' button
         ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {// handles the 'back' button
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
@@ -72,31 +70,18 @@ public class AdminShopListActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Map<String, Object> tempShopLists = new HashMap<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //THIS SECTION MIGHT NOT BE NEEDED BY I WILL KEEP IT JUST IN CASE
-                        //Basically make a new json structure array to keep all the datas
-                        /*=================================================================
-                        // gets name, phone, manager etc
-                        tempShopLists=document.getData();
 
-                        // add shopId key into the hash map
-                        tempShopLists.put("shopId", document.getId());
-
-                        //append shopLists array
-                        shopLists.add(tempShopLists);
-                        ==================================================================*/
-
-                        //get attributes (modify here for ASC or DESC)
-                        mName.add(document.getData().get("name").toString());
-                        mStatus.add(document.getData().get("status").toString());
+                        //get attributes
+                        shopName.add(document.getData().get("name").toString());
+                        shopStatus.add(document.getData().get("status").toString());
                         shopId.add(document.getId());
 
                     }
                     //set Adapter class to create rows
-                    MyAdapter adapter = new MyAdapter(AdminShopListActivity.this, mName, mStatus);
+                    MyAdapter adapter = new MyAdapter(AdminShopListActivity.this, shopName, shopStatus);
                     shopList.setAdapter(adapter);
                 } else {
-                    //TODO: more proper error handling
-                    Log.d("success", "Error getting documents: ", task.getException());
+                    Log.w("failed", "Error getting documents: ", task.getException());
                 }
             }
         });
@@ -133,7 +118,7 @@ public class AdminShopListActivity extends AppCompatActivity {
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) { //deal with the single item
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);
