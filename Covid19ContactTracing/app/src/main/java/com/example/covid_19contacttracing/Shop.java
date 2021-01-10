@@ -1,105 +1,142 @@
 package com.example.covid_19contacttracing;
 
-import java.util.ArrayList;
-
+/**
+ * This class holds basic information about a shop.
+ *
+ * @author Selwyn Darryl Kessler
+ * @author Theerapob Loo @ Loo Wei Xiong
+ */
 public class Shop
 {
+    /**
+     * Holds the name of the shop.
+     */
     private String name;
-    private String phone;
-    private ShopStatus status;
-    private String manager;
-    private ArrayList<ShopCheckIn> customers;
 
+    /**
+     * Holds the phone number of the shop.
+     */
+    private String phone;
+
+    /**
+     * Holds the shop status of the shop.
+     */
+    private ShopStatus status;
+
+    /**
+     * Holds the name of the manager of the shop.
+     */
+    private String manager;
+
+    /**
+     * Default constructor for shop class.
+     */
     public Shop()
     {
-        customers = new ArrayList<>();
+
     }
 
+    /**
+     * Parameterized constructor for Shop class.
+     *
+     * @param name Name of the shop.
+     * @param phone Phone number of the shop.
+     * @param status Status of the shop.
+     * @param manager Manager's name of the shop.
+     */
     public Shop(String name, String phone, ShopStatus status, String manager)
     {
-        customers = new ArrayList<>();
         this.name = name;
         this.phone = phone;
         this.status = status;
         this.manager = manager;
     }
 
+    /**
+     * Returns the name of the shop.
+     *
+     * @return The name of the shop.
+     */
     public String getName()
     {
         return this.name;
     }
 
+    /**
+     * Sets the name of the shop.
+     *
+     * @param name The name of the shop to be set.
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     * Returns the phone number of the shop.
+     *
+     * @return The phone number of the shop.
+     */
     public String getPhone()
     {
         return this.phone;
     }
 
+    /**
+     * Sets the phone number of the shop.
+     *
+     * @param phone The phone number of the shop to be set.
+     */
     public void setPhone(String phone)
     {
         this.phone = phone;
     }
 
+    /**
+     * Returns the status of the shop.
+     *
+     * @return The status of the shop.
+     */
     public ShopStatus getStatus()
     {
         return this.status;
     }
 
+    /**
+     * Sets the status of the shop.
+     *
+     * @param status The status of the shop to be set.
+     */
     public void setStatus(ShopStatus status)
     {
         this.status = status;
     }
 
+    /**
+     * Returns the manager of the shop.
+     *
+     * @return The manager of the shop.
+     */
     public String getManager()
     {
         return this.manager;
     }
 
+    /**
+     * Sets the manager of the shop.
+     *
+     * @param manager The manager of the shop to be set.
+     */
     public void setManager(String manager)
     {
         this.manager = manager;
     }
 
-    public void checkIn(Customer customer)
-    {
-        // Testing purposes only
-        if(customer.name.equals("Dog"))
-        {
-            ShopCheckIn item = new ShopCheckIn(customer, (System.currentTimeMillis() / 1000L) + 3700);
-            customers.add(item);
-        }
-        else if(customer.name.equals("Elephant"))
-        {
-            ShopCheckIn item = new ShopCheckIn(customer, (System.currentTimeMillis() / 1000L) - 3700);
-            customers.add(item);
-        }
-        else
-        {
-            ShopCheckIn item = new ShopCheckIn(customer, System.currentTimeMillis() / 1000L);
-            customers.add(item);
-        }
-    }
-
-    public ArrayList<ShopCheckIn> getCustomers()
-    {
-        return this.customers;
-    }
-
-    public String getCustomersString()
-    {
-        StringBuilder str = new StringBuilder("Customer List : ");
-        for(int i = 0; i < customers.size(); ++i)
-        {
-            str.append("\n" + String.valueOf(i + 1) + ".  ");
-            str.append(customers.get(i).toString());
-        }
-        return str.toString();
-    }
-
+    /**
+     * Returns the basic information of the shop as a string.
+     *
+     * @return The basic information of the shop as a string.
+     */
     public String toString()
     {
         StringBuilder str = new StringBuilder("");
