@@ -40,10 +40,9 @@ public class AdminCustomerListActivity extends AppCompatActivity {
     ListView customerList;
     ImageView listImage;
 
-    ArrayList<String> mName = new ArrayList<String>();
-    ArrayList<String> mStatus = new ArrayList<String>();
-    ArrayList<String> userId = new ArrayList<String>();
-    List<Map<String, Object>> shopLists = new ArrayList<Map<String, Object>>();
+    ArrayList<String> mName = new ArrayList<>();
+    ArrayList<String> mStatus = new ArrayList<>();
+    ArrayList<String> userId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +57,9 @@ public class AdminCustomerListActivity extends AppCompatActivity {
         //initializing Views
         customerList = findViewById(R.id.adminCustomerListView);
 
+        // handles the 'back' button
         ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {// handles the 'back' button
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
@@ -72,20 +71,8 @@ public class AdminCustomerListActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Map<String, Object> tempShopLists = new HashMap<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //THIS SECTION MIGHT NOT BE NEEDED BUT I WILL KEEP IT JUST IN CASE
-                        //Basically make a new json structure array to keep all the datas
-                        /*=================================================================
-                        // gets name, phone, manager etc
-                        tempShopLists=document.getData();
 
-                        // add shopId key into the hash map
-                        tempShopLists.put("shopId", document.getId());
-
-                        //append shopLists array
-                        shopLists.add(tempShopLists);
-                        ==================================================================*/
-
-                        //get attributes (modify here for ASC or DESC)
+                        //get attributes
                         Boolean isCustomer = document.getData().get("role").toString().equals("Customer"); // check if the user is admin or customer
                         if (isCustomer){
                             mName.add(document.getData().get("fullName").toString());
@@ -100,23 +87,19 @@ public class AdminCustomerListActivity extends AppCompatActivity {
                     MyAdapter adapter = new MyAdapter(AdminCustomerListActivity.this, mName, mStatus);
                     customerList.setAdapter(adapter);
                 } else {
-                    //TODO: more proper error handling
-                    Log.d("success", "Error getting documents: ", task.getException());
+                    Log.w("failed", "Error getting documents: ", task.getException());
                 }
             }
         });
-
-
 
         customerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                // pass intent to the the AdminCustomerProfileActivity
                 Intent intent = new Intent(getApplicationContext(), AdminCustomerProfileActivity.class);
-                // this intent put our 0 index image to another activity
                 Bundle bundle = new Bundle();
                 intent.putExtras(bundle);
-                // now put title and description to another activity
                 intent.putExtra("userId", userId.get(position));
                 startActivity(intent);
             }
@@ -138,7 +121,7 @@ public class AdminCustomerListActivity extends AppCompatActivity {
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) { // handles the single item
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View row = layoutInflater.inflate(R.layout.single_item, parent, false);

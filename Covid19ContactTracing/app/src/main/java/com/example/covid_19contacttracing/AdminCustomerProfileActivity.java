@@ -16,39 +16,32 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AdminCustomerProfileActivity extends AppCompatActivity {
 
     //Declare View
-//    ImageView customerImage;
     TextView customerName, customerPhoneNumber, customerEmail, customerState, customerStatus;
 
     //Declare firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
-    //Creating Objects
-    Customer customer;
-    Admin admin = new Admin();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_customer_profile);
 
+        // handles the 'back' button
         ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) { // handles the 'back' button
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
 
-//        customerImage = findViewById(R.id.customerImage);
         customerName = findViewById(R.id.display_name);
         customerPhoneNumber = findViewById(R.id.phone_number);
         customerEmail = findViewById(R.id.email_address);
         customerState = findViewById(R.id.state);
         customerStatus = findViewById(R.id.status);
 
+        //get intent
         Intent intent = getIntent();
-
         Bundle bundle = this.getIntent().getExtras();
         String userId = intent.getStringExtra("userId");
         fAuth = FirebaseAuth.getInstance();
@@ -69,8 +62,6 @@ public class AdminCustomerProfileActivity extends AppCompatActivity {
                     String email = documentSnapshot.getString("email");
                     String state = documentSnapshot.getString("currentState");
                     String status = documentSnapshot.getString("status");
-
-//                    customer = new Customer(name, "0123456789", email, CustStatus.valueOf(status));
 
                     customerName.setText(name);
                     customerPhoneNumber.setText(phone);
