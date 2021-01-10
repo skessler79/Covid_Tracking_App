@@ -27,8 +27,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
 
     //Creating Objects
-    Shop shop;
-    Admin admin = new Admin();
+    Admin admin;
 
 
     @Override
@@ -43,18 +42,22 @@ public class AdminShopProfileActivity extends AppCompatActivity {
             actionBar.setDisplayShowHomeEnabled(true);
         }
 
+        // Initialize admin
+        admin = new Admin();
+
+        // Initialize firestore
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
         qrCodeImage = findViewById(R.id.qrCodeImage);
         shopName = findViewById(R.id.shop_name);
         phoneNumber = findViewById(R.id.phone_number);
         managerName = findViewById(R.id.manager_name);
         shopStatus = findViewById(R.id.status);
 
+        //get data that got passed into this activity
         Intent intent = getIntent();
-
-        Bundle bundle = this.getIntent().getExtras();
         String shopId = intent.getStringExtra("shopId");
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
 
         // Getting user info from Firebase
         DocumentReference docRef = fStore.collection("shops").document(shopId);
@@ -71,16 +74,14 @@ public class AdminShopProfileActivity extends AppCompatActivity {
                     String manager = documentSnapshot.getString("manager");
                     String status = documentSnapshot.getString("status");
 
-                    shop = new Shop(name, phone, ShopStatus.valueOf(status), manager);
-
-                    shopName.setText(shop.getName());
-                    phoneNumber.setText(shop.getPhone());
-                    managerName.setText(shop.getManager());
-                    shopStatus.setText(shop.getStatus().name());
+                    shopName.setText(name);
+                    phoneNumber.setText(phone);
+                    managerName.setText(manager);
+                    shopStatus.setText(status);
 
                     try{
-                        qrCodeImage.setImageBitmap(admin.generateQR("COVIDTRACE-"+shopId)); // add identifier to shop id and pass to generator
-                        qrCodeImage.setVisibility(View.VISIBLE);
+                        qrCodeImage.setImageBitmap(admin.generateQR(shopId)); // generates ar code
+                        qrCodeImage.setVisibility(View.VISIBLE); // set the qrcode as image
                     }catch(Exception e){
                         Log.e("Error!", "onSuccess: ",  e);
                         e.printStackTrace();

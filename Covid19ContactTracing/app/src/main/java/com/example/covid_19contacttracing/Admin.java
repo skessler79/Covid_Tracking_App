@@ -54,6 +54,15 @@ public class Admin extends User {
         rand = new Random();
     }
 
+    // generate QR code
+    public Bitmap generateQR(String shopId)
+    {
+        //generate qr code with given text
+        QRGEncoder qrgEncoder = new QRGEncoder("COVIDTRACE-"+shopId, null, QRGContents.Type.TEXT, 150);
+
+        return qrgEncoder.getBitmap();
+    }
+
     // flag customers with id given
     public void flag(Context context, String customerId, String shopId, long time)
     {
@@ -152,20 +161,10 @@ public class Admin extends User {
                                 }
                             }
                         });
-
                     }
                 }
             });
         }
-    }
-
-
-    // generate QR code
-    public Bitmap generateQR(String shopId)
-    {
-        QRGEncoder qrgEncoder = new QRGEncoder(shopId, null, QRGContents.Type.TEXT, 150);
-
-        return qrgEncoder.getBitmap();
     }
 
     public void randomVisitGenerator(Context context){
@@ -176,7 +175,7 @@ public class Admin extends User {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        customerIdList.add(document.getId());
+                        customerIdList.add(document.getId()); // add all available customerId into
                     }
                     fStore.collection("shops").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -197,24 +196,22 @@ public class Admin extends User {
                                 }
                                 Toast.makeText(context, "Successfully generated random visits", Toast.LENGTH_SHORT).show();
                             } else {
-                                Log.d("success", "Error getting documents: ", task.getException());
+                                Log.w("failed", "Error getting documents: ", task.getException());
                             }
                         }
                     });
                 } else {
-                    Log.d("success", "Error getting documents: ", task.getException());
+                    Log.w("failed", "Error getting documents: ", task.getException());
                 }
             }
         });
-
-
     }
 
     private void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
 
         final String[] historyId = new String[1];
 
-        // Updating master history in Cloud Firestore
+        // Updating master history in  firestore cloud
         Map<String, Object> history = new HashMap<>();
         history.put("time", currentTime);
         history.put("shop", shopId);
@@ -257,13 +254,5 @@ public class Admin extends User {
             }
         });
     }
-
-    // Opens shop list page
-    public void showShopList()
-    { }
-
-    // Opens master history page
-    public void showMasterHistory()
-    { }
 }
 
