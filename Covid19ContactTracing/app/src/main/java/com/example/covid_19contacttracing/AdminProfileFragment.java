@@ -1,5 +1,6 @@
 package com.example.covid_19contacttracing;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -105,9 +106,15 @@ public class AdminProfileFragment extends Fragment
         {
             @Override
             public void onClick(View v) {
-                admin.randomVisitGenerator(getContext());
+                openDialog(getContext());
             }
         });
         return root;
     }
+
+    public void openDialog (Context context) {
+        RandomGeneratorDialog randomGeneratorDialog = new RandomGeneratorDialog(context);
+        randomGeneratorDialog.show(getFragmentManager() , "random generator dialog");
+    }
 }
+

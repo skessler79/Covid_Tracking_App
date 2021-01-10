@@ -100,6 +100,8 @@ public class Admin extends User {
         DocumentReference shopRef = fStore.collection("shops").document(shopId);
         DocumentReference customerRef = fStore.collection("users").document(customerId);
 
+        Log.d("success", "customerId-->"+ customerId);
+
         // flag the current shop
         shopRef
                 .update("status", ShopStatus.valueOf("Case"))
@@ -118,7 +120,7 @@ public class Admin extends User {
 
         // flag the current customer
         customerRef
-                .update("status", CustStatus.valueOf(("Case")))
+                .update("status", "Case")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -211,8 +213,8 @@ public class Admin extends User {
      */
     // method for generating random visits
     public void randomVisitGenerator(Context context){
-        ArrayList<String> shopIdList = new  ArrayList<String>();
-        ArrayList<String> customerIdList = new  ArrayList<String>();
+        ArrayList<String> shopIdList = new  ArrayList<>();
+        ArrayList<String> customerIdList = new  ArrayList<>();
         fStore.collection("users").whereEqualTo("role", "Customer").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -232,9 +234,8 @@ public class Admin extends User {
                                     int randomCustomerId = rand.nextInt(customerIdList.size());
                                     int randomTimeDifference = rand.nextInt(18000);
                                     Long currentTime = (System.currentTimeMillis() / 1000L) - randomTimeDifference;
-                                    Log.d("success", "randomShopID==>"+ randomShopID);
-                                    Log.d("success", "randomCustomerId==>"+ randomCustomerId);
-                                    Log.d("success", "currentTime==>"+ currentTime);
+                                    Log.d("sucecss", "customer id size==>" + customerIdList.size());
+                                    Log.d("sucecss", "generatedId==>" + customerIdList.get(randomCustomerId));
                                     randomVisitGeneratorCheckInLogic(shopIdList.get(randomShopID),customerIdList.get(randomCustomerId), currentTime);
                                 }
                                 Toast.makeText(context, "Successfully generated random visits", Toast.LENGTH_SHORT).show();

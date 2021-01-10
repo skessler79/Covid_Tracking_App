@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,10 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class FlagDialog extends AppCompatDialogFragment {
 
@@ -67,7 +62,8 @@ public class FlagDialog extends AppCompatDialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder((getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_dialog, null);
+        View view = inflater.inflate(R.layout.flag_dialog, null);
+        Log.d("success", "historyId in flag dialog ==>" + historyId);
 
         // gets history data by id from firestore
         DocumentReference docRef = fStore.collection("history").document(historyId);
@@ -81,6 +77,7 @@ public class FlagDialog extends AppCompatDialogFragment {
                     customerId = documentSnapshot.getString("customer");
                     shopId = documentSnapshot.getString("shop");
                     time = documentSnapshot.getLong("time");
+                    Log.d("success", "customerId in flag dialog ==>" + customerId);
                 }
             }
         });
