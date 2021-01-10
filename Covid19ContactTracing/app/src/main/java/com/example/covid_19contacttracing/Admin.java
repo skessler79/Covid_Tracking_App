@@ -17,15 +17,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -34,7 +30,12 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 import static java.lang.Long.parseLong;
 import static java.lang.Math.abs;
-
+/**
+ *  This class consists of methods that handle database operations involving a admin.
+ *
+ * @author Selwyn Darryl Kessler
+ * @author Theerapob Loo @ Loo Wei Xiong
+ */
 public class Admin extends User {
     private ArrayList<String> shopHistory;
     private Map<String, Object> query;
