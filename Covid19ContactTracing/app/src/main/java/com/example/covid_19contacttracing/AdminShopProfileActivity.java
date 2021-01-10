@@ -74,6 +74,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
                     String manager = documentSnapshot.getString("manager");
                     String status = documentSnapshot.getString("status");
 
+                    // set the text accordingly
                     shopName.setText(name);
                     phoneNumber.setText(phone);
                     managerName.setText(manager);
@@ -83,7 +84,7 @@ public class AdminShopProfileActivity extends AppCompatActivity {
                         qrCodeImage.setImageBitmap(admin.generateQR(shopId)); // generates ar code
                         qrCodeImage.setVisibility(View.VISIBLE); // set the qrcode as image
                     }catch(Exception e){
-                        Log.e("Error!", "onSuccess: ",  e);
+                        Log.e("Error!", "error: ",  e);
                         e.printStackTrace();
                     }
                 }

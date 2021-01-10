@@ -29,6 +29,7 @@ public class AdminProfileFragment extends Fragment
         return fragment;
     }
 
+    // Declaring firestore variables
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
@@ -36,17 +37,15 @@ public class AdminProfileFragment extends Fragment
     TextView adminName;
     Button shopBtn, customerBtn, masterVisitBtn, randomVisitGeneratorBtn;
 
-    // Creating Customer Object
-    Customer customer;
+    // Creating Admin Object
     Admin admin;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_admin_profile, container, false);
         // Initializing Views
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_admin_profile, container, false);
         shopBtn = root.findViewById(R.id.adminShopBtn);
         customerBtn = root.findViewById(R.id.adminCustomerBtn);
         adminName = root.findViewById(R.id.adminName);
@@ -75,6 +74,7 @@ public class AdminProfileFragment extends Fragment
             }
         });
 
+        //navigation to shop list
         shopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +82,7 @@ public class AdminProfileFragment extends Fragment
             }
         });
 
+        //navigation to customer list
         customerBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -90,6 +91,7 @@ public class AdminProfileFragment extends Fragment
             }
         });
 
+        // navigation to master visit list
         masterVisitBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -98,6 +100,7 @@ public class AdminProfileFragment extends Fragment
             }
         });
 
+        // functionality to generate random visits
         randomVisitGeneratorBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override

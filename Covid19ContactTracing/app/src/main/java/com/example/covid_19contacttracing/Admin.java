@@ -113,14 +113,14 @@ public class Admin extends User {
                 if(documentSnapshot.exists())
                 {
                     shopHistory = (ArrayList<String>) documentSnapshot.get("history");
-                    flagCustomer(shopHistory, time , customerId);
+                    flagLogic(shopHistory, time , customerId);
                 }
             }
         });
     }
 
-    // customer flagging logic
-    private void flagCustomer (ArrayList<String> historyList, long time, String originalId){
+    // flagging logic to check whether the user is close contact or not
+    private void flagLogic (ArrayList<String> historyList, long time, String originalId){
 
         final int[] counter = {0};
         for (int i = 0 ; i < historyList.size();i++){
@@ -167,6 +167,7 @@ public class Admin extends User {
         }
     }
 
+    // method for generating random visits
     public void randomVisitGenerator(Context context){
         ArrayList<String> shopIdList = new  ArrayList<String>();
         ArrayList<String> customerIdList = new  ArrayList<String>();
@@ -207,6 +208,7 @@ public class Admin extends User {
         });
     }
 
+    // some method to handle logic of checking in
     private void randomVisitGeneratorLogic(String shopId, String customerId, Long currentTime){
 
         final String[] historyId = new String[1];
